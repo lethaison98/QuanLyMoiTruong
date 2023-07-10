@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuanLyMoiTruong.UnitOfWork"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuanLyMoiTruong.Common", "QuanLyMoiTruong.Common\QuanLyMoiTruong.Common.csproj", "{890216FA-82E9-4B06-87F4-BC171B34AF23}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuanLyMoiTruong.WebApp", "QuanLyMoiTruong.WebApp\QuanLyMoiTruong.WebApp.csproj", "{60700FAC-8538-4495-9214-CAD63F1135E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{890216FA-82E9-4B06-87F4-BC171B34AF23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{890216FA-82E9-4B06-87F4-BC171B34AF23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{890216FA-82E9-4B06-87F4-BC171B34AF23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60700FAC-8538-4495-9214-CAD63F1135E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60700FAC-8538-4495-9214-CAD63F1135E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60700FAC-8538-4495-9214-CAD63F1135E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60700FAC-8538-4495-9214-CAD63F1135E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

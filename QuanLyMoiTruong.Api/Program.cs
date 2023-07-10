@@ -7,6 +7,8 @@ using QuanLyMoiTruong.Data.EF;
 using QuanLyMoiTruong.Data.Entities;
 using QuanLyMoiTruong.UnitOfWork;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +29,41 @@ builder.Configuration.GetConnectionString("DefaultConnection"))).AddUnitOfWork<Q
 builder.Services.AddControllers()
             .AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
 
-// Add services to the container.
+string issuer = builder.Configuration.GetValue<string>("Tokens:Issuer");
+string signingKey = builder.Configuration.GetValue<string>("Tokens:Key");
+byte[] signingKeyBytes = System.Text.Encoding.UTF8.GetBytes(signingKey);
+
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidIssuer = issuer,
+        ValidateAudience = true,
+        ValidAudience = issuer,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ClockSkew = System.TimeSpan.Zero,
+        IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
+    };
+});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+    builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 builder.Services.AddControllersWithViews();
 
 
@@ -45,10 +81,15 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseAuthentication();
 app.UseRouting();
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true) // allow any origin
+    .AllowCredentials()); // allow credentials
 if (!Directory.Exists(Path.Combine(builder.Environment.ContentRootPath, "UploadFile")))
 {
     Directory.CreateDirectory(Path.Combine(builder.Environment.ContentRootPath, "UploadFile"));

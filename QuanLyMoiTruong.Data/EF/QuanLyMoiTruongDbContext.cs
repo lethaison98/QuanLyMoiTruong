@@ -84,8 +84,6 @@ namespace QuanLyMoiTruong.Data.EF
                         entry.Entity.NguoiTao = userName + " - " + fullName;
                         entry.Entity.IdNguoiTao = userId;
                         entry.Entity.NgayTao = DateTime.Now;
-                        entry.Entity.NguoiCapNhat = userName + " - " + fullName;
-                        entry.Entity.NgayCapNhat = DateTime.Now;
                         break;
                     case EntityState.Modified:
                         entry.Entity.NguoiCapNhat = userName + " - " + fullName;
