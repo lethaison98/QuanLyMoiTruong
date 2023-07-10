@@ -168,7 +168,7 @@ namespace QuanLyMoiTruong.UnitOfWork
         public virtual IPagedList<TEntity> GetPagedList(Expression<Func<TEntity, bool>> predicate = null,
                                                 Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                                                 Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-                                                int pageIndex = 0,
+                                                int pageIndex = 1,
                                                 int pageSize = 20,
                                                 bool disableTracking = true,
                                                 bool ignoreQueryFilters = false)
@@ -223,7 +223,7 @@ namespace QuanLyMoiTruong.UnitOfWork
         public virtual Task<IPagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> predicate = null,
                                                            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                                                            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-                                                           int pageIndex = 0,
+                                                           int pageIndex = 1,
                                                            int pageSize = 20,
                                                            bool disableTracking = true,
                                                            CancellationToken cancellationToken = default(CancellationToken),
@@ -253,11 +253,11 @@ namespace QuanLyMoiTruong.UnitOfWork
 
             if (orderBy != null)
             {
-                return orderBy(query).ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
+                return orderBy(query).ToPagedListAsync(pageIndex, pageSize, 1, cancellationToken);
             }
             else
             {
-                return query.ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
+                return query.ToPagedListAsync(pageIndex, pageSize, 1, cancellationToken);
             }
         }
 
@@ -278,7 +278,7 @@ namespace QuanLyMoiTruong.UnitOfWork
                                                          Expression<Func<TEntity, bool>> predicate = null,
                                                          Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                                                          Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-                                                         int pageIndex = 0,
+                                                         int pageIndex = 1,
                                                          int pageSize = 20,
                                                          bool disableTracking = true,
                                                          bool ignoreQueryFilters = false)
@@ -336,7 +336,7 @@ namespace QuanLyMoiTruong.UnitOfWork
                                                                     Expression<Func<TEntity, bool>> predicate = null,
                                                                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                                                                     Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-                                                                    int pageIndex = 0,
+                                                                    int pageIndex = 1,
                                                                     int pageSize = 20,
                                                                     bool disableTracking = true,
                                                                     CancellationToken cancellationToken = default(CancellationToken),
@@ -367,11 +367,11 @@ namespace QuanLyMoiTruong.UnitOfWork
 
             if (orderBy != null)
             {
-                return orderBy(query).Select(selector).ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
+                return orderBy(query).Select(selector).ToPagedListAsync(pageIndex, pageSize, 1, cancellationToken);
             }
             else
             {
-                return query.Select(selector).ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
+                return query.Select(selector).ToPagedListAsync(pageIndex, pageSize, 1, cancellationToken);
             }
         }
 

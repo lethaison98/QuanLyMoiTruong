@@ -38,7 +38,7 @@ namespace QuanLyMoiTruong.Application.Services
 
         public async Task<ApiResult<IList<KhuCongNghiep>>> GetAll()
         {
-            var result =  await _unitOfWork.GetRepository<KhuCongNghiep>().GetAllAsync(predicate: x => x.IsDeleted);
+            var result =  await _unitOfWork.GetRepository<KhuCongNghiep>().GetAllAsync(predicate: x => !x.IsDeleted);
             return new ApiSuccessResult<IList<KhuCongNghiep>>() { Data = result };
         }
 

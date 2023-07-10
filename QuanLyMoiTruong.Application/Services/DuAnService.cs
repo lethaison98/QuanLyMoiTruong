@@ -39,7 +39,7 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<IList<DuAnViewModel>>> GetAll()
         {
             var result = new List<DuAnViewModel>();
-            var entities =  await _unitOfWork.GetRepository<DuAn>().GetAllAsync(predicate: x => x.IsDeleted);
+            var entities =  await _unitOfWork.GetRepository<DuAn>().GetAllAsync(predicate: x => !x.IsDeleted);
             result = entities.Select(MapEntityToViewModel).ToList();
             return new ApiSuccessResult<IList<DuAnViewModel>>() { Data = result };
         }

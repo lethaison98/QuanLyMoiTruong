@@ -39,7 +39,7 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<IList<BaoCaoBaoVeMoiTruongKCNViewModel>>> GetAll()
         {
             var result = new List<BaoCaoBaoVeMoiTruongKCNViewModel>();
-            var entities =  await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruongKCN>().GetAllAsync(predicate: x => x.IsDeleted);
+            var entities =  await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruongKCN>().GetAllAsync(predicate: x => !x.IsDeleted);
             result = entities.Select(MapEntityToViewModel).ToList();
             return new ApiSuccessResult<IList<BaoCaoBaoVeMoiTruongKCNViewModel>>() { Data = result };
         }
