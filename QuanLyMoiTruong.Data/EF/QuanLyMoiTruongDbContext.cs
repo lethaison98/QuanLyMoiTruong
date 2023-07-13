@@ -62,7 +62,7 @@ namespace QuanLyMoiTruong.Data.EF
 
         public DbSet<DuAn> DuAn { get; set; }
         public DbSet<KhuCongNghiep> KhuCongNghiep { get; set; }
-        public DbSet<Files> File { get; set; }
+        public DbSet<Files> Files { get; set; }
         public DbSet<FileTaiLieu> FileTaiLieu { get; set; }
         public DbSet<BaoCaoBaoVeMoiTruongHangNam> BaoCaoBaoVeMoiTruongHangNam { get; set; }
         public DbSet<GiayPhepMoiTruong> GiayPhepMoiTruong { get; set; }

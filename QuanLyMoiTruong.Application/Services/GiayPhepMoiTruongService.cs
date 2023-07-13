@@ -10,6 +10,8 @@ using System.Reflection.Metadata;
 using QuanLyMoiTruong.Application.Requests;
 using System.Linq.Expressions;
 using QuanLyMoiTruong.Common.Expressions;
+using QuanLyMoiTruong.Application.Request;
+using QuanLyMoiTruong.Common.Enums;
 
 namespace QuanLyMoiTruong.Application.Services
 {
@@ -17,17 +19,20 @@ namespace QuanLyMoiTruong.Application.Services
     public class GiayPhepMoiTruongService : IGiayPhepMoiTruongService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public GiayPhepMoiTruongService(IUnitOfWork unitOfWork)
+        private readonly IFileTaiLieuService _fileTaiLieuService;
+        public GiayPhepMoiTruongService(IUnitOfWork unitOfWork, IFileTaiLieuService fileTaiLieuService)
         {
-            _unitOfWork= unitOfWork;
+            _unitOfWork = unitOfWork;
+            _fileTaiLieuService = fileTaiLieuService;
         }
 
         public async Task<ApiResult<bool>> Delete(int id)
         {
             var entity =  await _unitOfWork.GetRepository<GiayPhepMoiTruong>().FindAsync(id);
-            if (entity == null)
+            if (entity != null)
             {
                 entity.IsDeleted= true;
+                await _unitOfWork.SaveChangesAsync();
                 return new ApiSuccessResult<bool>() {};
             }
             else
@@ -58,13 +63,20 @@ namespace QuanLyMoiTruong.Application.Services
             entity = MapViewModelToEntity(obj);
             await _unitOfWork.GetRepository<GiayPhepMoiTruong>().InsertAsync(entity);
             await _unitOfWork.SaveChangesAsync();
+
+            var fileTaiLieuRequest = new FileTaiLieuRequest();
+            fileTaiLieuRequest.IdTaiLieu = entity.IdGiayPhepMoiTruong;
+            fileTaiLieuRequest.NhomTaiLieu = NhomTaiLieuEnum.GiayPhepMoiTruong.ToString();
+            fileTaiLieuRequest.FileTaiLieu = obj.FileTaiLieu;
+            await _fileTaiLieuService.UpdateAll(fileTaiLieuRequest);
+
             return new ApiSuccessResult<GiayPhepMoiTruong>() { Data = entity };
         }
 
         public async Task<ApiResult<bool>> Remove(int id)
         {
             var entity = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().FindAsync(id);
-            if (entity == null)
+            if (entity != null)
             {
                 _unitOfWork.GetRepository<GiayPhepMoiTruong>().Remove(id);
                 return new ApiSuccessResult<bool>() { };
@@ -83,7 +95,7 @@ namespace QuanLyMoiTruong.Application.Services
                 var fullTextSearch = request.FullTextSearch.ToLowerInvariant();
                 filter = filter.And(p => p.SoGiayPhep.ToLower().Contains(fullTextSearch)|| p.TenGiayPhep.ToLower().Contains(fullTextSearch));
             }
-
+            filter = filter.And(p => !p.IsDeleted);
             var data = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetPagedListAsync(predicate: filter, pageIndex: request.PageIndex, pageSize: request.PageSize);
             data.Items.Select(MapEntityToViewModel);
             var result = new PagedList<GiayPhepMoiTruongViewModel>();
@@ -116,10 +128,10 @@ namespace QuanLyMoiTruong.Application.Services
         {
             var entity = new GiayPhepMoiTruong();
             entity.IdGiayPhepMoiTruong = viewModel.IdGiayPhepMoiTruong;
-            entity.TenGiayPhep = entity.TenGiayPhep;
-            entity.SoGiayPhep = entity.SoGiayPhep;
+            entity.TenGiayPhep = viewModel.TenGiayPhep;
+            entity.SoGiayPhep = viewModel.SoGiayPhep;
             entity.NgayCap = string.IsNullOrEmpty(viewModel.NgayCap) ? null : DateTime.Parse(viewModel.NgayCap, new CultureInfo("vi-VN"));
-            entity.IdDuAn = entity.IdDuAn;
+            entity.IdDuAn = viewModel.IdDuAn;
             return entity;
         }
     }

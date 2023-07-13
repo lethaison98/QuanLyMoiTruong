@@ -25,9 +25,10 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<bool>> Delete(int id)
         {
             var entity =  await _unitOfWork.GetRepository<ViecLam>().FindAsync(id);
-            if (entity == null)
+            if (entity != null)
             {
                 entity.IsDeleted= true;
+                await _unitOfWork.SaveChangesAsync();
                 return new ApiSuccessResult<bool>() {};
             }
             else
@@ -64,7 +65,7 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<bool>> Remove(int id)
         {
             var entity = await _unitOfWork.GetRepository<ViecLam>().FindAsync(id);
-            if (entity == null)
+            if (entity != null)
             {
                 _unitOfWork.GetRepository<ViecLam>().Remove(id);
                 return new ApiSuccessResult<bool>() { };
@@ -85,7 +86,7 @@ namespace QuanLyMoiTruong.Application.Services
                                       || p.MoTa.ToLower().Contains(fullTextSearch)
                                       || p.ThongTinNhaTuyenDung.ToLower().Contains(fullTextSearch));
             }
-
+            filter = filter.And(p => !p.IsDeleted);
             var data = await _unitOfWork.GetRepository<ViecLam>().GetPagedListAsync(predicate: filter, orderBy: o => o.OrderBy(s => s.MucUuTien).ThenBy(s => s.XepHang).ThenByDescending(s=> s.NgayPheDuyet), pageIndex: request.PageIndex, pageSize: request.PageSize);
             data.Items.Select(MapEntityToViewModel);
             var result = new PagedList<ViecLamViewModel>();

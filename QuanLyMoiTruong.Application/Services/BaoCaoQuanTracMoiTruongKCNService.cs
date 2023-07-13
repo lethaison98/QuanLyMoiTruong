@@ -25,9 +25,10 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<bool>> Delete(int id)
         {
             var entity =  await _unitOfWork.GetRepository<BaoCaoQuanTracMoiTruongKCN>().FindAsync(id);
-            if (entity == null)
+            if (entity != null)
             {
                 entity.IsDeleted= true;
+                await _unitOfWork.SaveChangesAsync();
                 return new ApiSuccessResult<bool>() {};
             }
             else
@@ -64,7 +65,7 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<bool>> Remove(int id)
         {
             var entity = await _unitOfWork.GetRepository<BaoCaoQuanTracMoiTruongKCN>().FindAsync(id);
-            if (entity == null)
+            if (entity != null)
             {
                 _unitOfWork.GetRepository<BaoCaoQuanTracMoiTruongKCN>().Remove(id);
                 return new ApiSuccessResult<bool>() { };
@@ -83,7 +84,7 @@ namespace QuanLyMoiTruong.Application.Services
                 var fullTextSearch = request.FullTextSearch.ToLowerInvariant();
                 filter = filter.And(p => p.TenBaoCao.ToLower().Contains(fullTextSearch));
             }
-
+            filter = filter.And(p => !p.IsDeleted);
             var data = await _unitOfWork.GetRepository<BaoCaoQuanTracMoiTruongKCN>().GetPagedListAsync(predicate: filter, pageIndex: request.PageIndex, pageSize: request.PageSize);
             data.Items.Select(MapEntityToViewModel);
             var result = new PagedList<BaoCaoQuanTracMoiTruongKCNViewModel>();
@@ -114,9 +115,9 @@ namespace QuanLyMoiTruong.Application.Services
         {
             var entity = new BaoCaoQuanTracMoiTruongKCN();
             entity.IdBaoCaoQuanTracMoiTruongKCN = viewModel.IdBaoCaoQuanTracMoiTruongKCN;
-            entity.TenBaoCao = entity.TenBaoCao;
+            entity.TenBaoCao = viewModel.TenBaoCao;
             entity.NgayBaoCao = string.IsNullOrEmpty(viewModel.NgayBaoCao) ? null : DateTime.Parse(viewModel.NgayBaoCao, new CultureInfo("vi-VN"));
-            entity.IdKhuCongNghiep = entity.IdKhuCongNghiep;
+            entity.IdKhuCongNghiep = viewModel.IdKhuCongNghiep;
 
             return entity;
         }

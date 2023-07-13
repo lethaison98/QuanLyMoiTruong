@@ -25,9 +25,10 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<bool>> Delete(int id)
         {
             var entity =  await _unitOfWork.GetRepository<DuAn>().FindAsync(id);
-            if (entity == null)
+            if (entity != null)
             {
                 entity.IsDeleted= true;
+                await _unitOfWork.SaveChangesAsync();
                 return new ApiSuccessResult<bool>() {};
             }
             else
@@ -64,7 +65,7 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<bool>> Remove(int id)
         {
             var entity = await _unitOfWork.GetRepository<DuAn>().FindAsync(id);
-            if (entity == null)
+            if (entity != null)
             {
                 _unitOfWork.GetRepository<DuAn>().Remove(id);
                 return new ApiSuccessResult<bool>() { };
@@ -85,7 +86,7 @@ namespace QuanLyMoiTruong.Application.Services
                                       || p.TenDuAn.ToLower().Contains(fullTextSearch)
                                       || p.GiayPhepDKKD.ToLower().Contains(fullTextSearch));
             }
-
+            filter = filter.And(p => !p.IsDeleted);
             var data = await _unitOfWork.GetRepository<DuAn>().GetPagedListAsync(predicate: filter, pageIndex: request.PageIndex, pageSize: request.PageSize);
             data.Items.Select(MapEntityToViewModel);
             var result = new PagedList<DuAnViewModel>();
