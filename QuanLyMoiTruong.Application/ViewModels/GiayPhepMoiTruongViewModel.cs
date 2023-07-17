@@ -15,5 +15,6 @@ namespace QuanLyMoiTruong.Data.Entities
         public string SoGiayPhep { get; set; }
         public string TenGiayPhep { get; set; }
         public string NgayCap { get; set; }
+        public List<FileTaiLieu> FileTaiLieu { get; set; } = new List<FileTaiLieu>();
     }
 }

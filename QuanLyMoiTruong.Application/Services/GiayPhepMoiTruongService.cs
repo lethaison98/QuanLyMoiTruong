@@ -61,7 +61,7 @@ namespace QuanLyMoiTruong.Application.Services
         {
             var entity = new GiayPhepMoiTruong();
             entity = MapViewModelToEntity(obj);
-            await _unitOfWork.GetRepository<GiayPhepMoiTruong>().InsertAsync(entity);
+            _unitOfWork.GetRepository<GiayPhepMoiTruong>().Update(entity);
             await _unitOfWork.SaveChangesAsync();
 
             var fileTaiLieuRequest = new FileTaiLieuRequest();
@@ -109,10 +109,37 @@ namespace QuanLyMoiTruong.Application.Services
             return new ApiSuccessResult<IPagedList<GiayPhepMoiTruongViewModel>>() { Data = result };
         }
 
-        public Task<ApiResult<GiayPhepMoiTruong>> Update(GiayPhepMoiTruongViewModel obj)
+        public async Task<ApiResult<GiayPhepMoiTruong>> Update(GiayPhepMoiTruongViewModel obj)
         {
-            throw new NotImplementedException();
+            var entity = new GiayPhepMoiTruong();
+            entity = MapViewModelToEntity(obj);
+             _unitOfWork.GetRepository<GiayPhepMoiTruong>().Update(entity);
+            await _unitOfWork.SaveChangesAsync();
+
+            var fileTaiLieuRequest = new FileTaiLieuRequest();
+            fileTaiLieuRequest.IdTaiLieu = entity.IdGiayPhepMoiTruong;
+            fileTaiLieuRequest.NhomTaiLieu = NhomTaiLieuEnum.GiayPhepMoiTruong.ToString();
+            fileTaiLieuRequest.FileTaiLieu = obj.FileTaiLieu;
+            await _fileTaiLieuService.UpdateAll(fileTaiLieuRequest);
+
+            return new ApiSuccessResult<GiayPhepMoiTruong>() { Data = entity };
         }
+        public async Task<ApiResult<IList<GiayPhepMoiTruongViewModel>>> GetListGiayPhepMoiTruongByDuAn(int idDuAn)
+        {
+            var result = new List<GiayPhepMoiTruongViewModel>();
+            var entities = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted && x.IdDuAn == idDuAn, include: x=> x.Include(x=> x.DuAn));
+            result = entities.Select(MapEntityToViewModel).ToList();
+            foreach(var item in result)
+            {
+                var dsFile = await _fileTaiLieuService.GetByTaiLieu(item.IdGiayPhepMoiTruong, NhomTaiLieuEnum.GiayPhepMoiTruong.ToString());
+                if (dsFile.Success)
+                {
+                    item.FileTaiLieu = dsFile.Data.ToList();
+                }
+            }
+            return new ApiSuccessResult<IList<GiayPhepMoiTruongViewModel>>() { Data = result };
+        }
+
         public GiayPhepMoiTruongViewModel MapEntityToViewModel(GiayPhepMoiTruong entity) {
             var result = new GiayPhepMoiTruongViewModel();
             result.IdGiayPhepMoiTruong = entity.IdGiayPhepMoiTruong;

@@ -14,6 +14,7 @@ namespace QuanLyMoiTruong.Application.Interfaces
     {
         public Task<ApiResult<int>> Insert(int idFile, int idTaiLieu, string nhomTaiLieu, string loaiFileTaiLieu);
         public Task<ApiResult<int>> UpdateAll(FileTaiLieuRequest request);
+        public Task<ApiResult<IList<FileTaiLieu>>> GetByTaiLieu(int idTaiLieu, string nhomTaiLieu);
         public Task<ApiResult<bool>> Delete(int idFileTaiLieu);
         //public Task<ApiResult<QuyetDinhMienTienThueDatViewModel>> GetById(int idQuyetDinhMienTienThueDat);
         //public Task<ApiResult<List<QuyetDinhMienTienThueDatViewModel>>> GetAll(int? idDoanhNghiep);

@@ -12,8 +12,8 @@ namespace QuanLyMoiTruong.Application.ViewModel
         public int IdFileTaiLieu { get; set; }
         public int IdFile { get; set; }
         public int IdTaiLieu { get; set; }
-        public int IdLoaiTaiLieu { get; set; }
-        public string LoaiTaiLieu { get; set; }
+        public string NhomTaiLieu { get; set; }
+        public string LoaiFileTaiLieu { get; set; }
         public int TrangThai { get; set; }
         public string LinkFile { get; set; }
         public string TenFile { get; set; }
