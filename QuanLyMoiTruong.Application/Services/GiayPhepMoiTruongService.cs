@@ -52,8 +52,13 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<GiayPhepMoiTruongViewModel>> GetById(int id)
         {
             var result = new GiayPhepMoiTruongViewModel();
-            var data = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().FindAsync(id);
+            var data = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetFirstOrDefaultAsync(predicate: x => x.IdGiayPhepMoiTruong == id, include: x=> x.Include(y=> y.DuAn));
             result = MapEntityToViewModel(data);
+            var dsFile = await _fileTaiLieuService.GetByTaiLieu(data.IdGiayPhepMoiTruong, NhomTaiLieuEnum.GiayPhepMoiTruong.ToString());
+            if (dsFile.Success)
+            {
+                result.FileTaiLieu = dsFile.Data.ToList();
+            }
             return new ApiSuccessResult<GiayPhepMoiTruongViewModel>() {Data = result };
         }
 

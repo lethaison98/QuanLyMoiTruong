@@ -86,7 +86,7 @@ namespace QuanLyMoiTruong.Application.Services
         }
         public async Task<ApiResult<IList<FileTaiLieu>>> GetByTaiLieu(int idTaiLieu, string nhomTaiLieu)
         {
-            var result = await _unitOfWork.GetRepository<FileTaiLieu>().GetAllAsync(predicate: x => !x.IsDeleted && x.IdTaiLieu == idTaiLieu && x.NhomTaiLieu == nhomTaiLieu );
+            var result = await _unitOfWork.GetRepository<FileTaiLieu>().GetAllAsync(predicate: x => !x.IsDeleted && x.IdTaiLieu == idTaiLieu && x.NhomTaiLieu == nhomTaiLieu, include: x => x.Include(x => x.File));
             return new ApiSuccessResult<IList<FileTaiLieu>>() { Data = result };
         }
         public async Task<ApiResult<bool>> Delete(int idFileTaiLieu)
