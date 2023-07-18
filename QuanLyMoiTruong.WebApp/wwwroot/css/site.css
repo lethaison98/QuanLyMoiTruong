@@ -1,0 +1,45 @@
+﻿html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.has-success .form-control { border-color: #35a989; -webkit-box-shadow: none; box-shadow: none; }
+
+.has-warning .form-control { border-color: #f5b225; -webkit-box-shadow: none; box-shadow: none; }
+
+.has-error .form-control { border-color: #ed3e3a; -webkit-box-shadow: none; box-shadow: none; }
+
+    .has-error .form-control .k-dropdown-wrap.k-state-default { border-color: #ed3e3a; }
+
+.has-error { position: relative; }
+
+    .has-error:before { content: 'Bạn chưa nhập dữ liệu!'; position: absolute; z-index: 1; top: 0px; left: 0px; width: 100%; height: 100%; background: #fff; text-align: center; color: #ed3e3a; line-height: 30px; animation-name: example; animation-duration: 2s; min-width: 155px; border: 1px solid #ed3e3a; }
+
+    .has-error.is-select:before { content: 'Bạn chưa chọn dữ liệu!'; }
+
+    .has-error.see:before { display: none; }
+
+    .has-error > .inputfile + label, .has-error .input-group-addon, .has-error .select-group-addon, .has-error .combotreedrop { border-color: #ed3e3a !important; }
+
+    .has-error > .dropdown-checkboxes { border: 1px solid #ed3e3a !important; }
+
+
+    .has-error .input-group-addon svg { color: #ed3e3a !important; }
+
+    .has-error .select-group-addon svg { color: #ed3e3a !important; }
+
+.required { color: #ed3e3a; margin: 0 5px; font-size: 14px; }

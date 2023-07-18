@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pagetitle">
+    <h1>Dự án</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Dự án</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Tìm kiếm</h5>
+                <div class="row">
+                    <div class="col-6 col-md-6 col-lg-6 col-xl-8">
+                        <div class="ttls-cm">
+                            <div class="ttls-content">
+                                <input type="text" id="txtKEY_WORD" placeholder="Nhập từ khóa tìm kiếm..." class="form-control" data-name="Keyword" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6 col-lg-6 col-xl-4">
+                        <div class="ttls-cm">
+                            <div class="ttls-content">
+                                <a class="btn btn-sm btn-primary waves-effect waves-light" id="btnSearchDuAn">
+                                    <span>Tra cứu</span>
+                                    <i class="fas fa-search"></i>
+                                </a>
+                                <a class="btn btn-sm btn-success waves-effect waves-light" id="btnCreateDuAn">
+                                    <span>Tạo mới</span>
+                                    <i class="fas fa-plus"></i>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Danh sách dự án</h4>
+                <table id="tbl" class="table table-bordered table-hover table-striped" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%">STT</th>
+                            <th>Tên dự án</th>
+                            <th>Tên doanh nghiệp</th>
+                            <th>Số giấy phép ĐKKD</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@await Html.PartialAsync("_PopupFormDuAn.cshtml")
+@section Scripts{
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
+<script src="~/js/controller/DuAnControl.js"></script>
+}

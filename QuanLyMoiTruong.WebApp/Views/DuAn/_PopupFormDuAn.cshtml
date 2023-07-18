@@ -1,0 +1,64 @@
+﻿@{
+    Layout = null;
+}
+<div class="modal fade" id="popup-form-du-an" data-backdrop="static" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm mới dự án</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="min-height:600px">
+                <div class="row g-3" id="FormDuAn">
+                    <div class="col-6">
+                        <label>Tên dự án<span class="required">*</span></label>
+                        <div class="ttls-content">
+                            <input type="hidden" class="form-control" data-name="IdDuAn" value="0">
+                            <input type="text" class="form-control" data-name="TenDuAn" required>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label>Tên doanh nghiệp<span class="required">*</span></label>
+                        <div class="ttls-content">
+                            <input type="text" class="form-control" required="" data-name="TenDoanhNghiep">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label>Địa chỉ<span class="required">*</span></label>
+                        <div class="ttls-content">
+                            <input type="text" class="form-control" required="" data-name="DiaChi">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label>Giấy phép Đăng ký kinh doanh<span class="required">*</span></label>
+                        <div class="ttls-content">
+                            <input type="text" class="form-control" required="" data-name="GiayPhepDKKD">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label>Tên người đại diện</label>
+                        <div class="ttls-content">
+                            <input type="text" class="form-control" data-name="TenNguoiDaiDien">
+                        </div>
+                    </div>
+                    
+                    <div class="col-6">
+                        <label>Tên người phụ trách TNMT</label>
+                        <div class="ttls-content">
+                            <input type="text" class="form-control" data-name="TenNguoiPhuTrachTNMT">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label>Ghi chú</label>
+                        <textarea rows="4" type="text" class="form-control" data-name="GhiChu"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveDuAn">Lưu</button>
+                <button type="button" class="btn btn-danger" id="btnCloseDuAn" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
