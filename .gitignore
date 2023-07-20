@@ -387,10 +387,8 @@ FodyWeavers.xsd
 .idea/
 *.sln.iml
 Logs
-UploadFiles
-/OrimxAPI/OrimxAPI/OrimxAPI.WebApi/UploadFile/2021/6
 
-QuanLyThueDat.WebApp/bin
-QuanLyThueDat.API/bin
-QuanLyThueDat.API/UploadFile
+QuanLyMoiTruong.WebApp/bin
+QuanLyMoiTruong.API/bin
+QuanLyMoiTruong.API/UploadFile
 

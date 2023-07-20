@@ -5,7 +5,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <div class="pagetitle">
-    <h1>Dashboard</h1>
+    <h1>Chi tiết dự án</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
@@ -34,75 +34,28 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Giấy phép môi trường <button type="button" class="btn btn-success offset-md-9" id="btnCreateGiayPhepMoiTruong"><i class="fas fa-plus"></i> Tạo mới</button></h5> 
-                                <div class="accordion" id="accordionExample">
-@*                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingOne">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                06/GPMT-TNMT ngày 17/04/2023
-                                            </button>
-                                        </h2>
-                                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body">
-                                                <strong>1. Đơn xin cấp phép</strong>
-                                                <p>
-                                                    <a>Đơn xin cấp.docx</a>
-                                                </p>
-                                                <hr>
-                                                <strong>2. Báo cáo đề xuất cấp phép</strong>
-                                                <p class="text-muted">
-                                                    Bao-cao.pdf
-                                                </p>
-                                                <hr>
-                                                <strong>3. Dự án đầu tư</strong>
-                                                <p class="text-muted">
-                                                    <span class="tag tag-danger">UI Design tài liệu.xlsx</span>
-                                                </p>
-                                                <hr>
-                                                <strong>4. Tài liệu khác</strong>
-                                                <p class="row">
-                                                    <span class="col-sm-3"><i class="fa fa-file-pdf">&nbsp;</i>10. CV thông báo kết quả thẩm định HAL 14.3.2023</span>
-                                                    <span class="col-sm-3"><i class="fas fa-file-word">&nbsp;</i>8. Bản nhân xét _ Huệ.docx</span>
-                                                    <span class="col-sm-3"><i class="fas fa-file-pdf">&nbsp;</i>Tài liệu thứ 3 công ty abcs.docx</span>
-                                                    <span class="col-sm-3"><i class="fa fa-file-excel">&nbsp;</i>PHP</span>
-                                                    <span class="col-sm-3"><i class="fas fa-file-excel">&nbsp;</i>Node.js</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingTwo">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                Accordion Item #2
-                                            </button>
-                                        </h2>
-                                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body">
-                                                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingThree">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                Accordion Item #3
-                                            </button>
-                                        </h2>
-                                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body">
-                                                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                            </div>
-                                        </div>
-                                    </div>*@
-                                </div><!-- End Default Accordion Example -->
-
+                                <h5 class="card-title">Giấy phép môi trường <button type="button" class="btn btn-success offset-md-3" style="float:right" id="btnCreateGiayPhepMoiTruong"><i class="fas fa-plus"></i> Tạo mới</button></h5>
+                                <div class="accordion" id="accordion-GiayPhepMoiTruong">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="bordered-BaoCaoBaoVeMoiTruongHangNam" role="tabpanel" aria-labelledby="BaoCaoBaoVeMoiTruongHangNam-tab">
-                Nesciunt totam et. Consequuntur magnam aliquid eos nulla dolor iure eos quia. Accusantium distinctio omnis et atque fugiat. Itaque doloremque aliquid sint quasi quia distinctio similique. Voluptate nihil recusandae mollitia dolores. Ut laboriosam voluptatum dicta.
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    Báo cáo bảo vệ môi trường hàng năm <button type="button" class="btn btn-success offset-md-3" style="float:right" id="btnCreateBaoCaoBaoVeMoiTruongHangNam"><i class="fas fa-plus"></i> Tạo mới</button>
+                                </h5>
+                                <div class="accordion" id="accordion-BaoCaoBaoVeMoiTruongHangNam">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade" id="bordered-HoSoKiemTraXuPhat" role="tabpanel" aria-labelledby="HoSoKiemTraXuPhat-tab">
                 Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
@@ -113,6 +66,9 @@
 </div>
 
 @await Html.PartialAsync("_PopupFormGiayPhepMoiTruong.cshtml")
+@await Html.PartialAsync("_PopupFormBaoCaoBaoVeMoiTruongHangNam.cshtml")
 @section Scripts{
 <script src="~/js/controller/DuAnChiTietControl.js"></script>
+<script src="~/js/controller/GiayPhepMoiTruongControl.js"></script>
+<script src="~/js/controller/BaoCaoBaoVeMoiTruongHangNamControl.js"></script>
 }

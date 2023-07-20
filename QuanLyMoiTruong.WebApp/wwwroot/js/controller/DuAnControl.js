@@ -133,7 +133,7 @@ DuAnControl = {
                     if (res.Success) {
                         toastr.success('Thực hiện thành công', 'Thông báo')
                         self.table.ajax.reload(null, false);
-                        ResetForm("FormDuAn");
+                        ResetForm("#FormDuAn");
                         $('#btnCloseDuAn').trigger('click');
                     }
                     else {
@@ -150,6 +150,7 @@ DuAnControl = {
         var self = this;
         self.LoadDatatable();
         $('#btnCreateDuAn').off('click').on('click', function () {
+            ResetPopup("#FormDuAn");
             $('#popup-form-du-an').modal('show');
             $("#popup-form-du-an .btn-primary").off('click').on('click', function () {
                 console.log(1);
