@@ -10,6 +10,8 @@ using System.Reflection.Metadata;
 using QuanLyMoiTruong.Application.Requests;
 using System.Linq.Expressions;
 using QuanLyMoiTruong.Common.Expressions;
+using QuanLyMoiTruong.Common.Enums;
+using QuanLyMoiTruong.Application.Request;
 
 namespace QuanLyMoiTruong.Application.Services
 {
@@ -17,9 +19,12 @@ namespace QuanLyMoiTruong.Application.Services
     public class BaoCaoBaoVeMoiTruongHangNamService : IBaoCaoBaoVeMoiTruongHangNamService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public BaoCaoBaoVeMoiTruongHangNamService(IUnitOfWork unitOfWork)
+        private readonly IFileTaiLieuService _fileTaiLieuService;
+
+        public BaoCaoBaoVeMoiTruongHangNamService(IUnitOfWork unitOfWork, IFileTaiLieuService fileTaiLieuService)
         {
             _unitOfWork= unitOfWork;
+            _fileTaiLieuService= fileTaiLieuService;
         }
 
         public async Task<ApiResult<bool>> Delete(int id)
@@ -48,8 +53,13 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<BaoCaoBaoVeMoiTruongHangNamViewModel>> GetById(int id)
         {
             var result = new BaoCaoBaoVeMoiTruongHangNamViewModel();
-            var data = await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruongHangNam>().FindAsync(id);
+            var data = await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruongHangNam>().GetFirstOrDefaultAsync(predicate: x => x.IdBaoCaoBaoVeMoiTruongHangNam == id, include: x => x.Include(y => y.DuAn));
             result = MapEntityToViewModel(data);
+            var dsFile = await _fileTaiLieuService.GetByTaiLieu(data.IdBaoCaoBaoVeMoiTruongHangNam, NhomTaiLieuEnum.BaoCaoBaoVeMoiTruongHangNam.ToString());
+            if (dsFile.Success)
+            {
+                result.FileTaiLieu = dsFile.Data.ToList();
+            }
             return new ApiSuccessResult<BaoCaoBaoVeMoiTruongHangNamViewModel>() {Data = result };
         }
 
@@ -59,6 +69,12 @@ namespace QuanLyMoiTruong.Application.Services
             entity = MapViewModelToEntity(obj);
             await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruongHangNam>().InsertAsync(entity);
             await _unitOfWork.SaveChangesAsync();
+
+            var fileTaiLieuRequest = new FileTaiLieuRequest();
+            fileTaiLieuRequest.IdTaiLieu = entity.IdBaoCaoBaoVeMoiTruongHangNam;
+            fileTaiLieuRequest.NhomTaiLieu = NhomTaiLieuEnum.BaoCaoBaoVeMoiTruongHangNam.ToString();
+            fileTaiLieuRequest.FileTaiLieu = obj.FileTaiLieu;
+            await _fileTaiLieuService.UpdateAll(fileTaiLieuRequest);
             return new ApiSuccessResult<BaoCaoBaoVeMoiTruongHangNam>() { Data = entity };
         }
 
@@ -98,10 +114,37 @@ namespace QuanLyMoiTruong.Application.Services
             return new ApiSuccessResult<IPagedList<BaoCaoBaoVeMoiTruongHangNamViewModel>>() { Data = result };
         }
 
-        public Task<ApiResult<BaoCaoBaoVeMoiTruongHangNam>> Update(BaoCaoBaoVeMoiTruongHangNamViewModel obj)
+        public async Task<ApiResult<BaoCaoBaoVeMoiTruongHangNam>> Update(BaoCaoBaoVeMoiTruongHangNamViewModel obj)
         {
-            throw new NotImplementedException();
+            var entity = new BaoCaoBaoVeMoiTruongHangNam();
+            entity = MapViewModelToEntity(obj);
+            _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruongHangNam>().Update(entity);
+            await _unitOfWork.SaveChangesAsync();
+
+            var fileTaiLieuRequest = new FileTaiLieuRequest();
+            fileTaiLieuRequest.IdTaiLieu = entity.IdBaoCaoBaoVeMoiTruongHangNam;
+            fileTaiLieuRequest.NhomTaiLieu = NhomTaiLieuEnum.BaoCaoBaoVeMoiTruongHangNam.ToString();
+            fileTaiLieuRequest.FileTaiLieu = obj.FileTaiLieu;
+            await _fileTaiLieuService.UpdateAll(fileTaiLieuRequest);
+
+            return new ApiSuccessResult<BaoCaoBaoVeMoiTruongHangNam>() { Data = entity };
         }
+        public async Task<ApiResult<IList<BaoCaoBaoVeMoiTruongHangNamViewModel>>> GetListBaoCaoBaoVeMoiTruongHangNamByDuAn(int idDuAn)
+        {
+            var result = new List<BaoCaoBaoVeMoiTruongHangNamViewModel>();
+            var entities = await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruongHangNam>().GetAllAsync(predicate: x => !x.IsDeleted && x.IdDuAn == idDuAn, include: x => x.Include(x => x.DuAn));
+            result = entities.Select(MapEntityToViewModel).ToList();
+            foreach (var item in result)
+            {
+                var dsFile = await _fileTaiLieuService.GetByTaiLieu(item.IdBaoCaoBaoVeMoiTruongHangNam, NhomTaiLieuEnum.BaoCaoBaoVeMoiTruongHangNam.ToString());
+                if (dsFile.Success)
+                {
+                    item.FileTaiLieu = dsFile.Data.ToList();
+                }
+            }
+            return new ApiSuccessResult<IList<BaoCaoBaoVeMoiTruongHangNamViewModel>>() { Data = result };
+        }
+
         public BaoCaoBaoVeMoiTruongHangNamViewModel MapEntityToViewModel(BaoCaoBaoVeMoiTruongHangNam entity) {
             var result = new BaoCaoBaoVeMoiTruongHangNamViewModel();
             result.IdBaoCaoBaoVeMoiTruongHangNam = entity.IdBaoCaoBaoVeMoiTruongHangNam;

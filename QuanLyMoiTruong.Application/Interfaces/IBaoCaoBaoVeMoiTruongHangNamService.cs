@@ -11,5 +11,7 @@ namespace QuanLyMoiTruong.Application.Interfaces
 {
     public interface IBaoCaoBaoVeMoiTruongHangNamService:IBaseService<BaoCaoBaoVeMoiTruongHangNam, int, BaoCaoBaoVeMoiTruongHangNamViewModel, BaoCaoBaoVeMoiTruongHangNamRequest>
     {
+        public Task<ApiResult<IList<BaoCaoBaoVeMoiTruongHangNamViewModel>>> GetListBaoCaoBaoVeMoiTruongHangNamByDuAn(int idDuAn);
+      
     }
 }

@@ -1,0 +1,82 @@
+﻿@{
+    Layout = null;
+}
+<div class="modal fade" id="popup-form-bao-cao-bao-ve-moi-truong-hang-nam" data-backdrop="static" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm mới báo cáo bảo vệ môi trường hàng năm</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="min-height:600px">
+                <div class="row g-3" id="FormBaoCaoBaoVeMoiTruongHangNam">
+                    <div class="col-6">
+                        <label>Tên báo cáo<span class="required">*</span></label>
+                        <div class="ttls-content">
+                            <input type="hidden" class="form-control" data-name="IdBaoCaoBaoVeMoiTruongHangNam" value="0">
+                            <input type="text" class="form-control" data-name="TenBaoCao" required>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label>Ngày báo cáo<span class="required">*</span></label>
+                        <div class="ttls-content">
+                            <input type="text" class="form-control" required="" data-name="NgayBaoCao">
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 mt-2" id="FormFileBaoCaoBaoVeMoiTruongHangNam">
+                    <div class="col-12">
+                        <label>Tài liệu</label>
+                        <table id="tblFileBaoCaoBaoVeMoiTruongHangNam" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">File tài liệu</th>
+                                    <th scope="col">Loại tài liệu</th>
+                                    <th scope="col">Mô tả</th>
+                                    <th scope="col">Xóa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="8">
+                                        <input type="file" id="fileBaoCaoBaoVeMoiTruongHangNam" multiple style="display:none">
+                                        <button type="button" id="btnSelectFileBaoCaoBaoVeMoiTruongHangNam" class="btn btn-warning">Đính kèm tài liệu</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <table style="display:none">
+                    <tbody id="tempChiTietQuyetDinhThueDat">
+                        <tr>
+                            <td style="width:10%">
+                            </td>
+                            <td style="width:20%">
+                                <input type="hidden" class="form-control" data-name="IdFileTaiLieu" value="0">
+                                <select class="form-control px-0" style="width: 100%;" data-name="LoaiFileTaiLieu">
+                                    <option value="BaoCaoBaoVeMoiTruongHangNam">Báo cáo bảo vệ môi trường hàng năm</option>
+                                    <option value="TaiLieuKhac">Tài liệu khác</option>
+                                </select>
+                            </td>
+                            <td style="width:20%">
+                                <input type="text" class="form-control px-1" data-name="MoTa" required>
+                            </td>
+                            <td style="width:5%">
+                                <a href="javascript:;" class="tr-remove text-danger"><i class="fas fa-trash-alt" title="Xóa"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveDuAn">Lưu</button>
+                <button type="button" class="btn btn-danger" id="btnCloseDuAn" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
