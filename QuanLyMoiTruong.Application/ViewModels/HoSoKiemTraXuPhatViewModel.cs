@@ -13,5 +13,6 @@ namespace QuanLyMoiTruong.Data.Entities
         public string TenDuAn { get; set; }  
         public string TenDoanhNghiep { get; set; }  
         public string TenHoSo { get; set; }
+        public List<FileTaiLieu> FileTaiLieu { get; set; } = new List<FileTaiLieu>();
     }
 }

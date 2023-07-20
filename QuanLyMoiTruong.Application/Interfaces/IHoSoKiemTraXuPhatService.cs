@@ -11,5 +11,7 @@ namespace QuanLyMoiTruong.Application.Interfaces
 {
     public interface IHoSoKiemTraXuPhatService:IBaseService<HoSoKiemTraXuPhat, int, HoSoKiemTraXuPhatViewModel, HoSoKiemTraXuPhatRequest>
     {
+        public Task<ApiResult<IList<HoSoKiemTraXuPhatViewModel>>> GetListHoSoKiemTraXuPhatByDuAn(int idDuAn);
+      
     }
 }
