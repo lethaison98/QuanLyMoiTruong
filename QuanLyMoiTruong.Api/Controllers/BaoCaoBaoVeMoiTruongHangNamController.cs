@@ -13,15 +13,15 @@ namespace QuanLyMoiTruong.Api.Controllers
     [Authorize]
     public class BaoCaoBaoVeMoiTruongHangNamController : Controller
     {
-        private readonly IBaoCaoBaoVeMoiTruongHangNamService _BaoCaoBaoVeMoiTruongHangNamService;
-        public BaoCaoBaoVeMoiTruongHangNamController(IBaoCaoBaoVeMoiTruongHangNamService BaoCaoBaoVeMoiTruongHangNamService)
+        private readonly IBaoCaoBaoVeMoiTruongHangNamService _baoCaoBaoVeMoiTruongHangNamService;
+        public BaoCaoBaoVeMoiTruongHangNamController(IBaoCaoBaoVeMoiTruongHangNamService baoCaoBaoVeMoiTruongHangNamService)
         {
-            _BaoCaoBaoVeMoiTruongHangNamService = BaoCaoBaoVeMoiTruongHangNamService;
+            _baoCaoBaoVeMoiTruongHangNamService = baoCaoBaoVeMoiTruongHangNamService;
         }
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _BaoCaoBaoVeMoiTruongHangNamService.GetAll();
+            var result = await _baoCaoBaoVeMoiTruongHangNamService.GetAll();
             return Ok(result);
         }
         [HttpPost("InsertUpdate")]
@@ -29,12 +29,12 @@ namespace QuanLyMoiTruong.Api.Controllers
         {
             if(req.IdBaoCaoBaoVeMoiTruongHangNam == 0)
             {
-                var result = await _BaoCaoBaoVeMoiTruongHangNamService.Insert(req);
+                var result = await _baoCaoBaoVeMoiTruongHangNamService.Insert(req);
                 return Ok(result);
             }
             else
             {
-                var result = await _BaoCaoBaoVeMoiTruongHangNamService.Update(req);
+                var result = await _baoCaoBaoVeMoiTruongHangNamService.Update(req);
                 return Ok(result);
             }
         }
@@ -47,26 +47,26 @@ namespace QuanLyMoiTruong.Api.Controllers
                 PageIndex = pageNumber,
                 PageSize = pageSize
             };
-            var result = await _BaoCaoBaoVeMoiTruongHangNamService.GetAllPaging(param);
+            var result = await _baoCaoBaoVeMoiTruongHangNamService.GetAllPaging(param);
             return Ok(result);
         }
         [HttpDelete("Delete")]
         public async Task<IActionResult> Delete(int idBaoCaoBaoVeMoiTruongHangNam)
         {
-            var result = await _BaoCaoBaoVeMoiTruongHangNamService.Delete(idBaoCaoBaoVeMoiTruongHangNam);
+            var result = await _baoCaoBaoVeMoiTruongHangNamService.Delete(idBaoCaoBaoVeMoiTruongHangNam);
             return Ok(result);
         }
 
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int idBaoCaoBaoVeMoiTruongHangNam)
         {
-            var result = await _BaoCaoBaoVeMoiTruongHangNamService.GetById(idBaoCaoBaoVeMoiTruongHangNam);
+            var result = await _baoCaoBaoVeMoiTruongHangNamService.GetById(idBaoCaoBaoVeMoiTruongHangNam);
             return Ok(result);
         }
         [HttpGet("GetBaoCaoBVMTHangNamByDuAn")]
         public async Task<IActionResult> GetGPMTByDuAn(int idDuAn)
         {
-            var result = await _BaoCaoBaoVeMoiTruongHangNamService.GetListBaoCaoBaoVeMoiTruongHangNamByDuAn(idDuAn);
+            var result = await _baoCaoBaoVeMoiTruongHangNamService.GetListBaoCaoBaoVeMoiTruongHangNamByDuAn(idDuAn);
             return Ok(result);
         }
     }

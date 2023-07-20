@@ -1231,3 +1231,4 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+.backgroundImg { background-image: url('/img/bg-login2.jpg'); position: absolute; background-size: cover; height: 100%; width: 100%; top: 0; }
