@@ -151,6 +151,7 @@ GiayPhepMoiTruongControl = {
         var $popup = $('#popup-form-giay-phep-moi-truong');
         $popup.find('.modal-header').text("Thêm mới giấy phép môi trường");
         ResetForm("#FormGiayPhepMoiTruong");
+        $popup.find('[data-name="IdGiayPhepMoiTruong"]').val(0);
         $popup.find("#tblFileGiayPhepMoiTruong tbody").html('');
     },
     LoadChiTietGiayPhepMoiTruong: function () {

@@ -55,7 +55,7 @@ BaoCaoBaoVeMoiTruongHangNamControl = {
                                         </h2>
                                         <div id="collapse_` + value.IdBaoCaoBaoVeMoiTruongHangNam + `" class="accordion-collapse collapse show" aria-labelledby="heading_` + value.IdBaoCaoBaoVeMoiTruongHangNam + `" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
-                                                <strong>1. Giấy phép môi trường</strong>
+                                                <strong>1. Báo cáo công tác bảo vệ môi trường hàng năm</strong>
                                                 <p class="row">`+ html1 + `
                                                 </p>
                                                 <hr>
@@ -125,6 +125,7 @@ BaoCaoBaoVeMoiTruongHangNamControl = {
     ResetPopup: function () {
         var $popup = $('#popup-form-bao-cao-bao-ve-moi-truong-hang-nam');
         ResetForm("#FormBaoCaoBaoVeMoiTruongHangNam");
+        $popup.find('[data-name="IdBaoCaoBaoVeMoiTruongHangNam"]').val(0);
         $popup.find("#tblFileBaoCaoBaoVeMoiTruongHangNam tbody").html('');
     },
     LoadChiTietBaoCaoBaoVeMoiTruongHangNam: function () {

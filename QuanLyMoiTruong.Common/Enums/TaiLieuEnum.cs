@@ -33,7 +33,7 @@ namespace QuanLyMoiTruong.Common.Enums
         KhuCongNghiep = 2,
         [Display(Name = "Báo cáo bảo vệ môi trường Khu công nghiệp")]
         BaoCaoBaoVeMoiTruongKCN = 21,
-        [Display(Name = "Báo cáo quan trắc môi trường định kỳ")]
-        BaoCaoQuanTracMoiTruongDinhKy = 22,
+        [Display(Name = "Báo cáo quan trắc môi trường định kỳ khu công nghiệp")]
+        BaoCaoQuanTracMoiTruongKCN = 22,
     }
 }

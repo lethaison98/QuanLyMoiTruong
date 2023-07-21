@@ -1,0 +1,35 @@
+﻿@{
+    Layout = null;
+}
+<div class="modal fade" id="popup-form-khu-cong-nghiep" data-backdrop="static" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm mới khu công nghiệp</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="min-height:100px">
+                <div class="row g-3" id="FormKhuCongNghiep">
+                    <div class="col-6">
+                        <label>Tên khu công nghiệp<span class="required">*</span></label>
+                        <div class="ttls-content">
+                            <input type="hidden" class="form-control" data-name="IdKhuCongNghiep" value= "0">
+                            <input type="text" class="form-control" data-name="TenKhuCongNghiep" required>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label>Ghi chú</label>
+                        <div class="ttls-content">
+                            <input type="text" class="form-control" data-name="GhiChu">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveKhuCongNghiep">Lưu</button>
+                <button type="button" class="btn btn-danger" id="btnCloseKhuCongNghiep" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>

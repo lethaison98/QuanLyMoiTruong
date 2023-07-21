@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<div class="pagetitle">
+    <h1>Chi tiết khu công nghiệp</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/KhuCongNghiep">Khu công nghiệp</a></li>
+            <li class="breadcrumb-item active">Chi tiết khu công nghiệp</li>
+        </ol>
+    </nav>
+</div>
+<div class="card">
+    <div class="card-body">
+        <!-- Bordered Tabs -->
+        <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="BaoCaoBaoVeMoiTruongKCN-tab" data-bs-toggle="tab" data-bs-target="#bordered-BaoCaoBaoVeMoiTruongKCN" type="button" role="tab" aria-controls="BaoCaoBaoVeMoiTruongKCN" aria-selected="true">Báo cáo công tác BVMT khu công nghiệp</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="HoSoKiemTraXuPhat-tab" data-bs-toggle="tab" data-bs-target="#bordered-HoSoKiemTraXuPhat" type="button" role="tab" aria-controls="HoSoKiemTraXuPhat" aria-selected="false">Báo cáo quan trắc môi trường định kỳ, liên tục hàng năm</button>
+            </li>
+        </ul>
+        <div class="tab-content pt-2" id="borderedTabContent">
+            <div class="tab-pane fade active show" id="bordered-BaoCaoBaoVeMoiTruongKCN" role="tabpanel" aria-labelledby="BaoCaoBaoVeMoiTruongKCN-tab">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    Báo cáo bảo vệ môi trường khu công nghiệp <button type="button" class="btn btn-success offset-md-3" style="float:right" id="btnCreateBaoCaoBaoVeMoiTruongKCN"><i class="fas fa-plus"></i> Tạo mới</button>
+                                </h5>
+                                <div class="accordion" id="accordion-BaoCaoBaoVeMoiTruongKCN">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="bordered-HoSoKiemTraXuPhat" role="tabpanel" aria-labelledby="HoSoKiemTraXuPhat-tab">
+                Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+            </div>
+        </div><!-- End Bordered Tabs -->
+
+    </div>
+</div>
+
+@await Html.PartialAsync("_PopupFormGiayPhepMoiTruong.cshtml")
+@await Html.PartialAsync("_PopupFormBaoCaoBaoVeMoiTruongKCN.cshtml")
+@section Scripts{
+<script src="~/js/controller/KhuCongNghiepChiTietControl.js"></script>
+<script src="~/js/controller/GiayPhepMoiTruongControl.js"></script>
+<script src="~/js/controller/BaoCaoBaoVeMoiTruongKCNControl.js"></script>
+}
