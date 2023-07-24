@@ -22,8 +22,8 @@ KhuCongNghiepChiTietControl = {
         $('#BaoCaoBaoVeMoiTruongKCN-tab').off('click').on('click', function () {
             BaoCaoBaoVeMoiTruongKCNControl.RegisterEventsBaoCaoBaoVeMoiTruongKCN();
         });
-        $('#GiayPhepMoiTruong-tab').off('click').on('click', function () {
-            GiayPhepMoiTruongControl.RegisterEventsGiayPhepMoiTruong();
+        $('#BaoCaoQuanTracMoiTruongKCN-tab').off('click').on('click', function () {
+            BaoCaoQuanTracMoiTruongKCNControl.RegisterEventsBaoCaoQuanTracMoiTruongKCN();
         });
     },
 }
