@@ -33,6 +33,7 @@ namespace QuanLyMoiTruong.Api.Extensions
             services.AddScoped<IDiaPhuongService, DiaPhuongService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IFileTaiLieuService, FileTaiLieuService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IDuAnService, DuAnService>();
             services.AddScoped<IBaoCaoBaoVeMoiTruongHangNamService, BaoCaoBaoVeMoiTruongHangNamService>();
