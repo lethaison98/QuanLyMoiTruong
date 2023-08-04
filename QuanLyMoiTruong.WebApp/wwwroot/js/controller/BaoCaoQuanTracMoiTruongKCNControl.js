@@ -139,36 +139,39 @@ BaoCaoQuanTracMoiTruongKCNControl = {
     },
     InsertUpdateBaoCaoQuanTracMoiTruongKCN: function () {
         var self = this;
-        var $popup = $('#popup-form-bao-cao-quan-trac-moi-truong-kcn');
-        var data = LoadFormData("#FormBaoCaoQuanTracMoiTruongKCN");
-        var listFileTaiLieu = [];
-        $('#tblFileBaoCaoQuanTracMoiTruongKCN tbody tr').each(function () {
-            var $tr = $(this);
-            listFileTaiLieu.push({
-                IdFileTaiLieu: $(this).find("td:first a").attr("data-id"),
-                IdFile: $(this).find("td:first a").attr("data-idfile"),
-                NhomTaiLieu: "BaoCaoQuanTracMoiTruongKCN",
-                LoaiFileTaiLieu: $(this).find('[data-name="LoaiFileTaiLieu"] option:selected').val(),
-                MoTa: $(this).find('[data-name="MoTa"]').val(),
-            })
+        var isValidate = ValidateForm($('#FormBaoCaoQuanTracMoiTruongKCN'));
+        if (isValidate) {
+            var $popup = $('#popup-form-bao-cao-quan-trac-moi-truong-kcn');
+            var data = LoadFormData("#FormBaoCaoQuanTracMoiTruongKCN");
+            var listFileTaiLieu = [];
+            $('#tblFileBaoCaoQuanTracMoiTruongKCN tbody tr').each(function () {
+                var $tr = $(this);
+                listFileTaiLieu.push({
+                    IdFileTaiLieu: $(this).find("td:first a").attr("data-id"),
+                    IdFile: $(this).find("td:first a").attr("data-idfile"),
+                    NhomTaiLieu: "BaoCaoQuanTracMoiTruongKCN",
+                    LoaiFileTaiLieu: $(this).find('[data-name="LoaiFileTaiLieu"] option:selected').val(),
+                    MoTa: $(this).find('[data-name="MoTa"]').val(),
+                })
 
-        });
-        data.IdKhuCongNghiep = id;
-        data.FileTaiLieu = listFileTaiLieu;
-        Post({
-            "url": localStorage.getItem("API_URL") + "/BaoCaoQuanTracMoiTruongKCN/InsertUpdate",
-            "data": data,
-            callback: function (res) {
-                if (res.Success) {
-                    toastr.success('Thực hiện thành công', 'Thông báo')
-                    self.LoadDanhSachBaoCaoQuanTracMoiTruongKCN();
-                    $popup.find('.btn-danger').trigger('click');
+            });
+            data.IdKhuCongNghiep = id;
+            data.FileTaiLieu = listFileTaiLieu;
+            Post({
+                "url": localStorage.getItem("API_URL") + "/BaoCaoQuanTracMoiTruongKCN/InsertUpdate",
+                "data": data,
+                callback: function (res) {
+                    if (res.Success) {
+                        toastr.success('Thực hiện thành công', 'Thông báo')
+                        self.LoadDanhSachBaoCaoQuanTracMoiTruongKCN();
+                        $popup.find('.btn-danger').trigger('click');
+                    }
+                    else {
+                        toastr.error(res.Message, 'Có lỗi xảy ra')
+                    }
                 }
-                else {
-                    toastr.error(res.Message, 'Có lỗi xảy ra')
-                }
-            }
-        });
+            });
+        }
     },
 
     RegisterEventsBaoCaoQuanTracMoiTruongKCN: function () {

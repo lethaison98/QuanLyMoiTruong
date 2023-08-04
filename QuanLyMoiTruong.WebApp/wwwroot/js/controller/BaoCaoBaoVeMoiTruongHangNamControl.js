@@ -139,36 +139,39 @@ BaoCaoBaoVeMoiTruongHangNamControl = {
     },
     InsertUpdateBaoCaoBaoVeMoiTruongHangNam: function () {
         var self = this;
-        var $popup = $('#popup-form-bao-cao-bao-ve-moi-truong-hang-nam');
-        var data = LoadFormData("#FormBaoCaoBaoVeMoiTruongHangNam");
-        var listFileTaiLieu = [];
-        $('#tblFileBaoCaoBaoVeMoiTruongHangNam tbody tr').each(function () {
-            var $tr = $(this);
-            listFileTaiLieu.push({
-                IdFileTaiLieu: $(this).find("td:first a").attr("data-id"),
-                IdFile: $(this).find("td:first a").attr("data-idfile"),
-                NhomTaiLieu: "BaoCaoBaoVeMoiTruongHangNam",
-                LoaiFileTaiLieu: $(this).find('[data-name="LoaiFileTaiLieu"] option:selected').val(),
-                MoTa: $(this).find('[data-name="MoTa"]').val(),
-            })
+        var isValidate = ValidateForm($('#FormBaoCaoBaoVeMoiTruongHangNam'));
+        if (isValidate) {
+            var $popup = $('#popup-form-bao-cao-bao-ve-moi-truong-hang-nam');
+            var data = LoadFormData("#FormBaoCaoBaoVeMoiTruongHangNam");
+            var listFileTaiLieu = [];
+            $('#tblFileBaoCaoBaoVeMoiTruongHangNam tbody tr').each(function () {
+                var $tr = $(this);
+                listFileTaiLieu.push({
+                    IdFileTaiLieu: $(this).find("td:first a").attr("data-id"),
+                    IdFile: $(this).find("td:first a").attr("data-idfile"),
+                    NhomTaiLieu: "BaoCaoBaoVeMoiTruongHangNam",
+                    LoaiFileTaiLieu: $(this).find('[data-name="LoaiFileTaiLieu"] option:selected').val(),
+                    MoTa: $(this).find('[data-name="MoTa"]').val(),
+                })
 
-        });
-        data.IdDuAn = id;
-        data.FileTaiLieu = listFileTaiLieu;
-        Post({
-            "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruongHangNam/InsertUpdate",
-            "data": data,
-            callback: function (res) {
-                if (res.Success) {
-                    toastr.success('Thực hiện thành công', 'Thông báo')
-                    self.LoadDanhSachBaoCaoBaoVeMoiTruongHangNam();
-                    $popup.find('.btn-danger').trigger('click');
+            });
+            data.IdDuAn = id;
+            data.FileTaiLieu = listFileTaiLieu;
+            Post({
+                "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruongHangNam/InsertUpdate",
+                "data": data,
+                callback: function (res) {
+                    if (res.Success) {
+                        toastr.success('Thực hiện thành công', 'Thông báo')
+                        self.LoadDanhSachBaoCaoBaoVeMoiTruongHangNam();
+                        $popup.find('.btn-danger').trigger('click');
+                    }
+                    else {
+                        toastr.error(res.Message, 'Có lỗi xảy ra')
+                    }
                 }
-                else {
-                    toastr.error(res.Message, 'Có lỗi xảy ra')
-                }
-            }
-        });
+            });
+        }
     },
 
     RegisterEventsBaoCaoBaoVeMoiTruongHangNam: function () {
