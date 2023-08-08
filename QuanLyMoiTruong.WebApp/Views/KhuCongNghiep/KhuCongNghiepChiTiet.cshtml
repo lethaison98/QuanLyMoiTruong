@@ -22,7 +22,7 @@
                 <button class="nav-link active" id="BaoCaoBaoVeMoiTruongKCN-tab" data-bs-toggle="tab" data-bs-target="#bordered-BaoCaoBaoVeMoiTruongKCN" type="button" role="tab" aria-controls="BaoCaoBaoVeMoiTruongKCN" aria-selected="true">Báo cáo công tác BVMT khu công nghiệp</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="BaoCaoQuanTracMoiTruongKCN-tab" data-bs-toggle="tab" data-bs-target="#bordered-BaoCaoQuanTracMoiTruongKCN" type="button" role="tab" aria-controls="BaoCaoQuanTracMoiTruongKCN" aria-selected="false">Báo cáo quan trắc môi trường định kỳ, liên tục hàng năm</button>
+                <button class="nav-link" id="BaoCaoQuanTracMoiTruong-tab" data-bs-toggle="tab" data-bs-target="#bordered-BaoCaoQuanTracMoiTruong" type="button" role="tab" aria-controls="BaoCaoQuanTracMoiTruong" aria-selected="false">Báo cáo quan trắc môi trường định kỳ, liên tục hàng năm</button>
             </li>
         </ul>
         <div class="tab-content pt-2" id="borderedTabContent">
@@ -41,15 +41,15 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="bordered-BaoCaoQuanTracMoiTruongKCN" role="tabpanel" aria-labelledby="BaoCaoQuanTracMoiTruongKCN-tab">
+            <div class="tab-pane fade" id="bordered-BaoCaoQuanTracMoiTruong" role="tabpanel" aria-labelledby="BaoCaoQuanTracMoiTruong-tab">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    Báo cáo quan trắc môi trường khu công nghiệp <button type="button" class="btn btn-success offset-md-3" style="float:right" id="btnCreateBaoCaoQuanTracMoiTruongKCN"><i class="fas fa-plus"></i> Tạo mới</button>
+                                    Báo cáo quan trắc môi trường khu công nghiệp <button type="button" class="btn btn-success offset-md-3" style="float:right" id="btnCreateBaoCaoQuanTracMoiTruong"><i class="fas fa-plus"></i> Tạo mới</button>
                                 </h5>
-                                <div class="accordion" id="accordion-BaoCaoQuanTracMoiTruongKCN">
+                                <div class="accordion" id="accordion-BaoCaoQuanTracMoiTruong">
                                 </div>
                             </div>
                         </div>
@@ -61,10 +61,10 @@
     </div>
 </div>
 
-@await Html.PartialAsync("_PopupFormBaoCaoQuanTracMoiTruongKCN.cshtml")
+@await Html.PartialAsync("_PopupFormBaoCaoQuanTracMoiTruong.cshtml")
 @await Html.PartialAsync("_PopupFormBaoCaoBaoVeMoiTruongKCN.cshtml")
 @section Scripts{
 <script src="~/js/controller/KhuCongNghiepChiTietControl.js"></script>
 <script src="~/js/controller/BaoCaoBaoVeMoiTruongKCNControl.js"></script>
-<script src="~/js/controller/BaoCaoQuanTracMoiTruongKCNControl.js"></script>
+<script src="~/js/controller/BaoCaoQuanTracMoiTruongControl.js"></script>
 }

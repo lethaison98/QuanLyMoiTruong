@@ -12,7 +12,7 @@ using QuanLyMoiTruong.Data.EF;
 namespace QuanLyMoiTruong.Data.Migrations
 {
     [DbContext(typeof(QuanLyMoiTruongDbContext))]
-    [Migration("20230717083205_Initial1")]
+    [Migration("20230808041026_Initial1")]
     partial class Initial1
     {
         /// <inheritdoc />
@@ -236,15 +236,18 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.ToTable("AppUser", (string)null);
                 });
 
-            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.BaoCaoBaoVeMoiTruongHangNam", b =>
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.BaoCaoBaoVeMoiTruong", b =>
                 {
-                    b.Property<int>("IdBaoCaoBaoVeMoiTruongHangNam")
+                    b.Property<int>("IdBaoCaoBaoVeMoiTruong")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdBaoCaoBaoVeMoiTruongHangNam"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdBaoCaoBaoVeMoiTruong"));
 
-                    b.Property<int>("IdDuAn")
+                    b.Property<int?>("IdDuAn")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdKhuCongNghiep")
                         .HasColumnType("int");
 
                     b.Property<string>("IdNguoiCapNhat")
@@ -274,22 +277,30 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Property<string>("TenBaoCao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdBaoCaoBaoVeMoiTruongHangNam");
+                    b.HasKey("IdBaoCaoBaoVeMoiTruong");
 
                     b.HasIndex("IdDuAn");
 
-                    b.ToTable("BaoCaoBaoVeMoiTruongHangNam", (string)null);
+                    b.HasIndex("IdKhuCongNghiep");
+
+                    b.ToTable("BaoCaoBaoVeMoiTruong", (string)null);
                 });
 
-            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.BaoCaoBaoVeMoiTruongKCN", b =>
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.BaoCaoQuanTracMoiTruong", b =>
                 {
-                    b.Property<int>("IdBaoCaoBaoVeMoiTruongKCN")
+                    b.Property<int>("IdBaoCaoQuanTracMoiTruong")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdBaoCaoBaoVeMoiTruongKCN"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdBaoCaoQuanTracMoiTruong"));
 
-                    b.Property<int>("IdKhuCongNghiep")
+                    b.Property<int?>("DuAnIdDuAn")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdDuAn")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdKhuCongNghiep")
                         .HasColumnType("int");
 
                     b.Property<string>("IdNguoiCapNhat")
@@ -319,56 +330,13 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Property<string>("TenBaoCao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdBaoCaoBaoVeMoiTruongKCN");
+                    b.HasKey("IdBaoCaoQuanTracMoiTruong");
+
+                    b.HasIndex("DuAnIdDuAn");
 
                     b.HasIndex("IdKhuCongNghiep");
 
-                    b.ToTable("BaoCaoBaoVeMoiTruongKCN", (string)null);
-                });
-
-            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.BaoCaoQuanTracMoiTruongKCN", b =>
-                {
-                    b.Property<int>("IdBaoCaoQuanTracMoiTruongKCN")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdBaoCaoQuanTracMoiTruongKCN"));
-
-                    b.Property<int>("IdKhuCongNghiep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("IdNguoiCapNhat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IdNguoiTao")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("NgayBaoCao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("NgayCapNhat")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("NgayTao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NguoiCapNhat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NguoiTao")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenBaoCao")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdBaoCaoQuanTracMoiTruongKCN");
-
-                    b.HasIndex("IdKhuCongNghiep");
-
-                    b.ToTable("BaoCaoQuanTracMoiTruongKCN", (string)null);
+                    b.ToTable("BaoCaoQuanTracMoiTruong", (string)null);
                 });
 
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.DuAn", b =>
@@ -388,6 +356,9 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Property<string>("GiayPhepDKKD")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("IdKhuCongNghiep")
+                        .HasColumnType("int");
+
                     b.Property<string>("IdNguoiCapNhat")
                         .HasColumnType("nvarchar(max)");
 
@@ -396,6 +367,9 @@ namespace QuanLyMoiTruong.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("KhuCongNghiepIdKhuCongNghiep")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("NgayCapNhat")
                         .HasColumnType("datetime2");
@@ -421,7 +395,12 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Property<string>("TenNguoiPhuTrachTNMT")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("ThuocKhuKinhTe")
+                        .HasColumnType("bit");
+
                     b.HasKey("IdDuAn");
+
+                    b.HasIndex("KhuCongNghiepIdKhuCongNghiep");
 
                     b.ToTable("DuAn", (string)null);
                 });
@@ -529,7 +508,13 @@ namespace QuanLyMoiTruong.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdGiayPhepMoiTruong"));
 
-                    b.Property<int>("IdDuAn")
+                    b.Property<string>("CoQuanCap")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IdDuAn")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdKhuCongNghiep")
                         .HasColumnType("int");
 
                     b.Property<string>("IdNguoiCapNhat")
@@ -566,6 +551,8 @@ namespace QuanLyMoiTruong.Data.Migrations
 
                     b.HasIndex("IdDuAn");
 
+                    b.HasIndex("IdKhuCongNghiep");
+
                     b.ToTable("GiayPhepMoiTruong", (string)null);
                 });
 
@@ -577,7 +564,10 @@ namespace QuanLyMoiTruong.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdHoSoKiemTraXuPhat"));
 
-                    b.Property<int>("IdDuAn")
+                    b.Property<int?>("IdDuAn")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdKhuCongNghiep")
                         .HasColumnType("int");
 
                     b.Property<string>("IdNguoiCapNhat")
@@ -608,6 +598,8 @@ namespace QuanLyMoiTruong.Data.Migrations
 
                     b.HasIndex("IdDuAn");
 
+                    b.HasIndex("IdKhuCongNghiep");
+
                     b.ToTable("HoSoKiemTraXuPhat", (string)null);
                 });
 
@@ -618,6 +610,9 @@ namespace QuanLyMoiTruong.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdKhuCongNghiep"));
+
+                    b.Property<string>("DiaDiem")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GhiChu")
                         .HasColumnType("nvarchar(max)");
@@ -643,8 +638,14 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Property<string>("NguoiTao")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TenChuDauTu")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TenKhuCongNghiep")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ThuocKhuKinhTe")
+                        .HasColumnType("bit");
 
                     b.HasKey("IdKhuCongNghiep");
 
@@ -826,37 +827,41 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.ToTable("ViecLam", (string)null);
                 });
 
-            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.BaoCaoBaoVeMoiTruongHangNam", b =>
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.BaoCaoBaoVeMoiTruong", b =>
                 {
                     b.HasOne("QuanLyMoiTruong.Data.Entities.DuAn", "DuAn")
-                        .WithMany("DsBaoCaoBaoVeMoiTruongHangNam")
-                        .HasForeignKey("IdDuAn")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("DsBaoCaoBaoVeMoiTruong")
+                        .HasForeignKey("IdDuAn");
+
+                    b.HasOne("QuanLyMoiTruong.Data.Entities.KhuCongNghiep", "KhuCongNghiep")
+                        .WithMany("DsBaoCaoBaoVeMoiTruong")
+                        .HasForeignKey("IdKhuCongNghiep");
 
                     b.Navigation("DuAn");
-                });
-
-            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.BaoCaoBaoVeMoiTruongKCN", b =>
-                {
-                    b.HasOne("QuanLyMoiTruong.Data.Entities.KhuCongNghiep", "KhuCongNghiep")
-                        .WithMany("DsBaoCaoBaoVeMoiTruongKCN")
-                        .HasForeignKey("IdKhuCongNghiep")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("KhuCongNghiep");
                 });
 
-            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.BaoCaoQuanTracMoiTruongKCN", b =>
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.BaoCaoQuanTracMoiTruong", b =>
                 {
+                    b.HasOne("QuanLyMoiTruong.Data.Entities.DuAn", "DuAn")
+                        .WithMany()
+                        .HasForeignKey("DuAnIdDuAn");
+
                     b.HasOne("QuanLyMoiTruong.Data.Entities.KhuCongNghiep", "KhuCongNghiep")
-                        .WithMany("DsBaoCaoQuanTracMoiTruongKCN")
-                        .HasForeignKey("IdKhuCongNghiep")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("DsBaoCaoQuanTracMoiTruong")
+                        .HasForeignKey("IdKhuCongNghiep");
+
+                    b.Navigation("DuAn");
 
                     b.Navigation("KhuCongNghiep");
+                });
+
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.DuAn", b =>
+                {
+                    b.HasOne("QuanLyMoiTruong.Data.Entities.KhuCongNghiep", null)
+                        .WithMany("DsDuAn")
+                        .HasForeignKey("KhuCongNghiepIdKhuCongNghiep");
                 });
 
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.FileTaiLieu", b =>
@@ -874,22 +879,30 @@ namespace QuanLyMoiTruong.Data.Migrations
                 {
                     b.HasOne("QuanLyMoiTruong.Data.Entities.DuAn", "DuAn")
                         .WithMany("DsGiayPhepMoiTruong")
-                        .HasForeignKey("IdDuAn")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdDuAn");
+
+                    b.HasOne("QuanLyMoiTruong.Data.Entities.KhuCongNghiep", "KhuCongNghiep")
+                        .WithMany("DsGiayPhepMoiTruong")
+                        .HasForeignKey("IdKhuCongNghiep");
 
                     b.Navigation("DuAn");
+
+                    b.Navigation("KhuCongNghiep");
                 });
 
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.HoSoKiemTraXuPhat", b =>
                 {
                     b.HasOne("QuanLyMoiTruong.Data.Entities.DuAn", "DuAn")
                         .WithMany("DsHoSoKiemTraXuPhat")
-                        .HasForeignKey("IdDuAn")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdDuAn");
+
+                    b.HasOne("QuanLyMoiTruong.Data.Entities.KhuCongNghiep", "KhuCongNghiep")
+                        .WithMany("DsHoSoKiemTraXuPhat")
+                        .HasForeignKey("IdKhuCongNghiep");
 
                     b.Navigation("DuAn");
+
+                    b.Navigation("KhuCongNghiep");
                 });
 
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.PhuongXa", b =>
@@ -916,7 +929,7 @@ namespace QuanLyMoiTruong.Data.Migrations
 
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.DuAn", b =>
                 {
-                    b.Navigation("DsBaoCaoBaoVeMoiTruongHangNam");
+                    b.Navigation("DsBaoCaoBaoVeMoiTruong");
 
                     b.Navigation("DsGiayPhepMoiTruong");
 
@@ -930,9 +943,15 @@ namespace QuanLyMoiTruong.Data.Migrations
 
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.KhuCongNghiep", b =>
                 {
-                    b.Navigation("DsBaoCaoBaoVeMoiTruongKCN");
+                    b.Navigation("DsBaoCaoBaoVeMoiTruong");
 
-                    b.Navigation("DsBaoCaoQuanTracMoiTruongKCN");
+                    b.Navigation("DsBaoCaoQuanTracMoiTruong");
+
+                    b.Navigation("DsDuAn");
+
+                    b.Navigation("DsGiayPhepMoiTruong");
+
+                    b.Navigation("DsHoSoKiemTraXuPhat");
                 });
 
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.QuanHuyen", b =>

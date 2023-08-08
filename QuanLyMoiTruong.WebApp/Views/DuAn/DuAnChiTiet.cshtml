@@ -22,7 +22,7 @@
                 <button class="nav-link active" id="GiayPhepMoiTruong-tab" data-bs-toggle="tab" data-bs-target="#bordered-GiayPhepMoiTruong" type="button" role="tab" aria-controls="GiayPhepMoiTruong" aria-selected="false" tabindex="-1">Hồ sơ cấp Giấy phép môi trường</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="BaoCaoBaoVeMoiTruongHangNam-tab" data-bs-toggle="tab" data-bs-target="#bordered-BaoCaoBaoVeMoiTruongHangNam" type="button" role="tab" aria-controls="BaoCaoBaoVeMoiTruongHangNam" aria-selected="true">Báo cáo công tác BVMT hàng năm</button>
+                <button class="nav-link" id="BaoCaoBaoVeMoiTruong-tab" data-bs-toggle="tab" data-bs-target="#bordered-BaoCaoBaoVeMoiTruong" type="button" role="tab" aria-controls="BaoCaoBaoVeMoiTruong" aria-selected="true">Báo cáo công tác BVMT hàng năm</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="HoSoKiemTraXuPhat-tab" data-bs-toggle="tab" data-bs-target="#bordered-HoSoKiemTraXuPhat" type="button" role="tab" aria-controls="HoSoKiemTraXuPhat" aria-selected="false" tabindex="-1">Hồ sơ thanh, kiểm tra công tác bảo vệ môi trường</button>
@@ -42,15 +42,15 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="bordered-BaoCaoBaoVeMoiTruongHangNam" role="tabpanel" aria-labelledby="BaoCaoBaoVeMoiTruongHangNam-tab">
+            <div class="tab-pane fade" id="bordered-BaoCaoBaoVeMoiTruong" role="tabpanel" aria-labelledby="BaoCaoBaoVeMoiTruong-tab">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    Báo cáo bảo vệ môi trường hàng năm <button type="button" class="btn btn-success offset-md-3" style="float:right" id="btnCreateBaoCaoBaoVeMoiTruongHangNam"><i class="fas fa-plus"></i> Tạo mới</button>
+                                    Báo cáo bảo vệ môi trường hàng năm <button type="button" class="btn btn-success offset-md-3" style="float:right" id="btnCreateBaoCaoBaoVeMoiTruong"><i class="fas fa-plus"></i> Tạo mới</button>
                                 </h5>
-                                <div class="accordion" id="accordion-BaoCaoBaoVeMoiTruongHangNam">
+                                <div class="accordion" id="accordion-BaoCaoBaoVeMoiTruong">
                                 </div>
                             </div>
                         </div>
@@ -66,9 +66,9 @@
 </div>
 
 @await Html.PartialAsync("_PopupFormGiayPhepMoiTruong.cshtml")
-@await Html.PartialAsync("_PopupFormBaoCaoBaoVeMoiTruongHangNam.cshtml")
+@await Html.PartialAsync("_PopupFormBaoCaoBaoVeMoiTruong.cshtml")
 @section Scripts{
 <script src="~/js/controller/DuAnChiTietControl.js"></script>
 <script src="~/js/controller/GiayPhepMoiTruongControl.js"></script>
-<script src="~/js/controller/BaoCaoBaoVeMoiTruongHangNamControl.js"></script>
+<script src="~/js/controller/BaoCaoBaoVeMoiTruongControl.js"></script>
 }

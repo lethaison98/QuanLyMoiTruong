@@ -1,20 +1,20 @@
 ﻿@{
     Layout = null;
 }
-<div class="modal fade" id="popup-form-bao-cao-bao-ve-moi-truong-kcn" data-backdrop="static" role="dialog">
+<div class="modal fade" id="popup-form-bao-cao-bao-ve-moi-truong-hang-nam" data-backdrop="static" role="dialog">
     <div class="modal-dialog modal-xl">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Thêm mới báo cáo bảo vệ môi trường khu công nghiệp</h4>
+                <h4 class="modal-title">Thêm mới báo cáo bảo vệ môi trường hàng năm</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="min-height:600px">
-                <div class="row g-3" id="FormBaoCaoBaoVeMoiTruongKCN">
+                <div class="row g-3" id="FormBaoCaoBaoVeMoiTruong">
                     <div class="col-6">
                         <label>Tên báo cáo<span class="required">*</span></label>
                         <div class="ttls-content">
-                            <input type="hidden" class="form-control" data-name="IdBaoCaoBaoVeMoiTruongKCN" value="0">
+                            <input type="hidden" class="form-control" data-name="IdBaoCaoBaoVeMoiTruong" value="0">
                             <input type="text" class="form-control" data-name="TenBaoCao" required>
                         </div>
                     </div>
@@ -25,10 +25,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="row g-3 mt-2" id="FormFileBaoCaoBaoVeMoiTruongKCN">
+                <div class="row g-3 mt-2" id="FormFileBaoCaoBaoVeMoiTruong">
                     <div class="col-12">
                         <label>Tài liệu</label>
-                        <table id="tblFileBaoCaoBaoVeMoiTruongKCN" class="table table-bordered">
+                        <table id="tblFileBaoCaoBaoVeMoiTruong" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th scope="col">File tài liệu</th>
@@ -42,8 +42,8 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="8">
-                                        <input type="file" id="fileBaoCaoBaoVeMoiTruongKCN" multiple style="display:none">
-                                        <button type="button" id="btnSelectFileBaoCaoBaoVeMoiTruongKCN" class="btn btn-warning">Đính kèm tài liệu</button>
+                                        <input type="file" id="fileBaoCaoBaoVeMoiTruong" multiple style="display:none">
+                                        <button type="button" id="btnSelectFileBaoCaoBaoVeMoiTruong" class="btn btn-warning">Đính kèm tài liệu</button>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -59,7 +59,7 @@
                             <td style="width:20%">
                                 <input type="hidden" class="form-control" data-name="IdFileTaiLieu" value="0">
                                 <select class="form-control px-0" style="width: 100%;" data-name="LoaiFileTaiLieu">
-                                    <option value="BaoCaoBaoVeMoiTruongKCN">Báo cáo bảo vệ môi trường</option>
+                                    <option value="BaoCaoBaoVeMoiTruong">Báo cáo bảo vệ môi trường hàng năm</option>
                                     <option value="TaiLieuKhac">Tài liệu khác</option>
                                 </select>
                             </td>
@@ -74,8 +74,8 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnSave">Lưu</button>
-                <button type="button" class="btn btn-danger" id="btnClose" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="btnSaveDuAn">Lưu</button>
+                <button type="button" class="btn btn-danger" id="btnCloseDuAn" data-bs-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>

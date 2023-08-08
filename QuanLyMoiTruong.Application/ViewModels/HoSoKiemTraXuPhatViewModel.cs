@@ -9,9 +9,12 @@ namespace QuanLyMoiTruong.Data.Entities
     public class HoSoKiemTraXuPhatViewModel
     {
         public int IdHoSoKiemTraXuPhat { get; set; }
-        public int IdDuAn { get; set; }
-        public string TenDuAn { get; set; }  
-        public string TenDoanhNghiep { get; set; }  
+        public int? IdDuAn { get; set; }
+        public string TenDuAn { get; set; }
+        public string TenDoanhNghiep { get; set; }
+        public int? IdKhuCongNghiep { get; set; }
+        public string TenKhuCongNghiep { get; set; }
+        public string TenChuDauTu { get; set; }
         public string TenHoSo { get; set; }
         public List<FileTaiLieu> FileTaiLieu { get; set; } = new List<FileTaiLieu>();
     }

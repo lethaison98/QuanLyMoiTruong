@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuanLyMoiTruong.Application.Requests
 {
-    public class BaoCaoBaoVeMoiTruongKCNRequest : PagingRequest
+    public class BaoCaoQuanTracMoiTruongRequest : PagingRequest
     {
         public int IdKhuCongNghiep { get; set; } 
     }

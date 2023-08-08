@@ -21,8 +21,8 @@ DuAnChiTietControl = {
         $('#GiayPhepMoiTruong-tab').off('click').on('click', function () {
             GiayPhepMoiTruongControl.RegisterEventsGiayPhepMoiTruong();
         });
-        $('#BaoCaoBaoVeMoiTruongHangNam-tab').off('click').on('click', function () {
-            BaoCaoBaoVeMoiTruongHangNamControl.RegisterEventsBaoCaoBaoVeMoiTruongHangNam();
+        $('#BaoCaoBaoVeMoiTruong-tab').off('click').on('click', function () {
+            BaoCaoBaoVeMoiTruongControl.RegisterEventsBaoCaoBaoVeMoiTruong();
         });
     },
 }

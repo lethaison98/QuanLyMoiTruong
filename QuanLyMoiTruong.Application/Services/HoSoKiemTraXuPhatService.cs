@@ -151,8 +151,12 @@ namespace QuanLyMoiTruong.Application.Services
             result.TenHoSo = entity.TenHoSo;
             //result.NgayBaoCao = entity.NgayBaoCao != null ? entity.NgayBaoCao.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "";
             result.IdDuAn = entity.IdDuAn;
-            result.TenDuAn = entity.DuAn.TenDuAn;
-            result.TenDoanhNghiep = entity.DuAn.TenDoanhNghiep;
+            result.TenDuAn = entity.IdDuAn != null ? entity.DuAn.TenDuAn : "";
+            result.TenDoanhNghiep = entity.IdDuAn != null ? entity.DuAn.TenDoanhNghiep : "";
+            result.IdKhuCongNghiep = entity.IdKhuCongNghiep;
+            result.TenKhuCongNghiep = entity.IdKhuCongNghiep != null ? entity.KhuCongNghiep.TenKhuCongNghiep : "";
+            result.TenChuDauTu = entity.IdKhuCongNghiep != null ? entity.KhuCongNghiep.TenChuDauTu : "";
+
             return result;
         }
         public HoSoKiemTraXuPhat MapViewModelToEntity(HoSoKiemTraXuPhatViewModel viewModel)
@@ -162,6 +166,7 @@ namespace QuanLyMoiTruong.Application.Services
             entity.TenHoSo = viewModel.TenHoSo;
             //entity.NgayBaoCao = string.IsNullOrEmpty(viewModel.NgayBaoCao) ? null : DateTime.Parse(viewModel.NgayBaoCao, new CultureInfo("vi-VN"));
             entity.IdDuAn = viewModel.IdDuAn;
+            entity.IdKhuCongNghiep = viewModel.IdKhuCongNghiep;
 
             return entity;
         }

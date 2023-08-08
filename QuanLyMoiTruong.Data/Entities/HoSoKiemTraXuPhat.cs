@@ -9,8 +9,10 @@ namespace QuanLyMoiTruong.Data.Entities
     public class HoSoKiemTraXuPhat : BaseEntity
     {
         public int IdHoSoKiemTraXuPhat { get; set; }
-        public int IdDuAn { get; set; }
+        public int? IdDuAn { get; set; }
         public virtual DuAn DuAn { get; set; }   
+        public int? IdKhuCongNghiep { get; set; }
+        public virtual KhuCongNghiep KhuCongNghiep { get; set; }   
         public string TenHoSo { get; set; }
         
     }

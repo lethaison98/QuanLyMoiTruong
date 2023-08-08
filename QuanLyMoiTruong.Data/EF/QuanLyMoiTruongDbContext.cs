@@ -45,11 +45,10 @@ namespace QuanLyMoiTruong.Data.EF
             modelBuilder.ApplyConfiguration(new FilesConfiguration());
             modelBuilder.ApplyConfiguration(new DuAnConfiguration());
             modelBuilder.ApplyConfiguration(new KhuCongNghiepConfiguration());
-            modelBuilder.ApplyConfiguration(new BaoCaoBaoVeMoiTruongHangNamConfiguration());
+            modelBuilder.ApplyConfiguration(new BaoCaoBaoVeMoiTruongConfiguration());
             modelBuilder.ApplyConfiguration(new GiayPhepMoiTruongConfiguration());
             modelBuilder.ApplyConfiguration(new HoSoKiemTraXuPhatConfiguration());
-            modelBuilder.ApplyConfiguration(new BaoCaoBaoVeMoiTruongKCNConfiguration());
-            modelBuilder.ApplyConfiguration(new BaoCaoQuanTracMoiTruongKCNConfiguration());
+            modelBuilder.ApplyConfiguration(new BaoCaoQuanTracMoiTruongConfiguration());
         }
         public DbSet<AppConfig> AppConfig { get; set; }
         public DbSet<AppRole> AppRole { get; set; }
@@ -64,11 +63,10 @@ namespace QuanLyMoiTruong.Data.EF
         public DbSet<KhuCongNghiep> KhuCongNghiep { get; set; }
         public DbSet<Files> Files { get; set; }
         public DbSet<FileTaiLieu> FileTaiLieu { get; set; }
-        public DbSet<BaoCaoBaoVeMoiTruongHangNam> BaoCaoBaoVeMoiTruongHangNam { get; set; }
+        public DbSet<BaoCaoBaoVeMoiTruong> BaoCaoBaoVeMoiTruong { get; set; }
         public DbSet<GiayPhepMoiTruong> GiayPhepMoiTruong { get; set; }
         public DbSet<HoSoKiemTraXuPhat> HoSoKiemTraXuPhat { get; set; }
-        public DbSet<BaoCaoBaoVeMoiTruongKCN> BaoCaoBaoVeMoiTruongKCN { get; set; }
-        public DbSet<BaoCaoQuanTracMoiTruongKCN> BaoCaoQuanTracMoiTruongKCN { get; set; }
+        public DbSet<BaoCaoQuanTracMoiTruong> BaoCaoQuanTracMoiTruong { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

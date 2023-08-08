@@ -41,12 +41,12 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<AccountViewModel>> Login(LoginViewModel loginVM)
         {
             var user = await _userManager.FindByNameAsync(loginVM.UserName);
-            if (user == null) return new ApiErrorResult<AccountViewModel>("Tài khoản không tồn tại!"); ;
+            if (user == null) return new ApiErrorResult<AccountViewModel>("Tài khoản hoặc mật khẩu không đúng!"); ;
 
             var login = await _signInManager.PasswordSignInAsync(user, loginVM.PassWord, loginVM.RememberMe, true);
             if (!login.Succeeded)
             {
-                return new ApiErrorResult<AccountViewModel>("Mật khẩu không chính xác, vui lòng kiểm tra lại!");
+                return new ApiErrorResult<AccountViewModel>("Tài khoản hoặc mật khẩu không đúng!");
             }
             _logger.LogWarning(user.UserName + " - " + user.FullName + " Đăng nhập thành công từ IP " + _accessor.HttpContext.Connection.RemoteIpAddress.ToString());
             var roles = await _userManager.GetRolesAsync(user);

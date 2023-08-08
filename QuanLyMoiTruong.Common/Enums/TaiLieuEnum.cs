@@ -25,7 +25,7 @@ namespace QuanLyMoiTruong.Common.Enums
         [Display(Name = "Giấy phép môi trường")]
         GiayPhepMoiTruong = 11,
         [Display(Name = "Báo cáo công tác bảo vệ môi trường hằng năm")]
-        BaoCaoBaoVeMoiTruongHangNam = 12,
+        BaoCaoBaoVeMoiTruong = 12,
         [Display(Name = "Hồ sơ thanh kiểm tra công tác bảo vệ môi trường")]
         HoSoKiemTraXuPhat = 13,
 
@@ -34,6 +34,6 @@ namespace QuanLyMoiTruong.Common.Enums
         [Display(Name = "Báo cáo bảo vệ môi trường Khu công nghiệp")]
         BaoCaoBaoVeMoiTruongKCN = 21,
         [Display(Name = "Báo cáo quan trắc môi trường định kỳ khu công nghiệp")]
-        BaoCaoQuanTracMoiTruongKCN = 22,
+        BaoCaoQuanTracMoiTruong = 22,
     }
 }

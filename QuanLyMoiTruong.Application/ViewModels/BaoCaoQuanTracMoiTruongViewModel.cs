@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace QuanLyMoiTruong.Application.ViewModels
 {
-    public class BaoCaoBaoVeMoiTruongHangNamViewModel
+    public class BaoCaoQuanTracMoiTruongViewModel
     {
-        public int IdBaoCaoBaoVeMoiTruongHangNam { get; set; }
-        public int IdDuAn { get; set; }
-        public string TenDuAn { get; set; }
-        public string TenDoanhNghiep { get; set; }
+        public int IdBaoCaoQuanTracMoiTruong { get; set; }
+        public int? IdKhuCongNghiep { get; set; }
+        public string TenKhuCongNghiep { get; set; }
         public string TenBaoCao { get; set; }
         public string NgayBaoCao { get; set; }
         public List<FileTaiLieu> FileTaiLieu { get; set; } = new List<FileTaiLieu>();

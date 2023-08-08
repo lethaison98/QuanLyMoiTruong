@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace QuanLyMoiTruong.Application.Interfaces
 {
-    public interface IBaoCaoQuanTracMoiTruongKCNService:IBaseService<BaoCaoQuanTracMoiTruongKCN, int, BaoCaoQuanTracMoiTruongKCNViewModel, BaoCaoQuanTracMoiTruongKCNRequest>
+    public interface IBaoCaoQuanTracMoiTruongService:IBaseService<BaoCaoQuanTracMoiTruong, int, BaoCaoQuanTracMoiTruongViewModel, BaoCaoQuanTracMoiTruongRequest>
     {
-        public Task<ApiResult<IList<BaoCaoQuanTracMoiTruongKCNViewModel>>> GetListBaoCaoQuanTracMoiTruongByKCN(int idDuAn);
+        public Task<ApiResult<IList<BaoCaoQuanTracMoiTruongViewModel>>> GetListBaoCaoQuanTracMoiTruongByKCN(int idDuAn);
 
     }
 }

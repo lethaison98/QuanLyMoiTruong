@@ -36,13 +36,12 @@ namespace QuanLyMoiTruong.Api.Extensions
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IDuAnService, DuAnService>();
-            services.AddScoped<IBaoCaoBaoVeMoiTruongHangNamService, BaoCaoBaoVeMoiTruongHangNamService>();
+            services.AddScoped<IBaoCaoBaoVeMoiTruongService, BaoCaoBaoVeMoiTruongService>();
             services.AddScoped<IGiayPhepMoiTruongService, GiayPhepMoiTruongService>();
             services.AddScoped<IHoSoKiemTraXuPhatService, HoSoKiemTraXuPhatService>();
 
             services.AddScoped<IKhuCongNghiepService, KhuCongNghiepService>();
-            services.AddScoped<IBaoCaoBaoVeMoiTruongKCNService, BaoCaoBaoVeMoiTruongKCNService>();
-            services.AddScoped<IBaoCaoQuanTracMoiTruongKCNService, BaoCaoQuanTracMoiTruongKCNService>();
+            services.AddScoped<IBaoCaoQuanTracMoiTruongService, BaoCaoQuanTracMoiTruongService>();
         }
     }  
 }
