@@ -12,13 +12,37 @@ KhuCongNghiepChiTietControl = {
             callback: function (res) {
                 if (res.Success) {
                     $('.pagetitle h1').text(res.Data.TenKhuCongNghiep);
+                    $("#thong-tin-kcn").html("");
+                    var html = `<div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Tên khu công nghiệp</div>
+                                    <div class="col-lg-9 col-md-8" data-name="TenDuAn">`+ res.Data.TenKhuCongNghiep + `</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Tên chủ đầu tư</div>
+                                    <div class="col-lg-9 col-md-8" data-name="TenDuAn">`+ res.Data.TenChuDauTu + `</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Địa chỉ</div>
+                                    <div class="col-lg-9 col-md-8">`+ res.Data.DiaDiem + `</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Ghi chú</div>
+                                    <div class="col-lg-9 col-md-8">`+ res.Data.GhiChu + `</div>
+                                </div>`;
+                    $("#thong-tin-kcn").append(html);
                 }
             }
         });
     },
     RegisterEvents: function () {
-        $('#BaoCaoBaoVeMoiTruongKCN-tab').trigger('click');
-
+        var self = this;
+        $('#ThongTinDuAn-tab').trigger('click');
+        $('#ThongTinDuAn-tab').off('click').on('click', function () {
+            self.LoadThongTinKhuCongNghiep();
+        });
         $('#BaoCaoBaoVeMoiTruongKCN-tab').off('click').on('click', function () {
             BaoCaoBaoVeMoiTruongKCNControl.RegisterEventsBaoCaoBaoVeMoiTruongKCN();
         });

@@ -48,7 +48,7 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<DuAnViewModel>> GetById(int id)
         {
             var result = new DuAnViewModel();
-            var data = await _unitOfWork.GetRepository<DuAn>().FindAsync(id);
+            var data = await _unitOfWork.GetRepository<DuAn>().GetFirstOrDefaultAsync(predicate: x => x.IdDuAn == id, include: x => x.Include(y => y.KhuCongNghiep));
             result = MapEntityToViewModel(data);
             return new ApiSuccessResult<DuAnViewModel>() {Data = result };
         }
@@ -56,7 +56,7 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<DuAn>> Insert(DuAnViewModel obj)
         {
             var entity = new DuAn();
-            entity = MapViewModelToEntity(obj);
+            entity = MapViewModelToEntity(obj, entity);
             await _unitOfWork.GetRepository<DuAn>().InsertAsync(entity);
             await _unitOfWork.SaveChangesAsync();
             return new ApiSuccessResult<DuAn>() { Data = entity };
@@ -100,15 +100,22 @@ namespace QuanLyMoiTruong.Application.Services
             return new ApiSuccessResult<IPagedList<DuAnViewModel>>() { Data = result };
         }
 
-        public Task<ApiResult<DuAn>> Update(DuAnViewModel obj)
+        public async Task<ApiResult<DuAn>> Update(DuAnViewModel obj)
         {
-            throw new NotImplementedException();
+            var entity = await _unitOfWork.GetRepository<DuAn>().GetFirstOrDefaultAsync(predicate: x => x.IdDuAn == obj.IdDuAn);
+            entity = MapViewModelToEntity(obj, entity);
+            _unitOfWork.GetRepository<DuAn>().Update(entity);
+            await _unitOfWork.SaveChangesAsync();
+            return new ApiSuccessResult<DuAn>() { Data = entity };
+
         }
         public DuAnViewModel MapEntityToViewModel(DuAn entity) {
             var result = new DuAnViewModel();
             result.IdDuAn = entity.IdDuAn;
             result.TenDuAn = entity.TenDuAn;
             result.TenDoanhNghiep = entity.TenDoanhNghiep;
+            result.IdKhuCongNghiep = entity.IdKhuCongNghiep == null? 0: entity.IdKhuCongNghiep;
+            result.TenKhuCongNghiep = entity.KhuCongNghiep == null? "": entity.KhuCongNghiep.TenKhuCongNghiep;
             result.DiaChi = entity.DiaChi;
             result.TenNguoiDaiDien = entity.TenNguoiDaiDien;
             result.TenNguoiPhuTrachTNMT = entity.TenNguoiPhuTrachTNMT;
@@ -116,12 +123,12 @@ namespace QuanLyMoiTruong.Application.Services
             result.GhiChu = entity.GhiChu;
             return result;
         }
-        public DuAn MapViewModelToEntity(DuAnViewModel viewModel)
+        public DuAn MapViewModelToEntity(DuAnViewModel viewModel, DuAn entity)
         {
-            var entity = new DuAn();
             entity.IdDuAn = viewModel.IdDuAn;
             entity.TenDuAn = viewModel.TenDuAn;
             entity.TenDoanhNghiep = viewModel.TenDoanhNghiep;
+            entity.IdKhuCongNghiep = viewModel.IdKhuCongNghiep == 0 ? null: viewModel.IdKhuCongNghiep;
             entity.DiaChi = viewModel.DiaChi;
             entity.TenNguoiDaiDien = viewModel.TenNguoiDaiDien;
             entity.TenNguoiPhuTrachTNMT = viewModel.TenNguoiPhuTrachTNMT;

@@ -66,7 +66,7 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<BaoCaoQuanTracMoiTruong>> Insert(BaoCaoQuanTracMoiTruongViewModel obj)
         {
             var entity = new BaoCaoQuanTracMoiTruong();
-            entity = MapViewModelToEntity(obj);
+            entity = MapViewModelToEntity(obj, entity);
             await _unitOfWork.GetRepository<BaoCaoQuanTracMoiTruong>().InsertAsync(entity);
             await _unitOfWork.SaveChangesAsync();
 
@@ -116,8 +116,8 @@ namespace QuanLyMoiTruong.Application.Services
 
         public async Task<ApiResult<BaoCaoQuanTracMoiTruong>> Update(BaoCaoQuanTracMoiTruongViewModel obj)
         {
-            var entity = new BaoCaoQuanTracMoiTruong();
-            entity = MapViewModelToEntity(obj);
+            var entity = await _unitOfWork.GetRepository<BaoCaoQuanTracMoiTruong>().GetFirstOrDefaultAsync(predicate: x => x.IdDuAn == obj.IdBaoCaoQuanTracMoiTruong);
+            entity = MapViewModelToEntity(obj, entity);
             _unitOfWork.GetRepository<BaoCaoQuanTracMoiTruong>().Update(entity);
             await _unitOfWork.SaveChangesAsync();
 
@@ -153,9 +153,8 @@ namespace QuanLyMoiTruong.Application.Services
             result.TenKhuCongNghiep = entity.KhuCongNghiep.TenKhuCongNghiep;
             return result;
         }
-        public BaoCaoQuanTracMoiTruong MapViewModelToEntity(BaoCaoQuanTracMoiTruongViewModel viewModel)
+        public BaoCaoQuanTracMoiTruong MapViewModelToEntity(BaoCaoQuanTracMoiTruongViewModel viewModel, BaoCaoQuanTracMoiTruong entity)
         {
-            var entity = new BaoCaoQuanTracMoiTruong();
             entity.IdBaoCaoQuanTracMoiTruong = viewModel.IdBaoCaoQuanTracMoiTruong;
             entity.TenBaoCao = viewModel.TenBaoCao;
             entity.NgayBaoCao = string.IsNullOrEmpty(viewModel.NgayBaoCao) ? null : DateTime.Parse(viewModel.NgayBaoCao, new CultureInfo("vi-VN"));

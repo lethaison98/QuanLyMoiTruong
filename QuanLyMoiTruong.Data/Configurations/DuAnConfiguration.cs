@@ -14,6 +14,8 @@ namespace QuanLyMoiTruong.Data.Configurations
         {
             builder.ToTable("DuAn");
             builder.HasKey(x => x.IdDuAn);
+            builder.HasOne(x => x.KhuCongNghiep).WithMany(hd => hd.DsDuAn).HasForeignKey(x => x.IdKhuCongNghiep);
+
         }
     }
 }

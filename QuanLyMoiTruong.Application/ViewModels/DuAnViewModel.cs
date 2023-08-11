@@ -9,6 +9,8 @@ namespace QuanLyMoiTruong.Data.Entities
     public class DuAnViewModel
     {
         public int IdDuAn { get; set; }
+        public int? IdKhuCongNghiep { get; set; }
+        public string TenKhuCongNghiep { get; set; }
         public string TenDuAn { get; set; }
         public string TenDoanhNghiep { get; set; }
         public string DiaChi { get; set; }

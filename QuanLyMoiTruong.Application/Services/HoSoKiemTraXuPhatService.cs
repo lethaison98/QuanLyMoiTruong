@@ -66,7 +66,7 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<HoSoKiemTraXuPhat>> Insert(HoSoKiemTraXuPhatViewModel obj)
         {
             var entity = new HoSoKiemTraXuPhat();
-            entity = MapViewModelToEntity(obj);
+            entity = MapViewModelToEntity(obj, entity);
             await _unitOfWork.GetRepository<HoSoKiemTraXuPhat>().InsertAsync(entity);
             await _unitOfWork.SaveChangesAsync();
 
@@ -116,8 +116,8 @@ namespace QuanLyMoiTruong.Application.Services
 
         public async Task<ApiResult<HoSoKiemTraXuPhat>> Update(HoSoKiemTraXuPhatViewModel obj)
         {
-            var entity = new HoSoKiemTraXuPhat();
-            entity = MapViewModelToEntity(obj);
+            var entity = await _unitOfWork.GetRepository<HoSoKiemTraXuPhat>().GetFirstOrDefaultAsync(predicate: x => x.IdDuAn == obj.IdHoSoKiemTraXuPhat);
+            entity = MapViewModelToEntity(obj, entity);
             _unitOfWork.GetRepository<HoSoKiemTraXuPhat>().Update(entity);
             await _unitOfWork.SaveChangesAsync();
 
@@ -159,9 +159,8 @@ namespace QuanLyMoiTruong.Application.Services
 
             return result;
         }
-        public HoSoKiemTraXuPhat MapViewModelToEntity(HoSoKiemTraXuPhatViewModel viewModel)
+        public HoSoKiemTraXuPhat MapViewModelToEntity(HoSoKiemTraXuPhatViewModel viewModel, HoSoKiemTraXuPhat entity)
         {
-            var entity = new HoSoKiemTraXuPhat();
             entity.IdHoSoKiemTraXuPhat = viewModel.IdHoSoKiemTraXuPhat;
             entity.TenHoSo = viewModel.TenHoSo;
             //entity.NgayBaoCao = string.IsNullOrEmpty(viewModel.NgayBaoCao) ? null : DateTime.Parse(viewModel.NgayBaoCao, new CultureInfo("vi-VN"));

@@ -69,6 +69,7 @@ DuAnControl = {
             callback: function () {
 
                 $('#tbl tbody .edit-DuAn').off('click').on('click', function (e) {
+                    self.ResetPopup();
                     var id = $(this).attr('data-id');
                     Get({
                         url: localStorage.getItem("API_URL") + '/DuAn/GetById',
@@ -78,7 +79,11 @@ DuAnControl = {
                         callback: function (res) {
                             if (res.Success) {
                                 $('#popup-form-du-an').modal('show');
+                                self.LoadDanhSachKhuCongNghiep();
                                 $('#popup-form-du-an .modal-title').text("Chỉnh sửa thông tin dự án");
+                                setTimeout(function () {
+                                    FillFormData('#FormDuAn', res.Data);
+                                }, 500)
                                 FillFormData('#FormDuAn', res.Data);
                                 $("#popup-form-du-an .btn-primary").off('click').on('click', function () {
                                     self.InsertUpdate();
@@ -120,7 +125,19 @@ DuAnControl = {
         });
 
     },
-
+    LoadDanhSachKhuCongNghiep: function () {
+        Get({
+            url: localStorage.getItem("API_URL") + "/KhuCongNghiep/GetAll",
+            callback: function (res) {
+                if (res.Success) {
+                    $('#popup-form-du-an').find('.ddKhuCongNghiep').append('<option value=0>Ngoài khu công nghiệp</option>');
+                    $.each(res.Data, function (i, item) {
+                        $('#popup-form-du-an').find('.ddKhuCongNghiep').append('<option value=' + item.IdKhuCongNghiep +'>' + item.TenKhuCongNghiep + '</option>');
+                    })
+                }
+            }
+        });
+    },
     InsertUpdate: function () {
         var self = this;
         var isValidate = ValidateForm($('#FormDuAn'));
@@ -144,12 +161,18 @@ DuAnControl = {
             toastr.error("Vui lòng không bỏ trống thông tin có đánh dấu *", 'Có lỗi xảy ra')
         }
     },
-
+    ResetPopup: function () {
+        var $popup = $('#popup-form-du-an');
+        ResetForm("#FormDuAn");
+        $popup.find('[data-name="IdDuAn"]').val(0);
+        $popup.find(".ddKhuCongNghiep").html('');
+    },
     RegisterEvents: function () {
         var self = this;
         self.LoadDatatable();
         $('#btnCreateDuAn').off('click').on('click', function () {
-            ResetForm("#FormDuAn");
+            self.ResetPopup();
+            self.LoadDanhSachKhuCongNghiep();
             $('#popup-form-du-an').find('[data-name="IdDuAn"]').val(0);
             $('#popup-form-du-an').modal('show');
             $("#popup-form-du-an .btn-primary").off('click').on('click', function () {

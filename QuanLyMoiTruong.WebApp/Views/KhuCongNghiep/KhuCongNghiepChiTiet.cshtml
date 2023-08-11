@@ -19,14 +19,32 @@
         <!-- Bordered Tabs -->
         <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="BaoCaoBaoVeMoiTruongKCN-tab" data-bs-toggle="tab" data-bs-target="#bordered-BaoCaoBaoVeMoiTruongKCN" type="button" role="tab" aria-controls="BaoCaoBaoVeMoiTruongKCN" aria-selected="true">Báo cáo công tác BVMT khu công nghiệp</button>
+                <button class="nav-link active" id="ThongTinKCN-tab" data-bs-toggle="tab" data-bs-target="#bordered-ThongTinKCN" type="button" role="tab" aria-controls="ThongTinKCN" aria-selected="true">Thông tin Khu công nghiệp</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="BaoCaoBaoVeMoiTruongKCN-tab" data-bs-toggle="tab" data-bs-target="#bordered-BaoCaoBaoVeMoiTruongKCN" type="button" role="tab" aria-controls="BaoCaoBaoVeMoiTruongKCN" aria-selected="true">Báo cáo công tác BVMT khu công nghiệp</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="BaoCaoQuanTracMoiTruong-tab" data-bs-toggle="tab" data-bs-target="#bordered-BaoCaoQuanTracMoiTruong" type="button" role="tab" aria-controls="BaoCaoQuanTracMoiTruong" aria-selected="false">Báo cáo quan trắc môi trường định kỳ, liên tục hàng năm</button>
             </li>
         </ul>
-        <div class="tab-content pt-2" id="borderedTabContent">
-            <div class="tab-pane fade active show" id="bordered-BaoCaoBaoVeMoiTruongKCN" role="tabpanel" aria-labelledby="BaoCaoBaoVeMoiTruongKCN-tab">
+        <div class="tab-content profile pt-2" id="borderedTabContent">
+            <div class="tab-pane profile-overview fade active show" id="bordered-ThongTinKCN" role="tabpanel" aria-labelledby="ThongTinKCN-tab">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Thông tin khu công nghiệp</h5>
+                                <div id="thong-tin-kcn">
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="bordered-BaoCaoBaoVeMoiTruongKCN" role="tabpanel" aria-labelledby="BaoCaoBaoVeMoiTruongKCN-tab">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
@@ -62,7 +80,6 @@
 </div>
 
 @await Html.PartialAsync("_PopupFormBaoCaoQuanTracMoiTruong.cshtml")
-@await Html.PartialAsync("_PopupFormBaoCaoBaoVeMoiTruongKCN.cshtml")
 @section Scripts{
 <script src="~/js/controller/KhuCongNghiepChiTietControl.js"></script>
 <script src="~/js/controller/BaoCaoBaoVeMoiTruongKCNControl.js"></script>

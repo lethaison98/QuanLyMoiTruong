@@ -6,13 +6,13 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Thêm mới dự án</h4>
+                <h4 class="modal-title">Thêm mới dự án/cơ sở</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="min-height:600px">
                 <div class="row g-3" id="FormDuAn">
                     <div class="col-6">
-                        <label>Tên dự án<span class="required">*</span></label>
+                        <label>Tên dự án/cơ sở<span class="required">*</span></label>
                         <div class="ttls-content">
                             <input type="hidden" class="form-control" data-name="IdDuAn" value="0">
                             <input type="text" class="form-control" data-name="TenDuAn" required>
@@ -42,11 +42,18 @@
                             <input type="text" class="form-control" data-name="TenNguoiDaiDien">
                         </div>
                     </div>
-                    
+
                     <div class="col-6">
                         <label>Tên người phụ trách TNMT</label>
                         <div class="ttls-content">
                             <input type="text" class="form-control" data-name="TenNguoiPhuTrachTNMT">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label>Khu công nghiệp</label>
+                        <div class="ttls-content">
+                            <select class="form-control select2 ddKhuCongNghiep" data-name="IdKhuCongNghiep" style="width: 100%;">
+                            </select>
                         </div>
                     </div>
                     <div class="col-12">

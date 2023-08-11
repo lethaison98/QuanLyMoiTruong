@@ -11,7 +11,8 @@ namespace QuanLyMoiTruong.Data.Entities
         public int IdDuAn { get; set; }
         public string TenDuAn { get; set; }
         public string TenDoanhNghiep { get; set; }
-        public int IdKhuCongNghiep { get; set; }
+        public int? IdKhuCongNghiep { get; set; }
+        public virtual KhuCongNghiep KhuCongNghiep { get; set; }    
         public bool ThuocKhuKinhTe { get; set; }
         public string DiaChi { get; set; }
         public string TenNguoiDaiDien { get; set; }

@@ -19,7 +19,10 @@
         <!-- Bordered Tabs -->
         <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="GiayPhepMoiTruong-tab" data-bs-toggle="tab" data-bs-target="#bordered-GiayPhepMoiTruong" type="button" role="tab" aria-controls="GiayPhepMoiTruong" aria-selected="false" tabindex="-1">Hồ sơ cấp Giấy phép môi trường</button>
+                <button class="nav-link active" id="ThongTinDuAn-tab" data-bs-toggle="tab" data-bs-target="#bordered-ThongTinDuAn" type="button" role="tab" aria-controls="ThongTinDuAn" aria-selected="false" tabindex="-1">Thông tin dự án</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="GiayPhepMoiTruong-tab" data-bs-toggle="tab" data-bs-target="#bordered-GiayPhepMoiTruong" type="button" role="tab" aria-controls="GiayPhepMoiTruong" aria-selected="false" tabindex="-1">Hồ sơ cấp Giấy phép môi trường</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="BaoCaoBaoVeMoiTruong-tab" data-bs-toggle="tab" data-bs-target="#bordered-BaoCaoBaoVeMoiTruong" type="button" role="tab" aria-controls="BaoCaoBaoVeMoiTruong" aria-selected="true">Báo cáo công tác BVMT hàng năm</button>
@@ -28,8 +31,23 @@
                 <button class="nav-link" id="HoSoKiemTraXuPhat-tab" data-bs-toggle="tab" data-bs-target="#bordered-HoSoKiemTraXuPhat" type="button" role="tab" aria-controls="HoSoKiemTraXuPhat" aria-selected="false" tabindex="-1">Hồ sơ thanh, kiểm tra công tác bảo vệ môi trường</button>
             </li>
         </ul>
-        <div class="tab-content pt-2" id="borderedTabContent">
-            <div class="tab-pane fade active show" id="bordered-GiayPhepMoiTruong" role="tabpanel" aria-labelledby="GiayPhepMoiTruong-tab">
+        <div class="tab-content profile pt-2" id="borderedTabContent">
+            <div class="tab-pane profile-overview fade active show" id="bordered-ThongTinDuAn" role="tabpanel" aria-labelledby="ThongTinDuAn-tab">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Thông tin dự án/cơ sở</h5>
+                                <div id="thong-tin-du-an">
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="bordered-GiayPhepMoiTruong" role="tabpanel" aria-labelledby="GiayPhepMoiTruong-tab">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
