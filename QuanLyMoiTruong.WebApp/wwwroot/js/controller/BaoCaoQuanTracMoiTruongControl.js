@@ -83,7 +83,7 @@ BaoCaoQuanTracMoiTruongControl = {
                                         FillFormData('#FormBaoCaoQuanTracMoiTruong', res.Data);
 
                                         $.each(res.Data.FileTaiLieu, function (i, item) {
-                                            var $tr = $popup.find("#tempChiTietQuyetDinhThueDat").html();
+                                            var $tr = $popup.find("#tempFileTable").html();
                                             $popup.find("#tblFileBaoCaoQuanTracMoiTruong tbody").append($tr);
                                             $popup.find("#tblFileBaoCaoQuanTracMoiTruong tbody tr:last").find('[data-name="MoTa"]').val(item.MoTa);
                                             $popup.find("#tblFileBaoCaoQuanTracMoiTruong tbody tr:last").find('[data-name="LoaiFileTaiLieu"]').val(item.LoaiFileTaiLieu);
@@ -222,7 +222,7 @@ BaoCaoQuanTracMoiTruongControl = {
                         success: function (res) {
                             if (res.Success) {
                                 for (var i = 0; i < res.Data.length; i++) {
-                                    var $tr = $popup.find("#tempChiTietQuyetDinhThueDat").html();
+                                    var $tr = $popup.find("#tempFileTable").html();
                                     $popup.find("#tblFileBaoCaoQuanTracMoiTruong tbody").append($tr);
                                     $popup.find("#tblFileBaoCaoQuanTracMoiTruong tbody tr:last td:first").append('<a href = "#" data-id="0" data-IdFile = "' + res.Data[i] + '">' + file[i].name + '</a>');
                                     $popup.find(".tr-remove").off('click').on('click', function () {

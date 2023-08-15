@@ -11,6 +11,12 @@ KhuCongNghiepChiTietControl = {
             "url": localStorage.getItem("API_URL") + "/KhuCongNghiep/GetById?idKhuCongNghiep=" + id,
             callback: function (res) {
                 if (res.Success) {
+                    var dsDuAn = "";
+                    $.each(res.Data.DsDuAn, function (j, duan) {
+                        console.log(duan);
+                        dsDuAn += "<span>" + duan.TenDuAn + "</span></br>";
+                    });
+                    console.log(dsDuAn);
                     $('.pagetitle h1').text(res.Data.TenKhuCongNghiep);
                     $("#thong-tin-kcn").html("");
                     var html = `<div class="row">
@@ -29,8 +35,17 @@ KhuCongNghiepChiTietControl = {
                                 </div>
 
                                 <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Thuộc khu kinh tế</div>
+                                    <div class="col-lg-9 col-md-8">`+ (res.Data.ThuocKhuKinhTe == true?"Có" : "Không") + `</div>
+                                </div>
+                                <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Ghi chú</div>
                                     <div class="col-lg-9 col-md-8">`+ res.Data.GhiChu + `</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Danh sách dự án</div>
+                                    <div class="col-lg-9 col-md-8">`+ dsDuAn+`
+                                    </div>
                                 </div>`;
                     $("#thong-tin-kcn").append(html);
                 }

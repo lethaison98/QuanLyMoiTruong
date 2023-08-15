@@ -16,8 +16,5 @@ namespace QuanLyMoiTruong.Application.Interfaces
         public Task<ApiResult<int>> UpdateAll(FileTaiLieuRequest request);
         public Task<ApiResult<IList<FileTaiLieu>>> GetByTaiLieu(int idTaiLieu, string nhomTaiLieu);
         public Task<ApiResult<bool>> Delete(int idFileTaiLieu);
-        //public Task<ApiResult<QuyetDinhMienTienThueDatViewModel>> GetById(int idQuyetDinhMienTienThueDat);
-        //public Task<ApiResult<List<QuyetDinhMienTienThueDatViewModel>>> GetAll(int? idDoanhNghiep);
-        //public Task<ApiResult<PageViewModel<QuyetDinhMienTienThueDatViewModel>>> GetAllPaging(int? idDoanhNghiep,string keyword, int pageIndex, int pageSize);
     }
 }

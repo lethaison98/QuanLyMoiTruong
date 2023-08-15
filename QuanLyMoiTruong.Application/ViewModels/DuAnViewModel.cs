@@ -13,6 +13,7 @@ namespace QuanLyMoiTruong.Data.Entities
         public string TenKhuCongNghiep { get; set; }
         public string TenDuAn { get; set; }
         public string TenDoanhNghiep { get; set; }
+        public bool ThuocKhuKinhTe { get; set; }
         public string DiaChi { get; set; }
         public string TenNguoiDaiDien { get; set; }
         public string TenNguoiPhuTrachTNMT { get; set; }

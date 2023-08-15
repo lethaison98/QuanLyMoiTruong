@@ -54,8 +54,7 @@
                         <tr>
                             <th style="width: 5%">STT</th>
                             <th>Tên Thành phần môi trường</th>
-                            <th>Tên doanh nghiệp</th>
-                            <th>Số giấy phép ĐKKD</th>
+                            <th>Ghi chú</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -66,6 +65,7 @@
         </div>
     </div>
 </div>
+@await Html.PartialAsync("_PopupFormThanhPhanMoiTruong.cshtml")
 
 @section Scripts{
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>

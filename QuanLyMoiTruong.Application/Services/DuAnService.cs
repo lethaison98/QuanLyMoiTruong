@@ -116,6 +116,7 @@ namespace QuanLyMoiTruong.Application.Services
             result.TenDoanhNghiep = entity.TenDoanhNghiep;
             result.IdKhuCongNghiep = entity.IdKhuCongNghiep == null? 0: entity.IdKhuCongNghiep;
             result.TenKhuCongNghiep = entity.KhuCongNghiep == null? "": entity.KhuCongNghiep.TenKhuCongNghiep;
+            result.ThuocKhuKinhTe = entity.ThuocKhuKinhTe;
             result.DiaChi = entity.DiaChi;
             result.TenNguoiDaiDien = entity.TenNguoiDaiDien;
             result.TenNguoiPhuTrachTNMT = entity.TenNguoiPhuTrachTNMT;
@@ -129,6 +130,7 @@ namespace QuanLyMoiTruong.Application.Services
             entity.TenDuAn = viewModel.TenDuAn;
             entity.TenDoanhNghiep = viewModel.TenDoanhNghiep;
             entity.IdKhuCongNghiep = viewModel.IdKhuCongNghiep == 0 ? null: viewModel.IdKhuCongNghiep;
+            entity.ThuocKhuKinhTe = viewModel.ThuocKhuKinhTe;
             entity.DiaChi = viewModel.DiaChi;
             entity.TenNguoiDaiDien = viewModel.TenNguoiDaiDien;
             entity.TenNguoiPhuTrachTNMT = viewModel.TenNguoiPhuTrachTNMT;

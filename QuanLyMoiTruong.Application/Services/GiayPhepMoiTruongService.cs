@@ -28,23 +28,23 @@ namespace QuanLyMoiTruong.Application.Services
 
         public async Task<ApiResult<bool>> Delete(int id)
         {
-            var entity =  await _unitOfWork.GetRepository<GiayPhepMoiTruong>().FindAsync(id);
+            var entity = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().FindAsync(id);
             if (entity != null)
             {
-                entity.IsDeleted= true;
+                entity.IsDeleted = true;
                 await _unitOfWork.SaveChangesAsync();
-                return new ApiSuccessResult<bool>() {};
+                return new ApiSuccessResult<bool>() { };
             }
             else
             {
-                return new ApiErrorResult<bool>("Không tồn tại dữ liệu cần xóa") ;
+                return new ApiErrorResult<bool>("Không tồn tại dữ liệu cần xóa");
             }
-        } 
+        }
 
         public async Task<ApiResult<IList<GiayPhepMoiTruongViewModel>>> GetAll()
         {
             var result = new List<GiayPhepMoiTruongViewModel>();
-            var entities =  await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted);
+            var entities = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted);
             result = entities.Select(MapEntityToViewModel).ToList();
             return new ApiSuccessResult<IList<GiayPhepMoiTruongViewModel>>() { Data = result };
         }
@@ -52,14 +52,14 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<GiayPhepMoiTruongViewModel>> GetById(int id)
         {
             var result = new GiayPhepMoiTruongViewModel();
-            var data = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetFirstOrDefaultAsync(predicate: x => x.IdGiayPhepMoiTruong == id, include: x=> x.Include(y=> y.DuAn));
+            var data = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetFirstOrDefaultAsync(predicate: x => x.IdGiayPhepMoiTruong == id, include: x => x.Include(y => y.DuAn));
             result = MapEntityToViewModel(data);
             var dsFile = await _fileTaiLieuService.GetByTaiLieu(data.IdGiayPhepMoiTruong, NhomTaiLieuEnum.GiayPhepMoiTruong.ToString());
             if (dsFile.Success)
             {
                 result.FileTaiLieu = dsFile.Data.ToList();
             }
-            return new ApiSuccessResult<GiayPhepMoiTruongViewModel>() {Data = result };
+            return new ApiSuccessResult<GiayPhepMoiTruongViewModel>() { Data = result };
         }
 
         public async Task<ApiResult<GiayPhepMoiTruong>> Insert(GiayPhepMoiTruongViewModel obj)
@@ -98,7 +98,7 @@ namespace QuanLyMoiTruong.Application.Services
             if (!string.IsNullOrWhiteSpace(request.FullTextSearch))
             {
                 var fullTextSearch = request.FullTextSearch.ToLowerInvariant();
-                filter = filter.And(p => p.SoGiayPhep.ToLower().Contains(fullTextSearch)|| p.TenGiayPhep.ToLower().Contains(fullTextSearch));
+                filter = filter.And(p => p.SoGiayPhep.ToLower().Contains(fullTextSearch) || p.TenGiayPhep.ToLower().Contains(fullTextSearch));
             }
             filter = filter.And(p => !p.IsDeleted);
             var data = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetPagedListAsync(predicate: filter, pageIndex: request.PageIndex, pageSize: request.PageSize);
@@ -107,9 +107,9 @@ namespace QuanLyMoiTruong.Application.Services
 
             result.PageIndex = data.PageIndex;
             result.PageSize = data.PageSize;
-            result.IndexFrom= data.IndexFrom;
+            result.IndexFrom = data.IndexFrom;
             result.TotalCount = data.TotalCount;
-            result.TotalPages = data.TotalPages;    
+            result.TotalPages = data.TotalPages;
             result.Items = data.Items.Select(MapEntityToViewModel).ToList();
             return new ApiSuccessResult<IPagedList<GiayPhepMoiTruongViewModel>>() { Data = result };
         }
@@ -118,7 +118,7 @@ namespace QuanLyMoiTruong.Application.Services
         {
             var entity = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetFirstOrDefaultAsync(predicate: x => x.IdGiayPhepMoiTruong == obj.IdGiayPhepMoiTruong);
             entity = MapViewModelToEntity(obj);
-             _unitOfWork.GetRepository<GiayPhepMoiTruong>().Update(entity);
+            _unitOfWork.GetRepository<GiayPhepMoiTruong>().Update(entity);
             await _unitOfWork.SaveChangesAsync();
 
             var fileTaiLieuRequest = new FileTaiLieuRequest();
@@ -132,9 +132,9 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<IList<GiayPhepMoiTruongViewModel>>> GetListGiayPhepMoiTruongByDuAn(int idDuAn)
         {
             var result = new List<GiayPhepMoiTruongViewModel>();
-            var entities = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted && x.IdDuAn == idDuAn, include: x=> x.Include(x=> x.DuAn));
+            var entities = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted && x.IdDuAn == idDuAn, include: x => x.Include(x => x.DuAn));
             result = entities.Select(MapEntityToViewModel).ToList();
-            foreach(var item in result)
+            foreach (var item in result)
             {
                 var dsFile = await _fileTaiLieuService.GetByTaiLieu(item.IdGiayPhepMoiTruong, NhomTaiLieuEnum.GiayPhepMoiTruong.ToString());
                 if (dsFile.Success)
@@ -145,11 +145,13 @@ namespace QuanLyMoiTruong.Application.Services
             return new ApiSuccessResult<IList<GiayPhepMoiTruongViewModel>>() { Data = result };
         }
 
-        public GiayPhepMoiTruongViewModel MapEntityToViewModel(GiayPhepMoiTruong entity) {
+        public GiayPhepMoiTruongViewModel MapEntityToViewModel(GiayPhepMoiTruong entity)
+        {
             var result = new GiayPhepMoiTruongViewModel();
             result.IdGiayPhepMoiTruong = entity.IdGiayPhepMoiTruong;
             result.TenGiayPhep = entity.TenGiayPhep;
             result.SoGiayPhep = entity.SoGiayPhep;
+            result.CoQuanCap = entity.CoQuanCap;
             result.NgayCap = entity.NgayCap != null ? entity.NgayCap.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "";
             result.IdDuAn = entity.IdDuAn;
             result.TenDuAn = entity.IdDuAn != null ? entity.DuAn.TenDuAn : "";
@@ -166,6 +168,7 @@ namespace QuanLyMoiTruong.Application.Services
             entity.IdGiayPhepMoiTruong = viewModel.IdGiayPhepMoiTruong;
             entity.TenGiayPhep = viewModel.TenGiayPhep;
             entity.SoGiayPhep = viewModel.SoGiayPhep;
+            entity.CoQuanCap = viewModel.CoQuanCap;
             entity.NgayCap = string.IsNullOrEmpty(viewModel.NgayCap) ? null : DateTime.Parse(viewModel.NgayCap, new CultureInfo("vi-VN"));
             entity.IdDuAn = viewModel.IdDuAn;
             entity.IdKhuCongNghiep = viewModel.IdKhuCongNghiep;

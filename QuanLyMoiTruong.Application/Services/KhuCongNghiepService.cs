@@ -45,7 +45,7 @@ namespace QuanLyMoiTruong.Application.Services
 
         public async Task<ApiResult<KhuCongNghiep>> GetById(int id)
         {
-            var result = await _unitOfWork.GetRepository<KhuCongNghiep>().FindAsync(id);
+            var result = await _unitOfWork.GetRepository<KhuCongNghiep>().GetFirstOrDefaultAsync(predicate: x => x.IdKhuCongNghiep == id, include: x => x.Include(y => y.DsDuAn));
             return new ApiSuccessResult<KhuCongNghiep>() {Data = result };
         }
 
@@ -91,9 +91,11 @@ namespace QuanLyMoiTruong.Application.Services
             return new ApiSuccessResult<IPagedList<KhuCongNghiep>>() { Data = result };
         }
 
-        public Task<ApiResult<KhuCongNghiep>> Update(KhuCongNghiep obj)
+        public async Task<ApiResult<KhuCongNghiep>> Update(KhuCongNghiep obj)
         {
-            throw new NotImplementedException();
+            _unitOfWork.GetRepository<KhuCongNghiep>().Update(obj);
+            await _unitOfWork.SaveChangesAsync();
+            return new ApiSuccessResult<KhuCongNghiep>() { Data = obj };
         }
        
     }

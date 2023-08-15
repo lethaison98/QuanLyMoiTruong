@@ -116,7 +116,7 @@ namespace QuanLyMoiTruong.Application.Services
 
         public async Task<ApiResult<HoSoKiemTraXuPhat>> Update(HoSoKiemTraXuPhatViewModel obj)
         {
-            var entity = await _unitOfWork.GetRepository<HoSoKiemTraXuPhat>().GetFirstOrDefaultAsync(predicate: x => x.IdDuAn == obj.IdHoSoKiemTraXuPhat);
+            var entity = await _unitOfWork.GetRepository<HoSoKiemTraXuPhat>().GetFirstOrDefaultAsync(predicate: x => x.IdHoSoKiemTraXuPhat == obj.IdHoSoKiemTraXuPhat);
             entity = MapViewModelToEntity(obj, entity);
             _unitOfWork.GetRepository<HoSoKiemTraXuPhat>().Update(entity);
             await _unitOfWork.SaveChangesAsync();

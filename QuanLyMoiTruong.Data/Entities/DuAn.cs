@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace QuanLyMoiTruong.Data.Entities
@@ -12,6 +13,7 @@ namespace QuanLyMoiTruong.Data.Entities
         public string TenDuAn { get; set; }
         public string TenDoanhNghiep { get; set; }
         public int? IdKhuCongNghiep { get; set; }
+        [JsonIgnore]
         public virtual KhuCongNghiep KhuCongNghiep { get; set; }    
         public bool ThuocKhuKinhTe { get; set; }
         public string DiaChi { get; set; }

@@ -73,7 +73,7 @@ KhuCongNghiepControl = {
                         callback: function (res) {
                             if (res.Success) {
                                 $('#popup-form-khu-cong-nghiep').modal('show');
-                                $('#popup-form-khu-cong-nghiep .modal-title').text("Chỉnh sửa thông tin dự án");
+                                $('#popup-form-khu-cong-nghiep .modal-title').text("Chỉnh sửa thông tin khu công nghiệp");
                                 FillFormData('#FormKhuCongNghiep', res.Data);
                                 $("#popup-form-khu-cong-nghiep .btn-primary").off('click').on('click', function () {
                                     self.InsertUpdate();
