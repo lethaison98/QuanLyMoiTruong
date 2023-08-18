@@ -5,7 +5,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <div class="pagetitle">
-    <h1>Chi tiết dự án</h1>
+    <h1>Chi tiết dự án/ cơ sở</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
@@ -28,7 +28,7 @@
                 <button class="nav-link" id="BaoCaoBaoVeMoiTruong-tab" data-bs-toggle="tab" data-bs-target="#bordered-BaoCaoBaoVeMoiTruong" type="button" role="tab" aria-controls="BaoCaoBaoVeMoiTruong" aria-selected="true">Báo cáo công tác BVMT hàng năm</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="HoSoKiemTraXuPhat-tab" data-bs-toggle="tab" data-bs-target="#bordered-HoSoKiemTraXuPhat" type="button" role="tab" aria-controls="HoSoKiemTraXuPhat" aria-selected="false" tabindex="-1">Hồ sơ thanh, kiểm tra công tác bảo vệ môi trường</button>
+                <button class="nav-link" id="HoSoKiemTraXuPhat-tab" data-bs-toggle="tab" data-bs-target="#bordered-HoSoKiemTraXuPhat" type="button" role="tab" aria-controls="HoSoKiemTraXuPhat" aria-selected="false" tabindex="-1">Hồ sơ thanh, kiểm tra CT BVMT và xử phạt VPHC lĩnh vực BVMT</button>
             </li>
         </ul>
         <div class="tab-content profile pt-2" id="borderedTabContent">
@@ -75,7 +75,19 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="bordered-HoSoKiemTraXuPhat" role="tabpanel" aria-labelledby="HoSoKiemTraXuPhat-tab">
-                Chức năng đang bổ sung
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    Hồ sơ thanh kiểm tra, xử phạt vi phạm hành chính lĩnh vực bảo vệ môi trường <button type="button" class="btn btn-success offset-md-3" style="float:right" id="btnCreateHoSoKiemTraXuPhat"><i class="fas fa-plus"></i> Tạo mới</button>
+                                </h5>
+                                <div class="accordion" id="accordion-HoSoKiemTraXuPhat">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div><!-- End Bordered Tabs -->
 
@@ -84,8 +96,11 @@
 
 @await Html.PartialAsync("_PopupFormGiayPhepMoiTruong.cshtml")
 @await Html.PartialAsync("_PopupFormBaoCaoBaoVeMoiTruong.cshtml")
+@await Html.PartialAsync("_PopupFormHoSoKiemTraXuPhat.cshtml")
 @section Scripts{
 <script src="~/js/controller/DuAnChiTietControl.js"></script>
 <script src="~/js/controller/GiayPhepMoiTruongControl.js"></script>
 <script src="~/js/controller/BaoCaoBaoVeMoiTruongControl.js"></script>
+<script src="~/js/controller/HoSoKiemTraXuPhatControl.js"></script>
+
 }

@@ -69,6 +69,9 @@ DuAnChiTietControl = {
         $('#BaoCaoBaoVeMoiTruong-tab').off('click').on('click', function () {
             BaoCaoBaoVeMoiTruongControl.RegisterEventsBaoCaoBaoVeMoiTruong();
         });
+        $('#HoSoKiemTraXuPhat-tab').off('click').on('click', function () {
+            HoSoKiemTraXuPhatControl.RegisterEventsHoSoKiemTraXuPhat();
+        });
     },
 }
 

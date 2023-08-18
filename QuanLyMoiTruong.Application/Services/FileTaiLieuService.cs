@@ -81,6 +81,22 @@ namespace QuanLyMoiTruong.Application.Services
             _unitOfWork.GetRepository<FileTaiLieu>().Insert(listNewFile);
             await _unitOfWork.SaveChangesAsync();
 
+            // UpdateFile: Là những file được lấy ra theo IdTaiLieu và LoaiTaiLieu,có trong danh sách OldFile sẽ cập nhật lại thông tin
+            var listUpdateFile = _context.FileTaiLieu.Where(x => x.IdTaiLieu == idTaiLieu && x.NhomTaiLieu == nhomTaiLieu && listIdOldFile.Contains(x.IdFileTaiLieu)).ToList();
+            foreach(var item in listUpdateFile)
+            {
+                foreach (var file in request.FileTaiLieu)
+                {
+                    if(item.IdFileTaiLieu == file.IdFileTaiLieu)
+                    {
+                        item.MoTa = file.MoTa;
+                        item.LoaiFileTaiLieu = file.LoaiFileTaiLieu;
+                    }
+                }
+            } 
+            _unitOfWork.GetRepository<FileTaiLieu>().Update(listUpdateFile);
+            await _unitOfWork.SaveChangesAsync();
+
             result = 1;
             return new ApiSuccessResult<int>() { Data = result };
         }

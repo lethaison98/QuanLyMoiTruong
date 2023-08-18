@@ -1,7 +1,8 @@
-﻿if (typeof (GiayPhepMoiTruongControl) == "undefined") GiayPhepMoiTruongControl = {};
+﻿if (typeof (HoSoKiemTraXuPhatControl) == "undefined") HoSoKiemTraXuPhatControl = {};
 var url = window.location.pathname;
-var id = url.substring(url.lastIndexOf('/') + 1);
 var type = "";
+var idDuAn = 0;
+var idKhuCongNghiep = 0;
 if (url.indexOf("DuAn") != -1) {
     idDuAn = url.substring(url.lastIndexOf('/') + 1);
     type = "DuAn";
@@ -10,9 +11,9 @@ if (url.indexOf("KhuCongNghiep") != -1) {
     idKhuCongNghiep = url.substring(url.lastIndexOf('/') + 1);
     type = "KhuCongNghiep";
 }
-GiayPhepMoiTruongControl = {
+HoSoKiemTraXuPhatControl = {
     Init: function () {
-        GiayPhepMoiTruongControl.RegisterEventsGiayPhepMoiTruong();
+        HoSoKiemTraXuPhatControl.RegisterEventsHoSoKiemTraXuPhat();
     },
     DrawIconFile: function (linkfile) {
         var iconfile = "";
@@ -29,18 +30,18 @@ GiayPhepMoiTruongControl = {
         return iconfile;
     },
 
-    LoadDanhSachGiayPhepMoiTruong: function () {
+    LoadDanhSachHoSoKiemTraXuPhat: function () {
         var self = this;
-        var $popup = $('#popup-form-giay-phep-moi-truong');
-        var $tab = $('#bordered-GiayPhepMoiTruong');
-        $tab.find('#accordion-GiayPhepMoiTruong').html('');
         var urlApi = "";
         if (type == "DuAn") {
-            urlApi = localStorage.getItem("API_URL") + "/GiayPhepMoiTruong/GetGPMTByDuAn?idDuAn=" + idDuAn;
+            urlApi = localStorage.getItem("API_URL") + "/HoSoKiemTraXuPhat/GetHoSoKiemTraXuPhatByDuAn?idDuAn=" + idDuAn;
         };
         if (type == "KhuCongNghiep") {
-            urlApi = localStorage.getItem("API_URL") + "/GiayPhepMoiTruong/GetGPMTByKhuCongNghiep?idKhuCongNghiep=" + idKhuCongNghiep;
+            urlApi = localStorage.getItem("API_URL") + "/HoSoKiemTraXuPhat/GetHoSoKiemTraXuPhatByKhuCongNghiep?idKhuCongNghiep=" + idKhuCongNghiep;
         };
+        var $tab = $('#bordered-HoSoKiemTraXuPhat');
+        var $popup = $('#popup-form-ho-so-kiem-tra-xu-phat');
+        $tab.find("#accordion-HoSoKiemTraXuPhat").html('');
         Get({
             "url": urlApi,
             callback: function (res) {
@@ -51,24 +52,11 @@ GiayPhepMoiTruongControl = {
                         var html3 = "";
                         var html4 = "";
                         var html5 = "";
-
                         $.each(value.FileTaiLieu, function (j, file) {
                             switch (file.LoaiFileTaiLieu) {
-                                case "GiayPhepMoiTruong":
+                                case "HoSoKiemTraXuPhat":
                                     var iconfile = self.DrawIconFile(file.File.LinkFile);
                                     html1 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '">' + iconfile + file.File.TenFile + '</a></span>';
-                                    break;
-                                case ("DonXinCapPhep"):
-                                    var iconfile = self.DrawIconFile(file.File.LinkFile);
-                                    html2 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '">' + iconfile + file.File.TenFile + '</a></span>';
-                                    break;
-                                case ("BaoCaoDeXuatCapPhep"):
-                                    var iconfile = self.DrawIconFile(file.File.LinkFile);
-                                    html3 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '">' + iconfile + file.File.TenFile + '</a></span>';
-                                    break;
-                                case ("DuAnDauTu"):
-                                    var iconfile = self.DrawIconFile(file.File.LinkFile);
-                                    html4 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '">' + iconfile + file.File.TenFile + '</a></span>';
                                     break;
                                 default:
                                     var iconfile = self.DrawIconFile(file.File.LinkFile);
@@ -77,62 +65,50 @@ GiayPhepMoiTruongControl = {
 
                         });
                         var tag = `<div class="accordion-item">
-                                        <h2 class="accordion-header" id="heading_`+ value.IdGiayPhepMoiTruong + `">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_`+ value.IdGiayPhepMoiTruong + `" aria-expanded="true" aria-controls="collapse_` + value.IdGiayPhepMoiTruong + `">
-                                                `+ value.SoGiayPhep + ' ngày ' + value.NgayCap + `
-                                            </button>
+                                        <h2 class="accordion-header" id="heading_`+ value.IdHoSoKiemTraXuPhat + `">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_`+ value.IdHoSoKiemTraXuPhat + `" aria-expanded="true" aria-controls="collapse_` + value.IdHoSoKiemTraXuPhat + `">
+                                                `+ value.TenHoSo + `</button>
                                         </h2>
-                                        <div id="collapse_` + value.IdGiayPhepMoiTruong + `" class="accordion-collapse collapse show" aria-labelledby="heading_` + value.IdGiayPhepMoiTruong + `" data-bs-parent="#accordionExample">
+                                        <div id="collapse_` + value.IdHoSoKiemTraXuPhat + `" class="accordion-collapse collapse show" aria-labelledby="heading_` + value.IdHoSoKiemTraXuPhat + `" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
-                                                <strong>1. Giấy phép môi trường</strong>
+                                                <strong>1. Hồ sơ thanh kiểm tra, xử phạt vi phạm hành chính lĩnh vực bảo vệ môi trường</strong>
                                                 <p class="row">`+ html1 + `
                                                 </p>
                                                 <hr>
-                                                <strong>2. Đơn xin cấp phép</strong>
-                                                <p class="row">`+ html2 + `
-                                                </p>
-                                                <hr>
-                                                <strong>3. Báo cáo đề xuất cấp phép</strong>
-                                                <p class="row">`+ html3 + `
-                                                </p>
-                                                <hr>
-                                                <strong>4. Dự án đầu tư</strong>
-                                                <p class="row">`+ html4 + `
-                                                </p>
-                                                <hr>
-                                                <strong>5. Tài liệu khác</strong>
+                                                <strong>2. Tài liệu khác</strong>
                                                 <p class="row">`+ html5 + `
                                                 </p>
                                             </div>
                                             <div  style="float:right">
-                                                <button type="button" class="btn btn-secondary btn-sm btn-sua" data-id=`+ value.IdGiayPhepMoiTruong + `>Chỉnh sửa</button>
-                                                <button type="button" class="btn btn-danger btn-sm btn-xoa " data-id=`+ value.IdGiayPhepMoiTruong + `>Xóa</button>
+                                                <button type="button" class="btn btn-secondary btn-sm btn-sua" data-id=`+ value.IdHoSoKiemTraXuPhat + `>Chỉnh sửa</button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-xoa " data-id=`+ value.IdHoSoKiemTraXuPhat + `>Xóa</button>
                                             </div>
                                             </br><hr>
                                         </div>
                                     </div>`
-                        $tab.find('#accordion-GiayPhepMoiTruong').append(tag);
+                        $tab.find("#accordion-HoSoKiemTraXuPhat").append(tag);
                         $tab.find('.btn-sua').off('click').on('click', function () {
                             var idGiayPhep = $(this).attr("data-id");
                             $popup.modal('show');
                             self.ResetPopup();
                             Get({
-                                "url": localStorage.getItem("API_URL") + "/GiayPhepMoiTruong/GetById?idGiayPhepMoiTruong=" + idGiayPhep,
+                                "url": localStorage.getItem("API_URL") + "/HoSoKiemTraXuPhat/GetById?idHoSoKiemTraXuPhat=" + idGiayPhep,
                                 callback: function (res) {
                                     if (res.Success) {
-                                        FillFormData('#FormGiayPhepMoiTruong', res.Data);
+                                        $popup.find('.modal-header').text("Chỉnh sửa Hồ sơ thanh kiểm tra, xử phạt vi phạm hành chính lĩnh vực bảo vệ môi trường")
+                                        FillFormData('#FormHoSoKiemTraXuPhat', res.Data);
 
                                         $.each(res.Data.FileTaiLieu, function (i, item) {
                                             var $tr = $popup.find("#tempFileTable").html();
-                                            $popup.find("#tblFileGiayPhepMoiTruong tbody").append($tr);
-                                            $popup.find("#tblFileGiayPhepMoiTruong tbody tr:last").find('[data-name="MoTa"]').val(item.MoTa);
-                                            $popup.find("#tblFileGiayPhepMoiTruong tbody tr:last").find('[data-name="LoaiFileTaiLieu"]').val(item.LoaiFileTaiLieu);
-                                            $popup.find("#tblFileGiayPhepMoiTruong tbody tr:last td:first").append('<a href = "' + localStorage.getItem('API_URL').replace("api", "") + item.File.LinkFile + '" data-id="' + item.IdFileTaiLieu + '" data-IdFile = "' + item.IdFile + '">' + item.File.TenFile + '</a>');
+                                            $popup.find("#tblFileHoSoKiemTraXuPhat tbody").append($tr);
+                                            $popup.find("#tblFileHoSoKiemTraXuPhat tbody tr:last").find('[data-name="MoTa"]').val(item.MoTa);
+                                            $popup.find("#tblFileHoSoKiemTraXuPhat tbody tr:last").find('[data-name="LoaiFileTaiLieu"]').val(item.LoaiFileTaiLieu);
+                                            $popup.find("#tblFileHoSoKiemTraXuPhat tbody tr:last td:first").append('<a href = "' + localStorage.getItem('API_URL').replace("api", "") + item.File.LinkFile + '" data-id="' + item.IdFileTaiLieu + '" data-IdFile = "' + item.IdFile + '">' + item.File.TenFile + '</a>');
                                             $popup.find(".tr-remove").off('click').on('click', function () {
                                                 $(this).parents('tr:first').remove();
                                             });
                                         });
-                                        self.RegisterEventsPopupGiayPhepMoiTruong();
+                                        self.RegisterEventsPopupHoSoKiemTraXuPhat();
 
                                     }
                                 }
@@ -142,11 +118,11 @@ GiayPhepMoiTruongControl = {
                             var idGiayPhep = $(this).attr("data-id");
                             if (confirm("Xác nhận xóa?") == true) {
                                 Delete({
-                                    "url": localStorage.getItem("API_URL") + "/GiayPhepMoiTruong/Delete?idGiayPhepMoiTruong=" + idGiayPhep,
+                                    "url": localStorage.getItem("API_URL") + "/HoSoKiemTraXuPhat/Delete?idHoSoKiemTraXuPhat=" + idGiayPhep,
                                     callback: function (res) {
                                         if (res.Success) {
                                             toastr.success('Thực hiện thành công', 'Thông báo')
-                                            self.LoadDanhSachGiayPhepMoiTruong();
+                                            self.LoadDanhSachHoSoKiemTraXuPhat();
                                         } else {
                                             toastr.error(res.Message, 'Có lỗi xảy ra')
                                         }
@@ -163,34 +139,33 @@ GiayPhepMoiTruongControl = {
         });
     },
     ResetPopup: function () {
-        var $popup = $('#popup-form-giay-phep-moi-truong');
-        $popup.find('.modal-header').text("Thêm mới giấy phép môi trường");
-        ResetForm("#FormGiayPhepMoiTruong");
-        $popup.find('[data-name="IdGiayPhepMoiTruong"]').val(0);
-        $popup.find("#tblFileGiayPhepMoiTruong tbody").html('');
+        var $popup = $('#popup-form-ho-so-kiem-tra-xu-phat');
+        ResetForm("#FormHoSoKiemTraXuPhat");
+        $popup.find('[data-name="IdHoSoKiemTraXuPhat"]').val(0);
+        $popup.find("#tblFileHoSoKiemTraXuPhat tbody").html('');
     },
-    LoadChiTietGiayPhepMoiTruong: function () {
+    LoadChiTietHoSoKiemTraXuPhat: function () {
         var self = this;
-        var $popup = $('#popup-form-giay-phep-moi-truong');
+        var $popup = $('#popup-form-ho-so-kiem-tra-xu-phat');
         Get({
-            "url": localStorage.getItem("API_URL") + "/GiayPhepMoiTruong/GetById?id=" + idGiayPhep,
+            "url": localStorage.getItem("API_URL") + "/HoSoKiemTraXuPhat/GetById?id=" + idGiayPhep,
             callback: function (res) {
             }
         });
     },
-    InsertUpdateGiayPhepMoiTruong: function () {
+    InsertUpdateHoSoKiemTraXuPhat: function () {
         var self = this;
-        var isValidate = ValidateForm($('#FormGiayPhepMoiTruong'));
+        var isValidate = ValidateForm($('#FormHoSoKiemTraXuPhat'));
         if (isValidate) {
-            var $popup = $('#popup-form-giay-phep-moi-truong');
-            var data = LoadFormData("#FormGiayPhepMoiTruong");
+            var $popup = $('#popup-form-ho-so-kiem-tra-xu-phat');
+            var data = LoadFormData("#FormHoSoKiemTraXuPhat");
             var listFileTaiLieu = [];
-            $('#tblFileGiayPhepMoiTruong tbody tr').each(function () {
+            $('#tblFileHoSoKiemTraXuPhat tbody tr').each(function () {
                 var $tr = $(this);
                 listFileTaiLieu.push({
                     IdFileTaiLieu: $(this).find("td:first a").attr("data-id"),
                     IdFile: $(this).find("td:first a").attr("data-idfile"),
-                    NhomTaiLieu: "GiayPhepMoiTruong",
+                    NhomTaiLieu: "HoSoKiemTraXuPhat",
                     LoaiFileTaiLieu: $(this).find('[data-name="LoaiFileTaiLieu"] option:selected').val(),
                     MoTa: $(this).find('[data-name="MoTa"]').val(),
                 })
@@ -200,12 +175,12 @@ GiayPhepMoiTruongControl = {
             data.IdKhuCongNghiep = idKhuCongNghiep;
             data.FileTaiLieu = listFileTaiLieu;
             Post({
-                "url": localStorage.getItem("API_URL") + "/GiayPhepMoiTruong/InsertUpdate",
+                "url": localStorage.getItem("API_URL") + "/HoSoKiemTraXuPhat/InsertUpdate",
                 "data": data,
                 callback: function (res) {
                     if (res.Success) {
                         toastr.success('Thực hiện thành công', 'Thông báo')
-                        self.LoadDanhSachGiayPhepMoiTruong();
+                        self.LoadDanhSachHoSoKiemTraXuPhat();
                         $popup.find('.btn-danger').trigger('click');
                     }
                     else {
@@ -216,31 +191,32 @@ GiayPhepMoiTruongControl = {
         }
     },
 
-    RegisterEventsGiayPhepMoiTruong: function () {
+    RegisterEventsHoSoKiemTraXuPhat: function () {
         var self = this;
-        var $tab = $('#bordered-GiayPhepMoiTruong');
-        var $popup = $('#popup-form-giay-phep-moi-truong');
-        $tab.find('#btnCreateGiayPhepMoiTruong').off('click').on('click', function () {
+        var $tab = $('#bordered-HoSoKiemTraXuPhat');
+        var $popup = $('#popup-form-ho-so-kiem-tra-xu-phat');
+        $tab.find('#btnCreateHoSoKiemTraXuPhat').off('click').on('click', function () {
             $popup.modal('show');
+            $popup.find('.modal-header').text("Thêm mới Hồ sơ thanh kiểm tra, xử phạt vi phạm hành chính lĩnh vực bảo vệ môi trường");
             self.ResetPopup();
-            self.RegisterEventsPopupGiayPhepMoiTruong();
+            self.RegisterEventsPopupHoSoKiemTraXuPhat();
         });
-        self.LoadDanhSachGiayPhepMoiTruong();
+        self.LoadDanhSachHoSoKiemTraXuPhat();
     },
-    RegisterEventsPopupGiayPhepMoiTruong: function () {
+    RegisterEventsPopupHoSoKiemTraXuPhat: function () {
         var self = this;
-        var $popup = $('#popup-form-giay-phep-moi-truong');
+        var $popup = $('#popup-form-ho-so-kiem-tra-xu-phat');
 
         // Phần xử lý file
-        $popup.find('#btnSelectFileGiayPhepMoiTruong').off('click').on('click', function () {
-            $popup.find('#fileGiayPhepMoiTruong').trigger("click");
+        $popup.find('#btnSelectFileHoSoKiemTraXuPhat').off('click').on('click', function () {
+            $popup.find('#fileHoSoKiemTraXuPhat').trigger("click");
         });
 
-        if ($popup.find('#fileGiayPhepMoiTruong').length > 0) {
-            $popup.find('#fileGiayPhepMoiTruong')[0].value = "";
-            $popup.find('#fileGiayPhepMoiTruong').off('change').on('change', function (e) {
+        if ($popup.find('#fileHoSoKiemTraXuPhat').length > 0) {
+            $popup.find('#fileHoSoKiemTraXuPhat')[0].value = "";
+            $popup.find('#fileHoSoKiemTraXuPhat').off('change').on('change', function (e) {
                 var $this = this;
-                var file = $popup.find('#fileGiayPhepMoiTruong')[0].files.length > 0 ? $popup.find('#fileGiayPhepMoiTruong')[0].files : null;
+                var file = $popup.find('#fileHoSoKiemTraXuPhat')[0].files.length > 0 ? $popup.find('#fileHoSoKiemTraXuPhat')[0].files : null;
                 if (file != null) {
                     var dataFile = new FormData();
                     if (type == "DuAn") {
@@ -266,8 +242,8 @@ GiayPhepMoiTruongControl = {
                             if (res.Success) {
                                 for (var i = 0; i < res.Data.length; i++) {
                                     var $tr = $popup.find("#tempFileTable").html();
-                                    $popup.find("#tblFileGiayPhepMoiTruong tbody").append($tr);
-                                    $popup.find("#tblFileGiayPhepMoiTruong tbody tr:last td:first").append('<a href = "#" data-id="0" data-IdFile = "' + res.Data[i] + '">' + file[i].name + '</a>');
+                                    $popup.find("#tblFileHoSoKiemTraXuPhat tbody").append($tr);
+                                    $popup.find("#tblFileHoSoKiemTraXuPhat tbody tr:last td:first").append('<a href = "#" data-id="0" data-IdFile = "' + res.Data[i] + '">' + file[i].name + '</a>');
                                     $popup.find(".tr-remove").off('click').on('click', function () {
                                         $(this).parents('tr:first').remove();
                                     });
@@ -283,12 +259,12 @@ GiayPhepMoiTruongControl = {
         //Hết phần xử lý file
 
         $popup.find(".btn-primary").off('click').on('click', function () {
-            self.InsertUpdateGiayPhepMoiTruong();
+            self.InsertUpdateHoSoKiemTraXuPhat();
         });
     },
 }
 
 $(document).ready(function () {
-    GiayPhepMoiTruongControl.Init();
+    HoSoKiemTraXuPhatControl.Init();
 });
 

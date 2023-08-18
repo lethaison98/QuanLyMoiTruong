@@ -13,20 +13,18 @@ KhuCongNghiepChiTietControl = {
                 if (res.Success) {
                     var dsDuAn = "";
                     $.each(res.Data.DsDuAn, function (j, duan) {
-                        console.log(duan);
                         dsDuAn += "<span>" + duan.TenDuAn + "</span></br>";
                     });
-                    console.log(dsDuAn);
                     $('.pagetitle h1').text(res.Data.TenKhuCongNghiep);
                     $("#thong-tin-kcn").html("");
                     var html = `<div class="row">
                                     <div class="col-lg-3 col-md-4 label ">Tên khu công nghiệp</div>
-                                    <div class="col-lg-9 col-md-8" data-name="TenDuAn">`+ res.Data.TenKhuCongNghiep + `</div>
+                                    <div class="col-lg-9 col-md-8">`+ res.Data.TenKhuCongNghiep + `</div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Tên chủ đầu tư</div>
-                                    <div class="col-lg-9 col-md-8" data-name="TenDuAn">`+ res.Data.TenChuDauTu + `</div>
+                                    <div class="col-lg-9 col-md-8">`+ res.Data.TenChuDauTu + `</div>
                                 </div>
 
                                 <div class="row">
@@ -54,15 +52,21 @@ KhuCongNghiepChiTietControl = {
     },
     RegisterEvents: function () {
         var self = this;
-        $('#ThongTinDuAn-tab').trigger('click');
-        $('#ThongTinDuAn-tab').off('click').on('click', function () {
+        $('#ThongTinKCN-tab').trigger('click');
+        $('#ThongTinKCN-tab').off('click').on('click', function () {
             self.LoadThongTinKhuCongNghiep();
         });
-        $('#BaoCaoBaoVeMoiTruongKCN-tab').off('click').on('click', function () {
-            BaoCaoBaoVeMoiTruongKCNControl.RegisterEventsBaoCaoBaoVeMoiTruongKCN();
+        $('#GiayPhepMoiTruong-tab').off('click').on('click', function () {
+            GiayPhepMoiTruongControl.RegisterEventsGiayPhepMoiTruong();
+        });
+        $('#BaoCaoBaoVeMoiTruong-tab').off('click').on('click', function () {
+            BaoCaoBaoVeMoiTruongControl.RegisterEventsBaoCaoBaoVeMoiTruong();
         });
         $('#BaoCaoQuanTracMoiTruong-tab').off('click').on('click', function () {
             BaoCaoQuanTracMoiTruongControl.RegisterEventsBaoCaoQuanTracMoiTruong();
+        });
+        $('#HoSoKiemTraXuPhat-tab').off('click').on('click', function () {
+            HoSoKiemTraXuPhatControl.RegisterEventsHoSoKiemTraXuPhat();
         });
     },
 }

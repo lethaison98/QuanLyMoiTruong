@@ -1,6 +1,16 @@
 ﻿if (typeof (BaoCaoBaoVeMoiTruongControl) == "undefined") BaoCaoBaoVeMoiTruongControl = {};
 var url = window.location.pathname;
-var id = url.substring(url.lastIndexOf('/') + 1);
+var type = "";
+var idDuAn = 0;
+var idKhuCongNghiep = 0;
+if (url.indexOf("DuAn") != -1) {
+    idDuAn = url.substring(url.lastIndexOf('/') + 1);
+    type = "DuAn";
+}
+if (url.indexOf("KhuCongNghiep") != -1) {
+    idKhuCongNghiep = url.substring(url.lastIndexOf('/') + 1);
+    type = "KhuCongNghiep";
+}
 BaoCaoBaoVeMoiTruongControl = {
     Init: function () {
         BaoCaoBaoVeMoiTruongControl.RegisterEventsBaoCaoBaoVeMoiTruong();
@@ -22,11 +32,18 @@ BaoCaoBaoVeMoiTruongControl = {
 
     LoadDanhSachBaoCaoBaoVeMoiTruong: function () {
         var self = this;
+        var urlApi = "";
+        if (type == "DuAn") {
+            urlApi = localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetBaoCaoBVMTHangNamByDuAn?idDuAn=" + idDuAn;
+        };
+        if (type == "KhuCongNghiep") {
+            urlApi = localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetBaoCaoBVMTHangNamByKhuCongNghiep?idKhuCongNghiep=" + idKhuCongNghiep;
+        };
         var $tab = $('#bordered-BaoCaoBaoVeMoiTruong');
         var $popup = $('#popup-form-bao-cao-bao-ve-moi-truong-hang-nam');
         $tab.find("#accordion-BaoCaoBaoVeMoiTruong").html('');
         Get({
-            "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetBaoCaoBVMTHangNamByDuAn?idDuAn=" + id,
+            "url": urlApi,
             callback: function (res) {
                 if (res.Success) {
                     $.each(res.Data, function (i, value) {
@@ -155,7 +172,8 @@ BaoCaoBaoVeMoiTruongControl = {
                 })
 
             });
-            data.IdDuAn = id;
+            data.IdDuAn = idDuAn;
+            data.IdKhuCongNghiep = idKhuCongNghiep;
             data.FileTaiLieu = listFileTaiLieu;
             Post({
                 "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/InsertUpdate",
@@ -202,7 +220,11 @@ BaoCaoBaoVeMoiTruongControl = {
                 var file = $popup.find('#fileBaoCaoBaoVeMoiTruong')[0].files.length > 0 ? $popup.find('#fileBaoCaoBaoVeMoiTruong')[0].files : null;
                 if (file != null) {
                     var dataFile = new FormData();
-                    dataFile.append("NhomTaiLieu", "DuAn");
+                    if (type == "DuAn") {
+                        dataFile.append("NhomTaiLieu", "DuAn");
+                    } else {
+                        dataFile.append("NhomTaiLieu", "KhuCongNghiep");
+                    }
                     dataFile.append("IdTaiLieu", id);
                     for (var i = 0; i < file.length; i++) {
                         dataFile.append("File", file[i]);

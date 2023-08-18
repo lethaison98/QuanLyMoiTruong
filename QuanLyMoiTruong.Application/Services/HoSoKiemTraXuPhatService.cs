@@ -53,7 +53,7 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<HoSoKiemTraXuPhatViewModel>> GetById(int id)
         {
             var result = new HoSoKiemTraXuPhatViewModel();
-            var data = await _unitOfWork.GetRepository<HoSoKiemTraXuPhat>().GetFirstOrDefaultAsync(predicate: x => x.IdHoSoKiemTraXuPhat == id, include: x => x.Include(y => y.DuAn));
+            var data = await _unitOfWork.GetRepository<HoSoKiemTraXuPhat>().GetFirstOrDefaultAsync(predicate: x => x.IdHoSoKiemTraXuPhat == id, include: x => x.Include(y => y.DuAn).Include(y=> y.KhuCongNghiep));
             result = MapEntityToViewModel(data);
             var dsFile = await _fileTaiLieuService.GetByTaiLieu(data.IdHoSoKiemTraXuPhat, NhomTaiLieuEnum.HoSoKiemTraXuPhat.ToString());
             if (dsFile.Success)
@@ -144,7 +144,21 @@ namespace QuanLyMoiTruong.Application.Services
             }
             return new ApiSuccessResult<IList<HoSoKiemTraXuPhatViewModel>>() { Data = result };
         }
-
+        public async Task<ApiResult<IList<HoSoKiemTraXuPhatViewModel>>> GetListHoSoKiemTraXuPhatByKhuCongNghiep(int idKhuCongNghiep)
+        {
+            var result = new List<HoSoKiemTraXuPhatViewModel>();
+            var entities = await _unitOfWork.GetRepository<HoSoKiemTraXuPhat>().GetAllAsync(predicate: x => !x.IsDeleted && x.IdKhuCongNghiep == idKhuCongNghiep, include: x => x.Include(x => x.KhuCongNghiep));
+            result = entities.Select(MapEntityToViewModel).ToList();
+            foreach (var item in result)
+            {
+                var dsFile = await _fileTaiLieuService.GetByTaiLieu(item.IdHoSoKiemTraXuPhat, NhomTaiLieuEnum.HoSoKiemTraXuPhat.ToString());
+                if (dsFile.Success)
+                {
+                    item.FileTaiLieu = dsFile.Data.ToList();
+                }
+            }
+            return new ApiSuccessResult<IList<HoSoKiemTraXuPhatViewModel>>() { Data = result };
+        }
         public HoSoKiemTraXuPhatViewModel MapEntityToViewModel(HoSoKiemTraXuPhat entity) {
             var result = new HoSoKiemTraXuPhatViewModel();
             result.IdHoSoKiemTraXuPhat = entity.IdHoSoKiemTraXuPhat;
@@ -163,9 +177,8 @@ namespace QuanLyMoiTruong.Application.Services
         {
             entity.IdHoSoKiemTraXuPhat = viewModel.IdHoSoKiemTraXuPhat;
             entity.TenHoSo = viewModel.TenHoSo;
-            //entity.NgayBaoCao = string.IsNullOrEmpty(viewModel.NgayBaoCao) ? null : DateTime.Parse(viewModel.NgayBaoCao, new CultureInfo("vi-VN"));
-            entity.IdDuAn = viewModel.IdDuAn;
-            entity.IdKhuCongNghiep = viewModel.IdKhuCongNghiep;
+            entity.IdDuAn = viewModel.IdDuAn == 0 ? null : viewModel.IdDuAn;
+            entity.IdKhuCongNghiep = viewModel.IdKhuCongNghiep == 0 ? null : viewModel.IdKhuCongNghiep;
 
             return entity;
         }
