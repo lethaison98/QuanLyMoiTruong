@@ -17,20 +17,8 @@ namespace QuanLyMoiTruong.WebApp.Controllers
             return View();
         }
 
-        [Route("PopupDetailThanhPhanMoiTruong")]
-        public ViewResult _PopupDetailThanhPhanMoiTruong()
-        {
-            return View();
-        }
-
-        [Route("PopupThongBaoThanhPhanMoiTruong")]
-        public ViewResult _PopupThongBaoThanhPhanMoiTruong()
-        {
-            return View();
-        }
-
-        [Route("PopupImportThanhPhanMoiTruong")]
-        public ViewResult _PopupImportThanhPhanMoiTruong()
+        [Route("BanDoCacThanhPhanMoitruong")]
+        public ViewResult BanDoCacThanhPhanMoitruong()
         {
             return View();
         }

@@ -13,7 +13,9 @@ KhuCongNghiepChiTietControl = {
                 if (res.Success) {
                     var dsDuAn = "";
                     $.each(res.Data.DsDuAn, function (j, duan) {
-                        dsDuAn += "<span>" + duan.TenDuAn + "</span></br>";
+                        var stt = j + 1;
+                        dsDuAn += "<tr><td>" + stt + "</td><td>" + duan.TenDuAn + "</td><td>" + duan.TenDoanhNghiep + "</td><td>" + duan.DiaChi + "</td><td>" + duan.GhiChu + "</td></tr>"
+                                
                     });
                     $('.pagetitle h1').text(res.Data.TenKhuCongNghiep);
                     $("#thong-tin-kcn").html("");
@@ -33,7 +35,7 @@ KhuCongNghiepChiTietControl = {
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Thuộc khu kinh tế</div>
+                                    <div class="col-lg-3 col-md-4 label">Trong khu kinh tế Đông Nam</div>
                                     <div class="col-lg-9 col-md-8">`+ (res.Data.ThuocKhuKinhTe == true?"Có" : "Không") + `</div>
                                 </div>
                                 <div class="row">
@@ -42,10 +44,9 @@ KhuCongNghiepChiTietControl = {
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Danh sách dự án</div>
-                                    <div class="col-lg-9 col-md-8">`+ dsDuAn+`
-                                    </div>
                                 </div>`;
                     $("#thong-tin-kcn").append(html);
+                    $("#danh-sach-du-an").append(dsDuAn);
                 }
             }
         });

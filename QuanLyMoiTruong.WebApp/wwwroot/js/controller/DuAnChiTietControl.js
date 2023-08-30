@@ -11,6 +11,7 @@ DuAnChiTietControl = {
             "url": localStorage.getItem("API_URL") + "/DuAn/GetById?idDuAn=" + id,
             callback: function (res) {
                 if (res.Success) {
+                    $('.pagetitle h1').text(res.Data.TenDuAn);
                     $("#thong-tin-du-an").html("");
                     var html = `<div class="row">
                                     <div class="col-lg-3 col-md-4 label ">Tên dự án/cơ sở</div>
@@ -18,8 +19,8 @@ DuAnChiTietControl = {
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Tên doanh nghiệp</div>
-                                    <div class="col-lg-9 col-md-8" data-name="TenDuAn">`+ res.Data.TenDoanhNghiep + `</div>
+                                    <div class="col-lg-3 col-md-4 label">Chủ đầu tư</div>
+                                    <div class="col-lg-9 col-md-8" data-name="TenDoanhNghiep">`+ res.Data.TenDoanhNghiep + `</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Địa chỉ</div>
@@ -41,11 +42,11 @@ DuAnChiTietControl = {
                                     <div class="col-lg-9 col-md-8">`+ res.Data.GiayPhepDKKD + `</div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Tên khu công nghiệp</div>
+                                    <div class="col-lg-3 col-md-4 label">Thuộc khu công nghiệp</div>
                                     <div class="col-lg-9 col-md-8" data-name="TenDuAn">`+ (res.Data.TenKhuCongNghiep == "" ? "Không" : res.Data.TenKhuCongNghiep) + `</div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Thuộc khu kinh tế</div>
+                                    <div class="col-lg-3 col-md-4 label">Trong khu kinh tế Đông Nam</div>
                                     <div class="col-lg-9 col-md-8" data-name="TenDuAn">`+ (res.Data.ThuocKhuKinhte == false ? "Không" : "Có") + `</div>
                                 </div>
                                 <div class="row">

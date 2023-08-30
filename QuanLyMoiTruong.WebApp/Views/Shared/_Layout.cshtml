@@ -59,13 +59,6 @@
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
-        <div class="search-bar">
-            <form class="search-form d-flex align-items-center" method="POST" action="#">
-                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-            </form>
-        </div><!-- End Search Bar -->
-
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
                 <li class="nav-item dropdown pe-3">
@@ -118,21 +111,34 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/DuAn">
-                    <i class="bi bi-question-circle"></i>
-                    <span>Quy trình công tác BVMT của các Dự án/Cơ sở</span>
+                    <i class="bi bi-journal-text"></i>
+                    <span>Công tác BVMT của các dự án/cơ sở</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/KhuCongNghiep">
-                    <i class="bi bi-envelope"></i>
-                    <span>Công tác BVMT tại các Khu công nghiệp</span>
+                    <i class="bi bi-layout-text-window-reverse"></i>
+                    <span>Công tác bảo vệ môi trường tại các KCN</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/ThanhPhanMoiTruong">
-                    <i class="bi bi-box-arrow-in-right"></i>
-                    <span>Các TPMT trong KKT và các KCN trên ĐB tỉnh Nghệ An</span>
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
+                    <i class="bi bi-bar-chart"></i><span>Diễn biến các thành phần môi trường trên địa bàn KKT Đông Nam</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
+                <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
+                    <li>
+                        <a class="nav-link collapsed" href="/ThanhPhanMoiTruong">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span>Danh sách các thành phần môi trường</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link collapsed" href="/ThanhPhanMoiTruong/BanDoCacThanhPhanMoitruong">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span>Bản đồ các thành phần môi trường</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/VanBanQuyPham">
@@ -209,10 +215,10 @@
     <script src="~/lib/treeview/dx.all.js"></script>
 
     <script>
-        const API_URL = @Json.Serialize(@Configuration.GetSection("BaseAddress").Value);
         if ('@Context.Session.GetString("AccessToken")' == '') {
             window.location.href = "/User/Logout";
         }
+        const API_URL = @Json.Serialize(@Configuration.GetSection("BaseAddress").Value);
         window.localStorage.setItem('API_URL', API_URL);
         window.localStorage.setItem('ACCESS_TOKEN', '@Context.Session.GetString("AccessToken")');
         window.localStorage.setItem('FullName', '@Context.Session.GetString("FullName")');

@@ -336,6 +336,55 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.ToTable("BaoCaoQuanTracMoiTruong", (string)null);
                 });
 
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.DiemQuanTrac", b =>
+                {
+                    b.Property<int>("IdDiemQuanTrac")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDiemQuanTrac"));
+
+                    b.Property<string>("DiaChi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdNguoiCapNhat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdNguoiTao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("KinhDo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Loai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("NgayCapNhat")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayTao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NguoiCapNhat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NguoiTao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenDiemQuanTrac")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ViDo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdDiemQuanTrac");
+
+                    b.ToTable("DiemQuanTrac", (string)null);
+                });
+
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.DuAn", b =>
                 {
                     b.Property<int>("IdDuAn")
@@ -365,6 +414,9 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("LoaiHinhSanXuat")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("NgayCapNhat")
                         .HasColumnType("datetime2");
 
@@ -375,6 +427,9 @@ namespace QuanLyMoiTruong.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NguoiTao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QuyMo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TenDoanhNghiep")

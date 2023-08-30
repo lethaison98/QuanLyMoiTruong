@@ -18,6 +18,8 @@ namespace QuanLyMoiTruong.Data.Entities
         public string TenNguoiDaiDien { get; set; }
         public string TenNguoiPhuTrachTNMT { get; set; }
         public string GiayPhepDKKD { get; set; }
+        public string LoaiHinhSanXuat { get; set; }
+        public string QuyMo { get; set; }
         public string GhiChu { get; set; }
     }
 }

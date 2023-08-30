@@ -201,6 +201,14 @@ ThanhPhanMoiTruongControl = {
             self.RegisterEventsPopupThanhPhanMoiTruong();
         });
         self.LoadDatatable();
+        $(document).on('keypress', function (e) {
+            if (e.which == 13) {
+                $("#btnSearchThanhPhanMoiTruong").trigger('click');
+            }
+        });
+        $("#btnSearchThanhPhanMoiTruong").off('click').on('click', function () {
+            self.table.ajax.reload();
+        });
     },
     RegisterEventsPopupThanhPhanMoiTruong: function () {
         var self = this;
