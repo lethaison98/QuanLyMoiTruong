@@ -17,80 +17,6 @@
 </div><!-- End Page Title -->
 
 <section class="section bandocacthanhphanmoitruong">
-    @*    <div class="row">
-
-        <!-- Left side columns -->
-        <div class="col-lg-8">
-        <div class="row">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2247.337242991142!2d105.6919470603318!3d18.683924939186173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3139cde0977f6557%3A0xb99afe6eb2c23f55!2zQmFuIHF14bqjbiBsw70ga2h1IGtpbmggdOG6vyDEkMO0bmcgTmFt!5e0!3m2!1sen!2s!4v1691110871276!5m2!1sen!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-        </div><!-- End Left side columns -->
-        <!-- Right side columns -->
-        <div class="col-lg-4">
-
-        <!-- Recent Activity -->
-        <div class="card">
-        <div class="filter">
-        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-        <li class="dropdown-header text-start">
-        <h6>Filter</h6>
-        </li>
-
-        <li><a class="dropdown-item" href="#">Today</a></li>
-        <li><a class="dropdown-item" href="#">This Month</a></li>
-        <li><a class="dropdown-item" href="#">This Year</a></li>
-        </ul>
-        </div>
-
-        <div class="card-body">
-        <h5 class="card-title">Các điểm quan trắc trên bản đồ</h5>
-
-        <div class="activity">
-        <div class="activity-item d-flex">
-        <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-        <div class="activity-content">
-        Điểm thoát nước
-        </div>
-        </div><!-- End activity item-->
-        <div class="activity-item d-flex">
-        <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-        <div class="activity-content">
-        Điểm quan trắc không khí
-        </div>
-        </div><!-- End activity item-->
-
-        <div class="activity-item d-flex">
-        <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-        <div class="activity-content">
-        Điểm quan trắc nước biển
-        </div>
-        </div><!-- End activity item-->
-
-        <div class="activity-item d-flex">
-        <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-        <div class="activity-content">
-        Điểm quan trắc nước ngầm
-        </div>
-        </div><!-- End activity item-->
-
-        <div class="activity-item d-flex">
-        <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-        <div class="activity-content">
-        Điểm quan trắc nước mặt
-        </div>
-        </div><!-- End activity item-->
-        </div>
-
-        </div>
-        </div><!-- End Recent Activity -->
-
-
-        </div><!-- End Right side columns -->
-
-        </div>
-    *@
-
     <div class="row">
         <div class="col-lg-8">
             <div id="mapid" style="height: 600px;"></div>
@@ -101,7 +27,7 @@
                         <div class="activity-item d-flex">
                             <div class="activity-content px-3">
                                 <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                                Điểm thoát nước 
+                                Điểm thoát nước
                             </div>
                             <div class="activity-content px-3">
                                 <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
@@ -125,7 +51,20 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="card recent-sales overflow-auto" style = "max-height: 600px">
+            <div class="card recent-sales overflow-auto" style="max-height: 600px">
+                <div class="card-body">
+                    <h5 class="card-title">Lựa chọn thời điểm hiển thị </h5>
+                    <div>
+                        <div>
+                            <select class="form-control select2 ddThanhPhanMoiTruong" data-name="IdThanhPhanMoiTruong" style="width: 100%;">
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="card recent-sales overflow-auto" style="max-height: 540px">
                 <div class="card-body">
                     <h5 class="card-title">Danh sách các điểm quan trắc </h5>
                     <div>

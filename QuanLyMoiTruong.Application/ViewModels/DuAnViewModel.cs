@@ -21,5 +21,6 @@ namespace QuanLyMoiTruong.Data.Entities
         public string LoaiHinhSanXuat { get; set; }
         public string QuyMo { get; set; }
         public string GhiChu { get; set; }
+        public List<GiayPhepMoiTruongViewModel> DSGiayPhepMoiTruong { get; set; }    
     }
 }

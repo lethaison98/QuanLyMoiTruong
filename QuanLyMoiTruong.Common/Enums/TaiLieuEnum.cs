@@ -16,7 +16,11 @@ namespace QuanLyMoiTruong.Common.Enums
         [Display(Name = "Báo cáo đề xuất cấp phép")]
         BaoCaoDeXuatCapPhep = 112, 
         [Display(Name = "Dự án đầu tư")]
-        DuAnDauTu = 113
+        DuAnDauTu = 113,
+        [Display(Name = "Báo cáo kết quả quan trắc")]
+        BaoCaoKetQuaQuanTrac = 310,
+        [Display(Name = "Tổng hợp kết quả quan trắc")]
+        TongHopKetQuaQuanTrac = 311
     }
     public enum NhomTaiLieuEnum
     {

@@ -46,7 +46,7 @@ namespace QuanLyMoiTruong.Application.Services
         {
             var result = new List<DiemQuanTracViewModel>();
             var entities =  await _unitOfWork.GetRepository<DiemQuanTrac>().GetAllAsync(predicate: x => !x.IsDeleted);
-            result = entities.Select(MapEntityToViewModel).ToList();
+            result = entities.Select(MapEntityToViewModel).OrderBy(x=> x.Loai).ThenBy(x=> x.TenDiemQuanTrac).ToList();
             return new ApiSuccessResult<IList<DiemQuanTracViewModel>>() { Data = result };
         }
 
@@ -110,6 +110,18 @@ namespace QuanLyMoiTruong.Application.Services
             _unitOfWork.GetRepository<DiemQuanTrac>().Update(entity);
             await _unitOfWork.SaveChangesAsync();
             return new ApiSuccessResult<DiemQuanTrac>() { Data = entity };
+        }
+        public async Task<ApiResult<IList<DiemQuanTracViewModel>>> GetDuLieuLenBanDo(int idThanhPhanMoiTruong)
+        {
+            var result = new List<DiemQuanTracViewModel>();
+            var entities = await _unitOfWork.GetRepository<DiemQuanTrac>().GetAllAsync(predicate: x => !x.IsDeleted);
+            result = entities.Select(MapEntityToViewModel).OrderBy(x => x.Loai).ThenBy(x => x.TenDiemQuanTrac).ToList();
+            foreach(var item in result)
+            {
+                var dsKetQuaQuanTrac = await _unitOfWork.GetRepository<KetQuaQuanTrac>().GetAllAsync(predicate: x => x.IdDiemQuanTrac == item.IdDiemQuanTrac && x.IdThanhPhanMoiTruong == idThanhPhanMoiTruong);
+                item.DsKetQuaQuanTrac = dsKetQuaQuanTrac.ToList();
+            }
+            return new ApiSuccessResult<IList<DiemQuanTracViewModel>>() { Data = result };
         }
         public DiemQuanTracViewModel MapEntityToViewModel(DiemQuanTrac entity) {
             var result = new DiemQuanTracViewModel();

@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<div class="pagetitle">
+    <h1>Chi tiết thành phần môi trường</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/DuAn">Thành phần môi trường</a></li>
+            <li class="breadcrumb-item active">Chi tiết thành phần môi trường</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card profile">
+            <div class="card-body profile-overview">
+                <h5 class="card-title ">Thông tin Thành phần môi trường</h5>
+                <div class="" id="thong-tin-tpmt">
+                </div>
+                <table class="table table-bordered table-hover table-striped" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%">STT</th>
+                            <th>Tên điểm quan trắc</th>
+                            <th>Tên chỉ số</th>
+                            <th>Giá trị</th>
+                            <th>Đơn vị tính</th>
+                        </tr>
+                    </thead>
+                    <tbody id="danh-sach-ket-qua-quan-trac">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+<script src="~/js/controller/ThanhPhanMoiTruongChiTietControl.js"></script>
+}

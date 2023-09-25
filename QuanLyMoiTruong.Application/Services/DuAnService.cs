@@ -17,9 +17,11 @@ namespace QuanLyMoiTruong.Application.Services
     public class DuAnService : IDuAnService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public DuAnService(IUnitOfWork unitOfWork)
+        private readonly IGiayPhepMoiTruongService _giayPhepMoiTruongService;
+        public DuAnService(IUnitOfWork unitOfWork, IGiayPhepMoiTruongService giayPhepMoiTruongService)
         {
             _unitOfWork= unitOfWork;
+            _giayPhepMoiTruongService = giayPhepMoiTruongService;
         }
 
         public async Task<ApiResult<bool>> Delete(int id)
@@ -48,7 +50,7 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<DuAnViewModel>> GetById(int id)
         {
             var result = new DuAnViewModel();
-            var data = await _unitOfWork.GetRepository<DuAn>().GetFirstOrDefaultAsync(predicate: x => x.IdDuAn == id, include: x => x.Include(y => y.KhuCongNghiep));
+            var data = await _unitOfWork.GetRepository<DuAn>().GetFirstOrDefaultAsync(predicate: x => x.IdDuAn == id, include: x => x.Include(y => y.KhuCongNghiep).Include(x=> x.DsGiayPhepMoiTruong));
             result = MapEntityToViewModel(data);
             return new ApiSuccessResult<DuAnViewModel>() {Data = result };
         }
@@ -121,7 +123,11 @@ namespace QuanLyMoiTruong.Application.Services
             result.TenNguoiDaiDien = entity.TenNguoiDaiDien;
             result.TenNguoiPhuTrachTNMT = entity.TenNguoiPhuTrachTNMT;
             result.GiayPhepDKKD = entity.GiayPhepDKKD;
+            result.QuyMo = entity.QuyMo;
+            result.LoaiHinhSanXuat = entity.LoaiHinhSanXuat;
             result.GhiChu = entity.GhiChu;
+            var listGPMT = _giayPhepMoiTruongService.GetListGiayPhepMoiTruongByDuAn(entity.IdDuAn).Result;
+            result.DSGiayPhepMoiTruong = listGPMT.Data.ToList();
             return result;
         }
         public DuAn MapViewModelToEntity(DuAnViewModel viewModel, DuAn entity)
@@ -135,6 +141,8 @@ namespace QuanLyMoiTruong.Application.Services
             entity.TenNguoiDaiDien = viewModel.TenNguoiDaiDien;
             entity.TenNguoiPhuTrachTNMT = viewModel.TenNguoiPhuTrachTNMT;
             entity.GiayPhepDKKD = viewModel.GiayPhepDKKD;
+            entity.QuyMo = viewModel.QuyMo;
+            entity.LoaiHinhSanXuat = viewModel.LoaiHinhSanXuat;
             entity.GhiChu = viewModel.GhiChu;
             return entity;
         }

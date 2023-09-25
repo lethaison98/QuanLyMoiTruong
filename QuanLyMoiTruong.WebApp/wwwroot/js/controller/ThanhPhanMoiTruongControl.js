@@ -51,7 +51,20 @@ ThanhPhanMoiTruongControl = {
                     {
                         "class": "name-control",
                         "defaultContent": "",
-                        "data": "TenThanhPhanMoiTruong",
+                        render: function (data, type, row) {
+                            var thaotac = "<a href='ThanhPhanMoiTruong/ThanhPhanMoiTruongChiTiet/" + row.IdThanhPhanMoiTruong + "'>" + row.TenThanhPhanMoiTruong + "</i></a>";
+                            return thaotac;
+                        }
+                    },
+                    {
+                        "class": "name-control",
+                        "data": "Nam",
+                        "defaultContent": "",
+                    },
+                    {
+                        "class": "name-control",
+                        "data": "Lan",
+                        "defaultContent": "",
                     },
                     {
                         "class": "name-control",
@@ -140,7 +153,7 @@ ThanhPhanMoiTruongControl = {
 
     ResetPopup: function () {
         var $popup = $('#popup-form-thanh-phan-moi-truong');
-        $popup.find('.modal-header').text("Thêm mới giấy phép môi trường");
+        $popup.find('.modal-header').text("Thêm mới thành phần môi trường");
         ResetForm("#FormThanhPhanMoiTruong");
         $popup.find('[data-name="IdThanhPhanMoiTruong"]').val(0);
         $popup.find("#tblFileThanhPhanMoiTruong tbody").html('');

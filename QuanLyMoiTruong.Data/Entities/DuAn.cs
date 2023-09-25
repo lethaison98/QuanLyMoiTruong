@@ -23,6 +23,7 @@ namespace QuanLyMoiTruong.Data.Entities
         public string LoaiHinhSanXuat { get; set; }
         public string QuyMo { get; set; }
         public string GhiChu { get; set; }
+        [JsonIgnore]
         public List<GiayPhepMoiTruong> DsGiayPhepMoiTruong { get; set; }
         public List<BaoCaoBaoVeMoiTruong> DsBaoCaoBaoVeMoiTruong { get; set; }
         public List<HoSoKiemTraXuPhat> DsHoSoKiemTraXuPhat { get; set; }

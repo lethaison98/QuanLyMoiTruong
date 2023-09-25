@@ -132,7 +132,7 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<IList<GiayPhepMoiTruongViewModel>>> GetListGiayPhepMoiTruongByDuAn(int idDuAn)
         {
             var result = new List<GiayPhepMoiTruongViewModel>();
-            var entities = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted && x.IdDuAn == idDuAn, include: x => x.Include(x => x.DuAn));
+            var entities = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted && x.IdDuAn == idDuAn, include: x => x.Include(x => x.DuAn), orderBy: o => o.OrderByDescending(s=> s.NgayCap));
             result = entities.Select(MapEntityToViewModel).ToList();
             foreach (var item in result)
             {

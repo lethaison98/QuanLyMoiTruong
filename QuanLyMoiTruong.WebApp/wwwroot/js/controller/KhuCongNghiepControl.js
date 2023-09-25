@@ -44,8 +44,18 @@ KhuCongNghiepControl = {
                     },
                     {
                         "class": "name-control",
-                        "data": "GhiChu",
+                        "data": "DiaDiem",
                         "defaultContent": "",
+                    },
+                    {
+                        "class": "name-control",
+                        "data": "DiaDiem",
+                        render: function (data, type, row) {
+                            if (row.ThuocKhuKinhTe)
+                                return "Có";
+                            else
+                                return "Không";
+                        }
                     },
                     {
                         "class": "function-control",

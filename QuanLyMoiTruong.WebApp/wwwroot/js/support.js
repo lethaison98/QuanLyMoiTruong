@@ -352,6 +352,11 @@
                 case 'checkbox':
                     $(item).prop('checked', Boolean(data[$(item).attr('data-name')]));
                     break;
+                case 'date':
+                    var formatDate = "YYYY-MM-DD";
+                    var formatString = "DD/MM/YYYY"
+                    $(item).val(moment(data[$(item).attr('data-name')], formatString).format(formatDate));
+                    break;
                 default:
 
                     break;
@@ -418,10 +423,12 @@
                     value2 = $(item).find('option:selected').text().trim();
                     data[key2] = value2;
                     $(item).val() ? value = $(item).val().trim() : value = "";
-
+                    break;
+                case 'date':
+                    var formatToString = "DD/MM/YYYY";
+                    value = moment($(item).val()).format(formatToString);
                     break;
                 default:
-
                     break;
             }
 

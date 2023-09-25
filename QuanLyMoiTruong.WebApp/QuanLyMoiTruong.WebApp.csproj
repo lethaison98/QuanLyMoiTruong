@@ -30,6 +30,9 @@
 	  </COMReference>
 	</ItemGroup>
 	<ItemGroup>
+	  <None Include="wwwroot\lib\moment\moment.min.js" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="DocumentFormat.OpenXml" Version="2.18.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.9" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

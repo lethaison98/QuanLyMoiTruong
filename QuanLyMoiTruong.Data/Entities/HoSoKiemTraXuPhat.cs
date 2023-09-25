@@ -14,6 +14,8 @@ namespace QuanLyMoiTruong.Data.Entities
         public int? IdKhuCongNghiep { get; set; }
         public virtual KhuCongNghiep KhuCongNghiep { get; set; }   
         public string TenHoSo { get; set; }
-        
+        public int Nam { get; set; }
+        public int Lan { get; set; }
+
     }
 }

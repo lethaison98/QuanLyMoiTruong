@@ -46,14 +46,29 @@ DuAnChiTietControl = {
                                     <div class="col-lg-9 col-md-8" data-name="TenDuAn">`+ (res.Data.TenKhuCongNghiep == "" ? "Không" : res.Data.TenKhuCongNghiep) + `</div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Quy mô sản xuất</div>
+                                    <div class="col-lg-9 col-md-8">`+ res.Data.QuyMo + `</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Loại hình sản xuất</div>
+                                    <div class="col-lg-9 col-md-8">`+ res.Data.LoaiHinhSanXuat + `</div>
+                                </div>
+                                <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Trong khu kinh tế Đông Nam</div>
                                     <div class="col-lg-9 col-md-8" data-name="TenDuAn">`+ (res.Data.ThuocKhuKinhte == false ? "Không" : "Có") + `</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Ghi chú</div>
                                     <div class="col-lg-9 col-md-8">`+ res.Data.GhiChu + `</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Giấy phép môi trường</div>
+                                    <div class="col-lg-9 col-md-8" data-name="SoNgayGiayPhepMoitruong"></div>
                                 </div>`;
-                    $("#thong-tin-du-an").append(html);
+                    $('#thong-tin-du-an').append(html);
+                    if (res.Data.DSGiayPhepMoiTruong != null) {
+                        $('#thong-tin-du-an').find('[data-name="SoNgayGiayPhepMoitruong"]').text(res.Data.DSGiayPhepMoiTruong[0].SoGiayPhep + " ngày " + res.Data.DSGiayPhepMoiTruong[0].NgayCap + " do " + res.Data.DSGiayPhepMoiTruong[0].CoQuanCap +" cấp");
+                    }
                 }
             }
         });

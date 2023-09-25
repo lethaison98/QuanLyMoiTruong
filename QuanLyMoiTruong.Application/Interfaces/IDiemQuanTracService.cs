@@ -11,6 +11,6 @@ namespace QuanLyMoiTruong.Application.Interfaces
 {
     public interface IDiemQuanTracService:IBaseService<DiemQuanTrac, int, DiemQuanTracViewModel, PagingRequest>
     {
-      
+        public Task<ApiResult<IList<DiemQuanTracViewModel>>> GetDuLieuLenBanDo(int idThanhPhanMoiTruong);
     }
 }

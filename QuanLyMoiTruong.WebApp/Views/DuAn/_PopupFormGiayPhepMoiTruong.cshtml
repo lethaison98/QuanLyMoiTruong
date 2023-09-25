@@ -21,13 +21,40 @@
                     <div class="col-6">
                         <label>Ngày cấp<span class="required">*</span></label>
                         <div class="ttls-content">
-                            <input type="text" class="form-control" required="" data-name="NgayCap">
+                            <input type="date" class="form-control" required="" data-name="NgayCap">
                         </div>
                     </div>
                     <div class="col-6">
                         <label>Cơ quan cấp<span class="required">*</span></label>
                         <div class="ttls-content">
-                            <input type="text" class="form-control" required="" data-name="CoQuanCap">
+                            <input type="text" list="coquancap" class="form-control" data-name="CoQuanCap" required />
+                            <datalist id="coquancap">
+                                <option>Ban quản lý KKT Đông Nam</option>
+                                <option>UBND tỉnh Nghệ An</option>
+                                <option>Sở tài nguyên môi trường tỉnh Nghệ An</option>
+                                <option>Bộ tài nguyên môi trường</option>
+                                <option>UBND Thành phố Vinh</option>
+                                <option>UBND Thị xã Cửa Lò</option>
+                                <option>UBND Thị xã Thái Hoà</option>
+                                <option>UBND Huyện Quế Phong</option>
+                                <option>UBND Huyện Quỳ Châu</option>
+                                <option>UBND Huyện Kỳ Sơn</option>
+                                <option>UBND Huyện Tương Dương</option>
+                                <option>UBND Huyện Nghĩa Đàn</option>
+                                <option>UBND Huyện Quỳ Hợp</option>
+                                <option>UBND Huyện Quỳnh Lưu</option>
+                                <option>UBND Huyện Con Cuông</option>
+                                <option>UBND Huyện Tân Kỳ</option>
+                                <option>UBND Huyện Anh Sơn</option>
+                                <option>UBND Huyện Diễn Châu</option>
+                                <option>UBND Huyện Yên Thành</option>
+                                <option>UBND Huyện Đô Lương</option>
+                                <option>UBND Huyện Thanh Chương</option>
+                                <option>UBND Huyện Nghi Lộc</option>
+                                <option>UBND Huyện Nam Đàn</option>
+                                <option>UBND Huyện Hưng Nguyên</option>
+                                <option>UBND Thị xã Hoàng Mai</option>
+                            </datalist>
                         </div>
                     </div>
                 </div>

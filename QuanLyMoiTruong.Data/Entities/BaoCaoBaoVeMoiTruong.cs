@@ -13,8 +13,10 @@ namespace QuanLyMoiTruong.Data.Entities
         public virtual DuAn DuAn { get; set; }
         public int? IdKhuCongNghiep { get; set; }
         public virtual KhuCongNghiep KhuCongNghiep { get; set; }   
+        public bool KhuKinhTe { get; set; }
         public string TenBaoCao { get; set; }
         public DateTime? NgayBaoCao { get; set; }
-        
+        public int Nam { get; set; }
+        public int Lan { get; set; }
     }
 }

@@ -11,30 +11,30 @@ namespace QuanLyMoiTruong.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class DiemQuanTracController : Controller
+    public class KetQuaQuanTracController : Controller
     {
-        private readonly IDiemQuanTracService _DiemQuanTracService;
-        public DiemQuanTracController(IDiemQuanTracService DiemQuanTracService)
+        private readonly IKetQuaQuanTracService _KetQuaQuanTracService;
+        public KetQuaQuanTracController(IKetQuaQuanTracService KetQuaQuanTracService)
         {
-            _DiemQuanTracService = DiemQuanTracService;
+            _KetQuaQuanTracService = KetQuaQuanTracService;
         }
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _DiemQuanTracService.GetAll();
+            var result = await _KetQuaQuanTracService.GetAll();
             return Ok(result);
         }
         [HttpPost("InsertUpdate")]
-        public async Task<IActionResult> InsertUpdate(DiemQuanTracViewModel req)
+        public async Task<IActionResult> InsertUpdate(KetQuaQuanTracViewModel req)
         {
-            if(req.IdDiemQuanTrac == 0)
+            if(req.IdKetQuaQuanTrac == 0)
             {
-                var result = await _DiemQuanTracService.Insert(req);
+                var result = await _KetQuaQuanTracService.Insert(req);
                 return Ok(result);
             }
             else
             {
-                var result = await _DiemQuanTracService.Update(req);
+                var result = await _KetQuaQuanTracService.Update(req);
                 return Ok(result);
             }
         }
@@ -47,26 +47,26 @@ namespace QuanLyMoiTruong.Api.Controllers
                 PageIndex = pageNumber,
                 PageSize = pageSize
             };
-            var result = await _DiemQuanTracService.GetAllPaging(param);
+            var result = await _KetQuaQuanTracService.GetAllPaging(param);
             return Ok(result);
         }
         [HttpDelete("Delete")]
-        public async Task<IActionResult> Delete(int idDiemQuanTrac)
+        public async Task<IActionResult> Delete(int idKetQuaQuanTrac)
         {
-            var result = await _DiemQuanTracService.Delete(idDiemQuanTrac);
+            var result = await _KetQuaQuanTracService.Delete(idKetQuaQuanTrac);
             return Ok(result);
         }
 
         [HttpGet("GetById")]
-        public async Task<IActionResult> GetById(int idDiemQuanTrac)
+        public async Task<IActionResult> GetById(int idKetQuaQuanTrac)
         {
-            var result = await _DiemQuanTracService.GetById(idDiemQuanTrac);
+            var result = await _KetQuaQuanTracService.GetById(idKetQuaQuanTrac);
             return Ok(result);
         }
-        [HttpGet("GetDuLieuLenBanDo")]
-        public async Task<IActionResult> GetDuLieuLenBanDo(int idThanhPhanMoiTruong)
+        [HttpGet("GetAllByIdThanhPhanMoiTruong")]
+        public async Task<IActionResult> GetAllByIdThanhPhanMoiTruong(int idThanhPhanMoiTruong)
         {
-            var result = await _DiemQuanTracService.GetDuLieuLenBanDo(idThanhPhanMoiTruong);
+            var result = await _KetQuaQuanTracService.GetAllByIdThanhPhanMoiTruong(idThanhPhanMoiTruong);
             return Ok(result);
         }
     }
