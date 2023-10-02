@@ -9,5 +9,7 @@ namespace QuanLyMoiTruong.Application.Requests
     public class GiayPhepMoiTruongRequest : PagingRequest
     {
         public int IdDuAn { get; set; } 
+        public DateTime? TuNgay { get; set; }
+        public DateTime? DenNgay { get; set; }
     }
 }

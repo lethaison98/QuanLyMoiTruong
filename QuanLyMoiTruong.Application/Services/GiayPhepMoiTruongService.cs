@@ -48,7 +48,6 @@ namespace QuanLyMoiTruong.Application.Services
             result = entities.Select(MapEntityToViewModel).ToList();
             return new ApiSuccessResult<IList<GiayPhepMoiTruongViewModel>>() { Data = result };
         }
-
         public async Task<ApiResult<GiayPhepMoiTruongViewModel>> GetById(int id)
         {
             var result = new GiayPhepMoiTruongViewModel();
@@ -159,6 +158,21 @@ namespace QuanLyMoiTruong.Application.Services
             }
             return new ApiSuccessResult<IList<GiayPhepMoiTruongViewModel>>() { Data = result };
         }
+        public async Task<ApiResult<IList<GiayPhepMoiTruongViewModel>>> GetListByKhoangThoiGian(GiayPhepMoiTruongRequest request)
+        {
+            var entities = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted && x.IdDuAn != null, include: x=> x.Include(x=> x.DuAn));
+            if (request.TuNgay != null)
+            {
+                entities = entities.Where(x => x.NgayCap >= request.TuNgay).ToList();
+            }
+            if (request.DenNgay != null)
+            {
+                entities = entities.Where(x => x.NgayCap <= request.DenNgay).ToList();
+            }
+            var result = new List<GiayPhepMoiTruongViewModel>();
+            result = entities.Select(MapEntityToViewModel).ToList();
+            return new ApiSuccessResult<IList<GiayPhepMoiTruongViewModel>>() { Data = result };
+        }
         public GiayPhepMoiTruongViewModel MapEntityToViewModel(GiayPhepMoiTruong entity)
         {
             var result = new GiayPhepMoiTruongViewModel();
@@ -168,11 +182,11 @@ namespace QuanLyMoiTruong.Application.Services
             result.CoQuanCap = entity.CoQuanCap;
             result.NgayCap = entity.NgayCap != null ? entity.NgayCap.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "";
             result.IdDuAn = entity.IdDuAn;
-            result.TenDuAn = entity.IdDuAn != null ? entity.DuAn.TenDuAn : "";
-            result.TenDoanhNghiep = entity.IdDuAn != null ? entity.DuAn.TenDoanhNghiep : "";
+            result.TenDuAn = entity.DuAn != null ? entity.DuAn.TenDuAn : "";
+            result.TenDoanhNghiep = entity.DuAn != null ? entity.DuAn.TenDoanhNghiep : "";
             result.IdKhuCongNghiep = entity.IdKhuCongNghiep;
-            result.TenKhuCongNghiep = entity.IdKhuCongNghiep != null ? entity.KhuCongNghiep.TenKhuCongNghiep : "";
-            result.TenChuDauTu = entity.IdKhuCongNghiep != null ? entity.KhuCongNghiep.TenChuDauTu : "";
+            result.TenKhuCongNghiep = entity.KhuCongNghiep != null ? entity.KhuCongNghiep.TenKhuCongNghiep : "";
+            result.TenChuDauTu = entity.KhuCongNghiep != null ? entity.KhuCongNghiep.TenChuDauTu : "";
 
             return result;
         }

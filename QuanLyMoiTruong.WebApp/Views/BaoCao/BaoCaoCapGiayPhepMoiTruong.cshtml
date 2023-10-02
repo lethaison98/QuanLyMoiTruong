@@ -1,0 +1,102 @@
+﻿@using QuanLyMoiTruong.Application.Requests
+@model GiayPhepMoiTruongRequest;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pagetitle">
+    <h1>Báo cáo danh mục dự án/ cơ sở được cấp giấy phép môi trường</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Báo cáo danh mục dự án/ cơ sở được cấp giấy phép môi trường</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row  pt-2">
+                    <form asp-action="BaoCaoCapGiayPhepMoiTruong" asp-controller="BaoCao" method="post" class="row g-3 needs-validation" novalidate>
+                        <div class="col-6 col-md-6 col-lg-6 col-xl-8">
+                            <div class="row  ttls-cm">
+                                <div class="col-6">
+                                    <label>Từ ngày</label>
+                                    <div class="ttls-content">
+                                        <input type="date" class="form-control" asp-for="TuNgay" placeholder="Từ ngày">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label>Đến ngày</label>
+                                    <div class="ttls-content">
+                                        <input type="date" class="form-control" asp-for="DenNgay" placeholder="Đến ngày">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-6 col-lg-6 col-xl-4">
+                            <label></label>
+
+                            <div class="ttls-cm">
+                                <div class="ttls-content">
+                                    <button class="btn btn-sm btn-primary waves-effect waves-light" type="submit" name="command" value="Search">
+                                        <span>Tra cứu</span>
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-success waves-effect waves-light" type="submit" name="command" value="Export">
+                                        <span>Xuất excel</span>
+                                        <i class="fas fa-excel"></i>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Dữ liệu báo cáo</h4>
+                <table id="tbl" class="table table-bordered table-hover table-striped" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%">STT</th>
+                            <th>Số giấy phép</th>
+                            <th>Tên dự án/cơ sở</th>
+                            <th>Tên chủ đầu tư</th>
+                            <th>Cơ quan cấp</th>
+                            <th>Ngày cấp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.Data != null)
+                        {
+                            @for (int i = 0; i < @ViewBag.Data.Count; i++)
+                            {
+                                <tr>
+                                    <td>@(i + 1)</td>
+                                    <td>@ViewBag.Data[i].SoGiayPhep</td>
+                                    <td>@ViewBag.Data[i].TenDuAn</td>
+                                    <td>@ViewBag.Data[i].TenDoanhNghiep</td>
+                                    <td>@ViewBag.Data[i].CoQuanCap</td>
+                                    <td>@ViewBag.Data[i].NgayCap</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
+}

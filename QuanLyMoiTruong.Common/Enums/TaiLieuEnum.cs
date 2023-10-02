@@ -39,7 +39,8 @@ namespace QuanLyMoiTruong.Common.Enums
         BaoCaoBaoVeMoiTruongKCN = 21,
         [Display(Name = "Báo cáo quan trắc môi trường định kỳ khu công nghiệp")]
         BaoCaoQuanTracMoiTruong = 22,
-
+        [Display(Name = "Báo cáo thống kê nguồn thải")]
+        BaoCaoThongKeNguonThai = 23,
         [Display(Name = "Thành phần môi trường")]
         ThanhPhanMoiTruong = 3,
     }

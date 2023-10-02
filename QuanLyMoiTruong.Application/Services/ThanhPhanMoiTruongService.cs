@@ -54,7 +54,7 @@ namespace QuanLyMoiTruong.Application.Services
         {
             var result = new List<ThanhPhanMoiTruongViewModel>();
             var entities = await _unitOfWork.GetRepository<ThanhPhanMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted);
-            result = entities.Select(MapEntityToViewModel).OrderByDescending(x=> x.Nam).ThenBy(x=> x.Lan).ToList();
+            result = entities.Select(MapEntityToViewModel).OrderByDescending(x=> x.Nam).ThenByDescending(x=> x.Lan).ToList();
             return new ApiSuccessResult<IList<ThanhPhanMoiTruongViewModel>>() { Data = result };
         }
 

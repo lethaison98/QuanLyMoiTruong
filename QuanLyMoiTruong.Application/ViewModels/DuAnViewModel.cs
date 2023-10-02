@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuanLyMoiTruong.Data.Entities
+namespace QuanLyMoiTruong.Application.ViewModels
 {
     public class DuAnViewModel
     {

@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pagetitle">
+    <h1>Thông tin khu kinh tế</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Thông tin khu kinh tế</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card profile">
+            <div class="card-body profile-overview">
+                <h5 class="card-title ">Thông tin khu kinh tế</h5>
+                <div class="" id="thong-tin-tpmt">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label ">Tổng diện tích</div>
+                        <div class="col-lg-9 col-md-8"> ... mét vuông</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">Số lượng dự án/ cơ sở</div>
+                        <div class="col-lg-9 col-md-8">... dự án</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">Số lượng khu công nghiệp</div>
+                        <div class="col-lg-9 col-md-8">... khu công nghiệp</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
+<script src="~/js/controller/KhuCongNghiepControl.js"></script>
+}

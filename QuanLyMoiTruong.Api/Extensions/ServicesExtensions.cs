@@ -45,6 +45,7 @@ namespace QuanLyMoiTruong.Api.Extensions
             services.AddScoped<IThanhPhanMoiTruongService, ThanhPhanMoiTruongService>();
             services.AddScoped<IDiemQuanTracService, DiemQuanTracService>();
             services.AddScoped<IKetQuaQuanTracService, KetQuaQuanTracService>();
+            services.AddScoped<IBaoCaoThongKeNguonThaiService, BaoCaoThongKeNguonThaiService>();
         }
     }  
 }

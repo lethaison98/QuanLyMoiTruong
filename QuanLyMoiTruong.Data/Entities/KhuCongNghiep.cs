@@ -20,6 +20,7 @@ namespace QuanLyMoiTruong.Data.Entities
         public List<GiayPhepMoiTruong> DsGiayPhepMoiTruong { get; set; }
         public List<HoSoKiemTraXuPhat> DsHoSoKiemTraXuPhat { get; set; }
         public List<BaoCaoQuanTracMoiTruong> DsBaoCaoQuanTracMoiTruong { get; set; }
+        public List<BaoCaoThongKeNguonThai> DsBaoCaoThongKeNguonThai { get; set; }
 
 
     }

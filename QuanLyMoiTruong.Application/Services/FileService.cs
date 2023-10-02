@@ -22,14 +22,14 @@ namespace QuanLyMoiTruong.Application.Services
             _accessor = HttpContextAccessor;
         }
 
-        public async Task<ApiResult<List<int>>> Insert(FileUploadRequest req)
+        public async Task<ApiResult<List<Files>>> Insert(FileUploadRequest req)
         {
             var claimsIdentity = _accessor.HttpContext.User.Identity as ClaimsIdentity;
             var userName = claimsIdentity.FindFirst("UserName")?.Value;
             var fullName = claimsIdentity.FindFirst("FullName")?.Value;
             var userId = claimsIdentity.FindFirst("UserId")?.Value;
             var entity = new Files();
-            var result = new List<int>();
+            var result = new List<Files>();
             foreach(var file in req.File)
             {
                 var path = Path.Combine(req.NhomTaiLieu, req.IdTaiLieu.ToString());
@@ -48,9 +48,9 @@ namespace QuanLyMoiTruong.Application.Services
                 }
                 _context.Files.Add(entity);
                 await _context.SaveChangesAsync();
-                result.Add(entity.IdFile);
+                result.Add(entity);
             }
-            return new ApiSuccessResult<List<int>>() { Data = result };
+            return new ApiSuccessResult<List<Files>>() { Data = result };
         }
         public async static Task<string> UploadFile(IFormFile file, string path)
         {

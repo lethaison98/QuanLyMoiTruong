@@ -55,12 +55,12 @@ HoSoKiemTraXuPhatControl = {
                         $.each(value.FileTaiLieu, function (j, file) {
                             switch (file.LoaiFileTaiLieu) {
                                 case "HoSoKiemTraXuPhat":
-                                    var iconfile = self.DrawIconFile(file.File.LinkFile);
-                                    html1 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '">' + iconfile + file.File.TenFile + '</a></span>';
+                                    var iconfile = self.DrawIconFile(file.File.LinkFile); 
+                                    html1 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
                                     break;
                                 default:
                                     var iconfile = self.DrawIconFile(file.File.LinkFile);
-                                    html5 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '">' + iconfile + file.File.TenFile + '</a></span>';
+                                    html5 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
                             }
 
                         });
@@ -103,7 +103,7 @@ HoSoKiemTraXuPhatControl = {
                                             $popup.find("#tblFileHoSoKiemTraXuPhat tbody").append($tr);
                                             $popup.find("#tblFileHoSoKiemTraXuPhat tbody tr:last").find('[data-name="MoTa"]').val(item.MoTa);
                                             $popup.find("#tblFileHoSoKiemTraXuPhat tbody tr:last").find('[data-name="LoaiFileTaiLieu"]').val(item.LoaiFileTaiLieu);
-                                            $popup.find("#tblFileHoSoKiemTraXuPhat tbody tr:last td:first").append('<a href = "' + localStorage.getItem('API_URL').replace("api", "") + item.File.LinkFile + '" data-id="' + item.IdFileTaiLieu + '" data-IdFile = "' + item.IdFile + '">' + item.File.TenFile + '</a>');
+                                            $popup.find("#tblFileHoSoKiemTraXuPhat tbody tr:last td:first").append('<a href = "' + localStorage.getItem('API_URL').replace("api", "") + item.File.LinkFile + '" data-id="' + item.IdFileTaiLieu + '" data-IdFile = "' + item.IdFile + '" target="_blank">' + item.File.TenFile + '</a>');
                                             $popup.find(".tr-remove").off('click').on('click', function () {
                                                 $(this).parents('tr:first').remove();
                                             });
@@ -243,7 +243,7 @@ HoSoKiemTraXuPhatControl = {
                                 for (var i = 0; i < res.Data.length; i++) {
                                     var $tr = $popup.find("#tempFileTable").html();
                                     $popup.find("#tblFileHoSoKiemTraXuPhat tbody").append($tr);
-                                    $popup.find("#tblFileHoSoKiemTraXuPhat tbody tr:last td:first").append('<a href = "#" data-id="0" data-IdFile = "' + res.Data[i] + '">' + file[i].name + '</a>');
+                                    $popup.find("#tblFileHoSoKiemTraXuPhat tbody tr:last td:first").append('<a href = "' + localStorage.getItem("API_URL").replace("api", "") + res.Data[i].LinkFile + '" data-id="0" data-IdFile = "' + res.Data[i].IdFile + '"target="_blank">' + file[i].name + '</a>');
                                     $popup.find(".tr-remove").off('click').on('click', function () {
                                         $(this).parents('tr:first').remove();
                                     });

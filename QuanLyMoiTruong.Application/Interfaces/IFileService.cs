@@ -12,7 +12,7 @@ namespace QuanLyMoiTruong.Application.Interfaces
 {
     public interface IFileService
     {
-        public Task<ApiResult<List<int>>> Insert(FileUploadRequest req);
+        public Task<ApiResult<List<Files>>> Insert(FileUploadRequest req);
         public Task<ApiResult<bool>> Delete(int idFile);
     }
 }

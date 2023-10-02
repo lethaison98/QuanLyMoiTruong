@@ -1,10 +1,11 @@
-﻿using System;
+﻿using QuanLyMoiTruong.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuanLyMoiTruong.Data.Entities
+namespace QuanLyMoiTruong.Application.ViewModels
 {
     public class ThanhPhanMoiTruongViewModel
     {

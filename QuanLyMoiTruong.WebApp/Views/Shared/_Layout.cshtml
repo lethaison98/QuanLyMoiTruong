@@ -146,7 +146,7 @@
                 </a>
                 <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
                     <li>
-                        <a class="nav-link collapsed" href="/ThanhPhanMoiTruong">
+                        <a class="nav-link collapsed" href="/KhuKinhTe">
                             <i class="bi bi-box-arrow-in-right"></i>
                             <span>Thông tin chung về KKT Đông Nam</span>
                         </a>
@@ -169,13 +169,33 @@
                             <span>Bản đồ các thành phần môi trường</span>
                         </a>
                     </li>
+                    <li>
+                        <a class="nav-link collapsed" href="/BaoCaoThongKeNguonThai">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span>Báo cáo thống kê nguồn thải</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
+           
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/VanBanQuyPham">
                     <i class="bi bi-card-list"></i>
                     <span>Văn bản quy phạm pháp luật liên quan đến lĩnh vực BVMT</span>
                 </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#baocao-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
+                    <i class="bi bi-bar-chart"></i><span>Báo cáo</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="baocao-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
+                    <li>
+                        <a class="nav-link collapsed" href="/BaoCao/BaoCaoCapGiayPhepMoiTruong">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span>Danh mục Dự án/Cơ sở được cấp giấy phép môi trường</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/User">
@@ -197,16 +217,6 @@
     @await Html.PartialAsync("_PopupDoiMatKhau")
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
-        <div class="copyright">
-            &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-        </div>
-        <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
     </footer><!-- End Footer -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

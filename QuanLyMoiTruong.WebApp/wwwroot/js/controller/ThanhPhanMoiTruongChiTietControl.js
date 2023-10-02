@@ -15,12 +15,12 @@ ThanhPhanMoiTruongChiTietControl = {
                         if (file.LoaiFileTaiLieu == "TongHopKetQuaQuanTrac") {
                             dsfile += ` <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Bảng tổng hợp kết quả quan trắc</div>
-                                    <div class="col-lg-9 col-md-8"><a href = "` + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '">' +  file.File.TenFile + `</a></div>
+                                    <div class="col-lg-9 col-md-8"><a href = "` + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '" target="_blank">' +  file.File.TenFile + `</a></div>
                                 </div>`;
                         } else {
                             dsfile += ` <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Báo cáo kết quả quan trắc</div>
-                                    <div class="col-lg-9 col-md-8"><a href = "` + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '">' +  file.File.TenFile + `</a></div>
+                                    <div class="col-lg-9 col-md-8"><a href = "` + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '" target="_blank">' +  file.File.TenFile + `</a></div>
                                 </div>`;
                         }
                     });
