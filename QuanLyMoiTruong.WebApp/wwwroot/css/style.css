@@ -656,6 +656,7 @@ h6 {
 .sidebar-nav .nav-item {
   margin-bottom: 5px;
 }
+    .sidebar-nav .nav-item span { text-transform: uppercase; }
 
 .sidebar-nav .nav-heading {
   font-size: 11px;

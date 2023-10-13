@@ -8,5 +8,9 @@ namespace QuanLyMoiTruong.WebApp.Controllers
         {
             return View();
         }
+        public IActionResult BaoCaoBaoVeMoiTruongKhuKinhTe()
+        {
+            return View();
+        }
     }
 }

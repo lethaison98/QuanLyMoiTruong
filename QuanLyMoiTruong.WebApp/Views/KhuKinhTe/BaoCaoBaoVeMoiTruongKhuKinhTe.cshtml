@@ -1,0 +1,37 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<div class="pagetitle">
+    <h1>Báo cáo công tác bảo vệ môi trường khu kinh tế</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/KhuKinhTe">Khu kinh tế</a></li>
+            <li class="breadcrumb-item active">Báo cáo công tác bảo vệ môi trường khu kinh tế</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-lg-12" id="bordered-BaoCaoBaoVeMoiTruong">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Báo cáo công tác bảo vệ môi trường khu kinh tế <button type="button" class="btn btn-success offset-md-3" style="float:right" id="btnCreateBaoCaoBaoVeMoiTruong"><i class="fas fa-plus"></i> Tạo mới</button>
+                </h5>
+                <div class="accordion" id="accordion-BaoCaoBaoVeMoiTruong">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_PopupFormBaoCaoBaoVeMoiTruong.cshtml")
+
+@section Scripts{
+<script src="~/js/controller/BaoCaoBaoVeMoiTruongControl.js"></script>
+}

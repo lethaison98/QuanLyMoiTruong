@@ -75,5 +75,11 @@ namespace QuanLyMoiTruong.Api.Controllers
             var result = await _BaoCaoBaoVeMoiTruongService.GetListBaoCaoBaoVeMoiTruongByKhuCongNghiep(idKhuCongNghiep);
             return Ok(result);
         }
+        [HttpGet("GetBaoCaoBVMTHangNamByKhuKinhTe")]
+        public async Task<IActionResult> GetGPMTByKhuKinhTe()
+        {
+            var result = await _BaoCaoBaoVeMoiTruongService.GetListBaoCaoBaoVeMoiTruongByKhuKinhTe();
+            return Ok(result);
+        }
     }
 }

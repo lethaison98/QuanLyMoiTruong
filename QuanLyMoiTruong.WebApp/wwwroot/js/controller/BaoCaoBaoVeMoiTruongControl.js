@@ -7,9 +7,14 @@ if (url.indexOf("DuAn") != -1) {
     idDuAn = url.substring(url.lastIndexOf('/') + 1);
     type = "DuAn";
 }
+
 if (url.indexOf("KhuCongNghiep") != -1) {
     idKhuCongNghiep = url.substring(url.lastIndexOf('/') + 1);
     type = "KhuCongNghiep";
+}
+if (url.indexOf("KhuKinhTe") != -1) {
+    id= 9999;
+    type = "KhuKinhTe";
 }
 BaoCaoBaoVeMoiTruongControl = {
     Init: function () {
@@ -38,6 +43,9 @@ BaoCaoBaoVeMoiTruongControl = {
         };
         if (type == "KhuCongNghiep") {
             urlApi = localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetBaoCaoBVMTHangNamByKhuCongNghiep?idKhuCongNghiep=" + idKhuCongNghiep;
+        };
+        if (type == "KhuKinhTe") {
+            urlApi = localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetBaoCaoBVMTHangNamByKhuKinhTe";
         };
         var $tab = $('#bordered-BaoCaoBaoVeMoiTruong');
         var $popup = $('#popup-form-bao-cao-bao-ve-moi-truong-hang-nam');
@@ -174,6 +182,9 @@ BaoCaoBaoVeMoiTruongControl = {
             });
             data.IdDuAn = idDuAn;
             data.IdKhuCongNghiep = idKhuCongNghiep;
+            if (type == "KhuKinhTe") {
+                data.KhuKinhTe = true;
+            }
             data.FileTaiLieu = listFileTaiLieu;
             Post({
                 "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/InsertUpdate",
@@ -194,15 +205,26 @@ BaoCaoBaoVeMoiTruongControl = {
 
     RegisterEventsBaoCaoBaoVeMoiTruong: function () {
         var self = this;
-        var $tab = $('#bordered-BaoCaoBaoVeMoiTruong');
-        var $popup = $('#popup-form-bao-cao-bao-ve-moi-truong-hang-nam');
-        $tab.find('#btnCreateBaoCaoBaoVeMoiTruong').off('click').on('click', function () {
-            $popup.modal('show');
-            $popup.find('.modal-header').text("Thêm mới báo cáo bảo vệ môi trường hàng năm");
-            self.ResetPopup();
-            self.RegisterEventsPopupBaoCaoBaoVeMoiTruong();
-        });
-        self.LoadDanhSachBaoCaoBaoVeMoiTruong();
+        if (type = "KhuKinhTe") {
+            $('#btnCreateBaoCaoBaoVeMoiTruong').off('click').on('click', function () {
+                var $popup = $('#popup-form-bao-cao-bao-ve-moi-truong-hang-nam');
+                $popup.modal('show');
+                $popup.find('.modal-header').text("Thêm mới báo cáo bảo vệ môi trường khu kinh tế");
+                self.ResetPopup();
+                self.RegisterEventsPopupBaoCaoBaoVeMoiTruong();
+            });
+            self.LoadDanhSachBaoCaoBaoVeMoiTruong();
+        } else {
+            var $tab = $('#bordered-BaoCaoBaoVeMoiTruong');
+            var $popup = $('#popup-form-bao-cao-bao-ve-moi-truong-hang-nam');
+            $tab.find('#btnCreateBaoCaoBaoVeMoiTruong').off('click').on('click', function () {
+                $popup.modal('show');
+                $popup.find('.modal-header').text("Thêm mới báo cáo bảo vệ môi trường hàng năm");
+                self.ResetPopup();
+                self.RegisterEventsPopupBaoCaoBaoVeMoiTruong();
+            });
+            self.LoadDanhSachBaoCaoBaoVeMoiTruong();
+        }
     },
     RegisterEventsPopupBaoCaoBaoVeMoiTruong: function () {
         var self = this;
@@ -220,11 +242,7 @@ BaoCaoBaoVeMoiTruongControl = {
                 var file = $popup.find('#fileBaoCaoBaoVeMoiTruong')[0].files.length > 0 ? $popup.find('#fileBaoCaoBaoVeMoiTruong')[0].files : null;
                 if (file != null) {
                     var dataFile = new FormData();
-                    if (type == "DuAn") {
-                        dataFile.append("NhomTaiLieu", "DuAn");
-                    } else {
-                        dataFile.append("NhomTaiLieu", "KhuCongNghiep");
-                    }
+                    dataFile.append("NhomTaiLieu", type);
                     dataFile.append("IdTaiLieu", id);
                     for (var i = 0; i < file.length; i++) {
                         dataFile.append("File", file[i]);

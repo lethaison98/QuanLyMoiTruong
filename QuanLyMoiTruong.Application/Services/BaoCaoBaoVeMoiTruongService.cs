@@ -160,7 +160,21 @@ namespace QuanLyMoiTruong.Application.Services
             }
             return new ApiSuccessResult<IList<BaoCaoBaoVeMoiTruongViewModel>>() { Data = result };
         }
-
+        public async Task<ApiResult<IList<BaoCaoBaoVeMoiTruongViewModel>>> GetListBaoCaoBaoVeMoiTruongByKhuKinhTe()
+        {
+            var result = new List<BaoCaoBaoVeMoiTruongViewModel>();
+            var entities = await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted && x.KhuKinhTe);
+            result = entities.Select(MapEntityToViewModel).ToList();
+            foreach (var item in result)
+            {
+                var dsFile = await _fileTaiLieuService.GetByTaiLieu(item.IdBaoCaoBaoVeMoiTruong, NhomTaiLieuEnum.BaoCaoBaoVeMoiTruong.ToString());
+                if (dsFile.Success)
+                {
+                    item.FileTaiLieu = dsFile.Data.ToList();
+                }
+            }
+            return new ApiSuccessResult<IList<BaoCaoBaoVeMoiTruongViewModel>>() { Data = result };
+        }
         public BaoCaoBaoVeMoiTruongViewModel MapEntityToViewModel(BaoCaoBaoVeMoiTruong entity) {
             var result = new BaoCaoBaoVeMoiTruongViewModel();
             result.IdBaoCaoBaoVeMoiTruong = entity.IdBaoCaoBaoVeMoiTruong;
@@ -172,6 +186,7 @@ namespace QuanLyMoiTruong.Application.Services
             result.IdKhuCongNghiep = entity.IdKhuCongNghiep;
             result.TenKhuCongNghiep = entity.IdKhuCongNghiep != null ? entity.KhuCongNghiep.TenKhuCongNghiep : "";
             result.TenChuDauTu = entity.IdKhuCongNghiep != null ? entity.KhuCongNghiep.TenChuDauTu : "";
+            result.KhuKinhTe = entity.KhuKinhTe;
 
             return result;
         }
@@ -182,6 +197,7 @@ namespace QuanLyMoiTruong.Application.Services
             entity.NgayBaoCao = string.IsNullOrEmpty(viewModel.NgayBaoCao) ? null : DateTime.Parse(viewModel.NgayBaoCao, new CultureInfo("vi-VN"));
             entity.IdDuAn = viewModel.IdDuAn == 0 ? null : viewModel.IdDuAn;
             entity.IdKhuCongNghiep = viewModel.IdKhuCongNghiep == 0 ? null : viewModel.IdKhuCongNghiep;
+            entity.KhuKinhTe = viewModel.KhuKinhTe;
             return entity;
         }
     }
