@@ -12,8 +12,8 @@ using QuanLyMoiTruong.Data.EF;
 namespace QuanLyMoiTruong.Data.Migrations
 {
     [DbContext(typeof(QuanLyMoiTruongDbContext))]
-    [Migration("20230808085240_Initial2")]
-    partial class Initial2
+    [Migration("20231013010425_Initial1")]
+    partial class Initial1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -259,6 +259,15 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("KhuKinhTe")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Lan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Nam")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("NgayBaoCao")
                         .HasColumnType("datetime2");
 
@@ -312,6 +321,12 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Lan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Nam")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("NgayBaoCao")
                         .HasColumnType("datetime2");
 
@@ -337,6 +352,117 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.HasIndex("IdKhuCongNghiep");
 
                     b.ToTable("BaoCaoQuanTracMoiTruong", (string)null);
+                });
+
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.BaoCaoThongKeNguonThai", b =>
+                {
+                    b.Property<int>("IdBaoCaoThongKeNguonThai")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdBaoCaoThongKeNguonThai"));
+
+                    b.Property<string>("GhiChu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IdDuAn")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdKhuCongNghiep")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdNguoiCapNhat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdNguoiTao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("KhuKinhTe")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Lan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Nam")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("NgayBaoCao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayCapNhat")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayTao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NguoiCapNhat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NguoiTao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenBaoCao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdBaoCaoThongKeNguonThai");
+
+                    b.HasIndex("IdDuAn");
+
+                    b.HasIndex("IdKhuCongNghiep");
+
+                    b.ToTable("BaoCaoThongKeNguonThai", (string)null);
+                });
+
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.DiemQuanTrac", b =>
+                {
+                    b.Property<int>("IdDiemQuanTrac")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDiemQuanTrac"));
+
+                    b.Property<string>("DiaChi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdNguoiCapNhat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdNguoiTao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("KinhDo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Loai")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("NgayCapNhat")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayTao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NguoiCapNhat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NguoiTao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenDiemQuanTrac")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ViDo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdDiemQuanTrac");
+
+                    b.ToTable("DiemQuanTrac", (string)null);
                 });
 
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.DuAn", b =>
@@ -368,6 +494,9 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("LoaiHinhSanXuat")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("NgayCapNhat")
                         .HasColumnType("datetime2");
 
@@ -378,6 +507,9 @@ namespace QuanLyMoiTruong.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NguoiTao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QuyMo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TenDoanhNghiep")
@@ -576,6 +708,12 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Lan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Nam")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("NgayCapNhat")
                         .HasColumnType("datetime2");
 
@@ -598,6 +736,74 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.HasIndex("IdKhuCongNghiep");
 
                     b.ToTable("HoSoKiemTraXuPhat", (string)null);
+                });
+
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.KetQuaQuanTrac", b =>
+                {
+                    b.Property<int>("IdKetQuaQuanTrac")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdKetQuaQuanTrac"));
+
+                    b.Property<string>("ChiTieu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DonViTinh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GiaTri")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdDiemQuanTrac")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdNguoiCapNhat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdNguoiTao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdThanhPhanMoiTruong")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Lan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Nam")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("NgayCapNhat")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayTao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NguoiCapNhat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NguoiTao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NguongToiDa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NguongToiThieu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TieuChuan")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdKetQuaQuanTrac");
+
+                    b.HasIndex("IdDiemQuanTrac");
+
+                    b.HasIndex("IdThanhPhanMoiTruong");
+
+                    b.ToTable("KetQuaQuanTrac", (string)null);
                 });
 
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.KhuCongNghiep", b =>
@@ -701,6 +907,52 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.HasIndex("IdTinhThanh");
 
                     b.ToTable("QuanHuyen", (string)null);
+                });
+
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.ThanhPhanMoiTruong", b =>
+                {
+                    b.Property<int>("IdThanhPhanMoiTruong")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdThanhPhanMoiTruong"));
+
+                    b.Property<string>("GhiChu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdNguoiCapNhat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdNguoiTao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Lan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Nam")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("NgayCapNhat")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NgayTao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NguoiCapNhat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NguoiTao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenThanhPhanMoiTruong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdThanhPhanMoiTruong");
+
+                    b.ToTable("ThanhPhanMoiTruong", (string)null);
                 });
 
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.TinhThanh", b =>
@@ -854,6 +1106,21 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Navigation("KhuCongNghiep");
                 });
 
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.BaoCaoThongKeNguonThai", b =>
+                {
+                    b.HasOne("QuanLyMoiTruong.Data.Entities.DuAn", "DuAn")
+                        .WithMany("DsBaoCaoThongKeNguonThai")
+                        .HasForeignKey("IdDuAn");
+
+                    b.HasOne("QuanLyMoiTruong.Data.Entities.KhuCongNghiep", "KhuCongNghiep")
+                        .WithMany("DsBaoCaoThongKeNguonThai")
+                        .HasForeignKey("IdKhuCongNghiep");
+
+                    b.Navigation("DuAn");
+
+                    b.Navigation("KhuCongNghiep");
+                });
+
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.DuAn", b =>
                 {
                     b.HasOne("QuanLyMoiTruong.Data.Entities.KhuCongNghiep", "KhuCongNghiep")
@@ -904,6 +1171,25 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Navigation("KhuCongNghiep");
                 });
 
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.KetQuaQuanTrac", b =>
+                {
+                    b.HasOne("QuanLyMoiTruong.Data.Entities.DiemQuanTrac", "DiemQuanTrac")
+                        .WithMany("DsKetQuaQuanTrac")
+                        .HasForeignKey("IdDiemQuanTrac")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuanLyMoiTruong.Data.Entities.ThanhPhanMoiTruong", "ThanhPhanMoiTruong")
+                        .WithMany("DsKetQuaQuanTrac")
+                        .HasForeignKey("IdThanhPhanMoiTruong")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DiemQuanTrac");
+
+                    b.Navigation("ThanhPhanMoiTruong");
+                });
+
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.PhuongXa", b =>
                 {
                     b.HasOne("QuanLyMoiTruong.Data.Entities.QuanHuyen", "QuanHuyen")
@@ -926,9 +1212,16 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Navigation("TinhThanh");
                 });
 
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.DiemQuanTrac", b =>
+                {
+                    b.Navigation("DsKetQuaQuanTrac");
+                });
+
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.DuAn", b =>
                 {
                     b.Navigation("DsBaoCaoBaoVeMoiTruong");
+
+                    b.Navigation("DsBaoCaoThongKeNguonThai");
 
                     b.Navigation("DsGiayPhepMoiTruong");
 
@@ -946,6 +1239,8 @@ namespace QuanLyMoiTruong.Data.Migrations
 
                     b.Navigation("DsBaoCaoQuanTracMoiTruong");
 
+                    b.Navigation("DsBaoCaoThongKeNguonThai");
+
                     b.Navigation("DsDuAn");
 
                     b.Navigation("DsGiayPhepMoiTruong");
@@ -956,6 +1251,11 @@ namespace QuanLyMoiTruong.Data.Migrations
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.QuanHuyen", b =>
                 {
                     b.Navigation("DSPhuongXa");
+                });
+
+            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.ThanhPhanMoiTruong", b =>
+                {
+                    b.Navigation("DsKetQuaQuanTrac");
                 });
 
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.TinhThanh", b =>
