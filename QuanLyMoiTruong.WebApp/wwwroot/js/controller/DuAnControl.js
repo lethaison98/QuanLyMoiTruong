@@ -49,7 +49,7 @@ DuAnControl = {
                     },
                     {
                         "class": "name-control",
-                        "data": "GiayPhepDKKD",
+                        "data": "DiaChi",
                         "defaultContent": "",
                     },
                     {

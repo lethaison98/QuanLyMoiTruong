@@ -24,30 +24,30 @@ namespace QuanLyMoiTruong.Application.Services
 
         public KetQuaQuanTracService(IUnitOfWork unitOfWork, IFileTaiLieuService fileTaiLieuService, IDiemQuanTracService diemQuanTracService)
         {
-            _unitOfWork= unitOfWork;
-            _fileTaiLieuService= fileTaiLieuService;
-            _diemQuanTracService= diemQuanTracService;
+            _unitOfWork = unitOfWork;
+            _fileTaiLieuService = fileTaiLieuService;
+            _diemQuanTracService = diemQuanTracService;
         }
 
         public async Task<ApiResult<bool>> Delete(int id)
         {
-            var entity =  await _unitOfWork.GetRepository<KetQuaQuanTrac>().FindAsync(id);
+            var entity = await _unitOfWork.GetRepository<KetQuaQuanTrac>().FindAsync(id);
             if (entity != null)
             {
-                entity.IsDeleted= true;
+                entity.IsDeleted = true;
                 await _unitOfWork.SaveChangesAsync();
-                return new ApiSuccessResult<bool>() {};
+                return new ApiSuccessResult<bool>() { };
             }
             else
             {
-                return new ApiErrorResult<bool>("Không tồn tại dữ liệu cần xóa") ;
+                return new ApiErrorResult<bool>("Không tồn tại dữ liệu cần xóa");
             }
-        } 
+        }
 
         public async Task<ApiResult<IList<KetQuaQuanTracViewModel>>> GetAll()
         {
             var result = new List<KetQuaQuanTracViewModel>();
-            var entities =  await _unitOfWork.GetRepository<KetQuaQuanTrac>().GetAllAsync(predicate: x => !x.IsDeleted);
+            var entities = await _unitOfWork.GetRepository<KetQuaQuanTrac>().GetAllAsync(predicate: x => !x.IsDeleted);
             result = entities.Select(MapEntityToViewModel).ToList();
             return new ApiSuccessResult<IList<KetQuaQuanTracViewModel>>() { Data = result };
         }
@@ -57,7 +57,7 @@ namespace QuanLyMoiTruong.Application.Services
             var result = new KetQuaQuanTracViewModel();
             var data = await _unitOfWork.GetRepository<KetQuaQuanTrac>().GetFirstOrDefaultAsync(predicate: x => x.IdKetQuaQuanTrac == id);
             result = MapEntityToViewModel(data);
-            return new ApiSuccessResult<KetQuaQuanTracViewModel>() {Data = result };
+            return new ApiSuccessResult<KetQuaQuanTracViewModel>() { Data = result };
         }
 
         public async Task<ApiResult<KetQuaQuanTrac>> Insert(KetQuaQuanTracViewModel obj)
@@ -97,9 +97,9 @@ namespace QuanLyMoiTruong.Application.Services
 
             result.PageIndex = data.PageIndex;
             result.PageSize = data.PageSize;
-            result.IndexFrom= data.IndexFrom;
+            result.IndexFrom = data.IndexFrom;
             result.TotalCount = data.TotalCount;
-            result.TotalPages = data.TotalPages;    
+            result.TotalPages = data.TotalPages;
             result.Items = data.Items.Select(MapEntityToViewModel).ToList();
             return new ApiSuccessResult<IPagedList<KetQuaQuanTracViewModel>>() { Data = result };
         }
@@ -112,7 +112,7 @@ namespace QuanLyMoiTruong.Application.Services
             await _unitOfWork.SaveChangesAsync();
             return new ApiSuccessResult<KetQuaQuanTrac>() { Data = entity };
         }
-        public async Task<ApiResult<bool>> InsertFromExcel (List<KetQuaQuanTracViewModel> list)
+        public async Task<ApiResult<bool>> InsertFromExcel(List<KetQuaQuanTracViewModel> list)
         {
             try
             {
@@ -125,7 +125,8 @@ namespace QuanLyMoiTruong.Application.Services
                 }
                 await _unitOfWork.SaveChangesAsync();
 
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new ApiSuccessResult<bool>() { Data = false };
             }
@@ -135,10 +136,50 @@ namespace QuanLyMoiTruong.Application.Services
         {
             var result = new List<KetQuaQuanTracViewModel>();
             var entities = await _unitOfWork.GetRepository<KetQuaQuanTrac>().GetAllAsync(predicate: x => x.IdThanhPhanMoiTruong == idThanhPhanMoiTruong && !x.IsDeleted, include: x => x.Include(y => y.DiemQuanTrac));
-            result = entities.Select(MapEntityToViewModel).OrderBy(x=> x.TenDiemQuanTrac).ToList();
+            result = entities.Select(MapEntityToViewModel).OrderBy(x => x.TenDiemQuanTrac).ToList();
             return new ApiSuccessResult<IList<KetQuaQuanTracViewModel>>() { Data = result };
         }
-        public KetQuaQuanTracViewModel MapEntityToViewModel(KetQuaQuanTrac entity) {
+        public async Task<ApiResult<List<DuLieuQuanTracMoiTruongViewModel>>> DuLieuQuanTracMoiTruong(int idThanhPhanMoiTruong, string loai)
+        {
+            var result = new List<DuLieuQuanTracMoiTruongViewModel>();
+            var listDQT = await _diemQuanTracService.GetAll();
+            var listKQ = await GetAllByIdThanhPhanMoiTruong(idThanhPhanMoiTruong);
+            if (listDQT.Success && listKQ.Success)
+            {
+                var dsDiemQuanTrac = listDQT.Data;
+                var dsKetQua = listKQ.Data.OrderBy(x => x.ChiTieu).ThenBy(x => x.TenDiemQuanTrac).ToList();
+                var dsChiTieuKhongKhi = listKQ.Data;
+                if (!String.IsNullOrEmpty(loai))
+                {
+                    dsChiTieuKhongKhi = dsChiTieuKhongKhi.Where(x => x.Loai == loai).ToList();
+                }
+                var dsTenChiTieuKhongKhi = dsChiTieuKhongKhi.Select(x => x.ChiTieu).Distinct().ToList();
+                //foreach (var item in dsDiemQuanTrac)
+                //{
+                //    var duLieu = new DuLieuQuanTracMoiTruongViewModel();
+                //    duLieu.TenDiemQuanTrac = item.TenDiemQuanTrac;
+                //    duLieu.Loai = item.Loai;
+                //    duLieu.DsKetQua = dsKetQua.Where(x => x.IdDiemQuanTrac == item.IdDiemQuanTrac).OrderBy(x=> x.ChiTieu).ToList();
+                //    result.Add(duLieu);
+                //}
+                foreach (var tenChiTieu in dsTenChiTieuKhongKhi)
+                {
+                    var duLieu = new DuLieuQuanTracMoiTruongViewModel();
+                    duLieu.ChiTieu = tenChiTieu;
+                    foreach (var item in dsChiTieuKhongKhi)
+                    {
+                        duLieu.DsKetQua = dsKetQua.Where(x => x.ChiTieu == tenChiTieu).OrderBy(x => x.ChiTieu).ToList();
+                    }
+                    duLieu.DonVi = duLieu.DsKetQua.FirstOrDefault().DonViTinh;
+                    duLieu.Loai = duLieu.DsKetQua.FirstOrDefault().Loai;
+                    result.Add(duLieu);
+                }
+            }
+            return new ApiSuccessResult<List<DuLieuQuanTracMoiTruongViewModel>>() { Data = result };
+        }
+
+        public KetQuaQuanTracViewModel MapEntityToViewModel(KetQuaQuanTrac entity)
+        {
             var result = new KetQuaQuanTracViewModel();
             result.IdKetQuaQuanTrac = entity.IdKetQuaQuanTrac;
             result.IdThanhPhanMoiTruong = entity.IdThanhPhanMoiTruong;
@@ -152,6 +193,7 @@ namespace QuanLyMoiTruong.Application.Services
             result.Nam = entity.Nam;
             result.Lan = entity.Lan;
             result.TenDiemQuanTrac = entity.DiemQuanTrac == null ? "" : entity.DiemQuanTrac.TenDiemQuanTrac;
+            result.Loai = entity.DiemQuanTrac == null ? "" : entity.DiemQuanTrac.Loai;
             result.TenThanhPhanMoiTruong = entity.ThanhPhanMoiTruong == null ? "" : entity.ThanhPhanMoiTruong.TenThanhPhanMoiTruong;
             return result;
         }

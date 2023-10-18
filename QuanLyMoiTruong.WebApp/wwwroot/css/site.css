@@ -43,3 +43,5 @@ body {
     .has-error .select-group-addon svg { color: #ed3e3a !important; }
 
 .required { color: #ed3e3a; margin: 0 5px; font-size: 14px; }
+
+.table-striped th { background-color: #8EA9DB }

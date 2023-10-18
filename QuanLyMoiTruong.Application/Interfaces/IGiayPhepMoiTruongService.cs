@@ -13,6 +13,6 @@ namespace QuanLyMoiTruong.Application.Interfaces
     {
         public Task<ApiResult<IList<GiayPhepMoiTruongViewModel>>> GetListGiayPhepMoiTruongByDuAn(int idDuAn);
         public Task<ApiResult<IList<GiayPhepMoiTruongViewModel>>> GetListGiayPhepMoiTruongByKhuCongNghiep(int idKhuCongNghiep);
-        public Task<ApiResult<IList<GiayPhepMoiTruongViewModel>>> GetListByKhoangThoiGian(GiayPhepMoiTruongRequest request);
+        public Task<ApiResult<IList<BaoCaoCapGiayPhepMoiTruongViewModel>>> GetListByKhoangThoiGian(GiayPhepMoiTruongRequest request);
     }
 }

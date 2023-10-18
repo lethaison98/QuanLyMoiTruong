@@ -27,7 +27,7 @@ ThanhPhanMoiTruongChiTietControl = {
                     $('.pagetitle h1').text(res.Data.TenThanhPhanMoiTruong);
                     $("#thong-tin-tpmt").html("");
                     var html = `<div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Tên thành phần môi trường</div>
+                                    <div class="col-lg-3 col-md-4 label ">Báo cáo quan trắc môi trường</div>
                                     <div class="col-lg-9 col-md-8">`+ res.Data.TenThanhPhanMoiTruong + `</div>
                                 </div>
                                 <div class="row">
@@ -62,7 +62,94 @@ ThanhPhanMoiTruongChiTietControl = {
                         dsKQ += "<tr><td>" + stt + "</td><td>" + kq.TenDiemQuanTrac + "</td><td>" + kq.ChiTieu + "</td><td>" + kq.GiaTri + "</td><td>" + kq.DonViTinh + "</td></tr>"
 
                     });
-                    $("#danh-sach-ket-qua-quan-trac").append(dsKQ);
+                    //$("#danh-sach-ket-qua-quan-trac").append(dsKQ);
+
+                }
+            }
+        });
+    },
+    LoadDuLieuQuanTracKhongKhi: function () {
+        Get({
+            "url": localStorage.getItem("API_URL") + "/KetQuaQuanTrac/DuLieuQuanTracMoiTruong",
+            data: {
+                "idThanhPhanMoiTruong": id,
+                "loai": "K"
+            },
+            callback: function (res) {
+                if (res.Success) {
+                    var dsKQ = "";
+                    $.each(res.Data, function (j, kq) {
+                        var stt = j + 1;
+                        console.log(kq.DsKetQua)
+                        dsKQ += "<tr><td>" + stt + "</td><td>" + kq.ChiTieu + "</td><td>" + kq.DonVi + "</td><td style='background-color: #cfe2ff'>" + kq.DsKetQua[0].GiaTri + "</td><td style='background-color: #a2dbdd'>" + kq.DsKetQua[1].GiaTri + "</td><td style= 'background-color: #d1e7dd'>" + kq.DsKetQua[2].GiaTri + "</td><td style= 'background-color: #f8d7da'>" + kq.DsKetQua[3].GiaTri + "</td><td style= 'background-color: #fff3cd'>" + kq.DsKetQua[4].GiaTri + "</td><td style= 'background-color: #cff4fc'>" + kq.DsKetQua[5].GiaTri + "</td><td style='background-color: #acdfb6'>" + kq.DsKetQua[6].GiaTri + "</td><td style='background-color: #dfdaac'>" + kq.DsKetQua[7].GiaTri + "</td><td style='background-color: #ced4da'>" + kq.DsKetQua[8].GiaTri + "</td></tr>"
+
+                    });
+                    $("#du-lieu-quan-trac-khong-khi").append(dsKQ);
+
+                }
+            }
+        });
+    },
+    LoadDuLieuQuanTracNuocBien: function () {
+        Get({
+            "url": localStorage.getItem("API_URL") + "/KetQuaQuanTrac/DuLieuQuanTracMoiTruong",
+            data: {
+                "idThanhPhanMoiTruong": id,
+                "loai": "B"
+            },
+            callback: function (res) {
+                if (res.Success) {
+                    var dsKQ = "";
+                    $.each(res.Data, function (j, kq) {
+                        var stt = j + 1;
+                        dsKQ += "<tr><td>" + stt + "</td><td>" + kq.ChiTieu + "</td><td>" + kq.DonVi + "</td><td style='background-color: #cfe2ff'>" + kq.DsKetQua[0].GiaTri + "</td><td style='background-color: #a2dbdd'>" + kq.DsKetQua[1].GiaTri + "</td><td style= 'background-color: #d1e7dd'>" + kq.DsKetQua[2].GiaTri + "</td></tr>"
+
+                    });
+                    $("#du-lieu-quan-trac-nuoc-bien").append(dsKQ);
+
+                }
+            }
+        });
+    },
+    LoadDuLieuQuanTracNuocMat: function () {
+        Get({
+            "url": localStorage.getItem("API_URL") + "/KetQuaQuanTrac/DuLieuQuanTracMoiTruong",
+            data: {
+                "idThanhPhanMoiTruong": id,
+                "loai": "M"
+            },
+            callback: function (res) {
+                if (res.Success) {
+                    var dsKQ = "";
+                    $.each(res.Data, function (j, kq) {
+                        var stt = j + 1;
+                        console.log(kq.DsKetQua)
+                        dsKQ += "<tr><td>" + stt + "</td><td>" + kq.ChiTieu + "</td><td>" + kq.DonVi + "</td><td style='background-color: #cfe2ff'>" + kq.DsKetQua[0].GiaTri + "</td><td style='background-color: #a2dbdd'>" + kq.DsKetQua[1].GiaTri + "</td><td style= 'background-color: #d1e7dd'>" + kq.DsKetQua[2].GiaTri + "</td><td style= 'background-color: #f8d7da'>" + kq.DsKetQua[3].GiaTri + "</td><td style= 'background-color: #fff3cd'>" + kq.DsKetQua[4].GiaTri + "</td><td style= 'background-color: #cff4fc'>" + kq.DsKetQua[5].GiaTri + "</td><td style='background-color: #acdfb6'>" + kq.DsKetQua[6].GiaTri + "</td></tr>"
+
+                    });
+                    $("#du-lieu-quan-trac-nuoc-mat").append(dsKQ);
+
+                }
+            }
+        });
+    },
+    LoadDuLieuQuanTracNuocNgam: function () {
+        Get({
+            "url": localStorage.getItem("API_URL") + "/KetQuaQuanTrac/DuLieuQuanTracMoiTruong",
+            data: {
+                "idThanhPhanMoiTruong": id,
+                "loai": "N"
+            },
+            callback: function (res) {
+                if (res.Success) {
+                    var dsKQ = "";
+                    $.each(res.Data, function (j, kq) {
+                        var stt = j + 1;
+                        console.log(kq.DsKetQua)
+                        dsKQ += "<tr><td>" + stt + "</td><td>" + kq.ChiTieu + "</td><td>" + kq.DonVi + "</td><td style='background-color: #cfe2ff'>" + kq.DsKetQua[0].GiaTri + "</td><td style='background-color: #a2dbdd'>" + kq.DsKetQua[1].GiaTri + "</td>></tr>"
+
+                    });
+                    $("#du-lieu-quan-trac-nuoc-ngam").append(dsKQ);
 
                 }
             }
@@ -72,6 +159,10 @@ ThanhPhanMoiTruongChiTietControl = {
         var self = this;
         self.LoadThongTinThanhPhanMoiTruong();
         self.LoadKetQuaQuanTrac();
+        self.LoadDuLieuQuanTracKhongKhi();
+        self.LoadDuLieuQuanTracNuocBien();
+        self.LoadDuLieuQuanTracNuocMat();
+        self.LoadDuLieuQuanTracNuocNgam();
     },
 }
 

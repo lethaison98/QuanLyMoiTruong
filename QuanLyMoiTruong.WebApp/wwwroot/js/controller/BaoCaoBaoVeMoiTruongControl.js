@@ -205,7 +205,7 @@ BaoCaoBaoVeMoiTruongControl = {
 
     RegisterEventsBaoCaoBaoVeMoiTruong: function () {
         var self = this;
-        if (type = "KhuKinhTe") {
+        if (type == "KhuKinhTe") {
             $('#btnCreateBaoCaoBaoVeMoiTruong').off('click').on('click', function () {
                 var $popup = $('#popup-form-bao-cao-bao-ve-moi-truong-hang-nam');
                 $popup.modal('show');

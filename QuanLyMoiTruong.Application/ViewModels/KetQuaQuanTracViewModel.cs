@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace QuanLyMoiTruong.Data.Entities
 {
-    public class KetQuaQuanTracViewModel : BaseEntity
+    public class KetQuaQuanTracViewModel
     {
         public int IdKetQuaQuanTrac { get; set; }
         public int IdDiemQuanTrac { get; set; }
         public string TenDiemQuanTrac { get; set; }
+        public string Loai { get; set; }
         public int IdThanhPhanMoiTruong { get; set; }
         public string TenThanhPhanMoiTruong { get; set; }
         public int Nam { get; set; }
@@ -22,5 +23,12 @@ namespace QuanLyMoiTruong.Data.Entities
         public string TieuChuan { get; set; }
         public string NguongToiThieu { get; set; }
         public string NguongToiDa { get; set; }
+    }
+    public class DuLieuQuanTracMoiTruongViewModel
+    {
+        public string ChiTieu{ get; set; }
+        public string DonVi { get; set; }
+        public string Loai { get; set; }
+        public List<KetQuaQuanTracViewModel> DsKetQua { get; set; } = new List<KetQuaQuanTracViewModel>();
     }
 }

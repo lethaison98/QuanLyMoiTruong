@@ -1,4 +1,5 @@
-﻿using QuanLyMoiTruong.Application.Requests;
+﻿using Microsoft.AspNetCore.Http;
+using QuanLyMoiTruong.Application.Requests;
 using QuanLyMoiTruong.Application.ViewModels;
 using QuanLyMoiTruong.Data.Entities;
 using System;
@@ -11,5 +12,7 @@ namespace QuanLyMoiTruong.Application.Interfaces
 {
     public interface IDuAnService:IBaseService<DuAn, int, DuAnViewModel, DuAnRequest>
     {
+        public Task<ApiResult<List<string>>> ImportDuAn(IList<IFormFile> files);
+
     }
 }

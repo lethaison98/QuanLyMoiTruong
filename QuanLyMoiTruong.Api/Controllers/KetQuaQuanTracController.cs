@@ -69,5 +69,11 @@ namespace QuanLyMoiTruong.Api.Controllers
             var result = await _KetQuaQuanTracService.GetAllByIdThanhPhanMoiTruong(idThanhPhanMoiTruong);
             return Ok(result);
         }
+        [HttpGet("DuLieuQuanTracMoiTruong")]
+        public async Task<IActionResult> DuLieuQuanTracMoiTruong(int idThanhPhanMoiTruong, string loai)
+        {
+            var result = await _KetQuaQuanTracService.DuLieuQuanTracMoiTruong(idThanhPhanMoiTruong, loai);
+            return Ok(result);
+        }
     }
 }

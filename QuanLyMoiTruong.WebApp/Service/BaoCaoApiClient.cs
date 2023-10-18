@@ -21,7 +21,7 @@ namespace QuanLyMoiTruong.WebApp.Service
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<ApiResult<List<GiayPhepMoiTruongViewModel>>> SearchBaoCaoCapGiayPhepMoiTruong(GiayPhepMoiTruongRequest request)
+        public async Task<ApiResult<List<BaoCaoCapGiayPhepMoiTruongViewModel>>> SearchBaoCaoCapGiayPhepMoiTruong(GiayPhepMoiTruongRequest request)
         {
             var sessions = _httpContextAccessor
             .HttpContext
@@ -43,15 +43,15 @@ namespace QuanLyMoiTruong.WebApp.Service
             var response = await client.PostAsync("/api/BaoCao/BaoCaoCapGiayPhepMoiTruong", httpContent);
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<ApiSuccessResult<List<GiayPhepMoiTruongViewModel>>>(await response.Content.ReadAsStringAsync());
+                return JsonConvert.DeserializeObject<ApiSuccessResult<List<BaoCaoCapGiayPhepMoiTruongViewModel>>>(await response.Content.ReadAsStringAsync());
             }
-            return JsonConvert.DeserializeObject<ApiErrorResult<List<GiayPhepMoiTruongViewModel>>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ApiErrorResult<List<BaoCaoCapGiayPhepMoiTruongViewModel>>>(await response.Content.ReadAsStringAsync());
         }
         public async Task<ApiResult<byte[]>> ExportBaoCaoCapGiayPhepMoiTruong(GiayPhepMoiTruongRequest request)
         {
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
             var pathFileTemplate = "Assets/Template/MauBaoCaoCapGiayPhepMoiTruong.xlsx";
-            var data = new List<GiayPhepMoiTruongViewModel>();
+            var data = new List<BaoCaoCapGiayPhepMoiTruongViewModel>();
             var response = await SearchBaoCaoCapGiayPhepMoiTruong(request);
             if (response.Success) data = response.Data;
             var result = new ApiSuccessResult<byte[]>();
@@ -74,14 +74,18 @@ namespace QuanLyMoiTruong.WebApp.Service
                     ws.Cells[7 + i, 1].Value = i.ToString();
                     ws.Cells[7 + i, 2].Value = obj.TenDuAn;
                     ws.Cells[7 + i, 3].Value = obj.TenDoanhNghiep;
-                    ws.Cells[7 + i, 4].Value = obj.SoGiayPhep;
-                    ws.Cells[7 + i, 5].Value = obj.NgayCap;
-                    ws.Cells[7 + i, 6].Value = obj.CoQuanCap;
+                    ws.Cells[7 + i, 4].Value = obj.DiaChi;
+                    ws.Cells[7 + i, 5].Value = obj.QuyMo;
+                    ws.Cells[7 + i, 6].Value = obj.LoaiHinhSanXuat;
+                    ws.Cells[7 + i, 7].Value = obj.TenNguoiDaiDien;
+                    ws.Cells[7 + i, 8].Value = obj.SoGiayPhep;
+                    ws.Cells[7 + i, 9].Value = obj.NgayCap;
+                    ws.Cells[7 + i, 10].Value = obj.CoQuanCap;
                 }
-                ws.Cells[7, 1, i + 7, 6].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                ws.Cells[7, 1, i + 7, 6].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                ws.Cells[7, 1, i + 7, 6].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                ws.Cells[7, 1, i + 7, 6].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                ws.Cells[7, 1, i + 7, 10].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                ws.Cells[7, 1, i + 7, 10].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                ws.Cells[7, 1, i + 7, 10].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[7, 1, i + 7, 10].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                 ws.Cells.AutoFitColumns();
                 result.Data = p.GetAsByteArray();
             }

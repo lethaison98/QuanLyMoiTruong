@@ -63,5 +63,12 @@ namespace QuanLyMoiTruong.Api.Controllers
             var result = await _duAnService.GetById(idDuAn);
             return Ok(result);
         }
+        [AllowAnonymous]
+        [HttpPost("ImportDuAn")]
+        public async Task<IActionResult> ImportDuAn([FromQuery] IList<IFormFile> files)
+        {
+            var result = await _duAnService.ImportDuAn(files);
+            return Ok(result);
+        }
     }
 }

@@ -10,6 +10,8 @@ using System.Reflection.Metadata;
 using QuanLyMoiTruong.Application.Requests;
 using System.Linq.Expressions;
 using QuanLyMoiTruong.Common.Expressions;
+using OfficeOpenXml;
+using Microsoft.AspNetCore.Http;
 
 namespace QuanLyMoiTruong.Application.Services
 {
@@ -145,6 +147,75 @@ namespace QuanLyMoiTruong.Application.Services
             entity.LoaiHinhSanXuat = viewModel.LoaiHinhSanXuat;
             entity.GhiChu = viewModel.GhiChu;
             return entity;
+        }
+
+        public async Task<ApiResult<bool>> InsertExcel(List<DuAnViewModel> listVm)
+        {
+            foreach(var obj in listVm)
+            {
+
+                var kcn = await _unitOfWork.GetRepository<KhuCongNghiep>().GetFirstOrDefaultAsync(predicate: x => obj.TenKhuCongNghiep.ToLower().Contains(x.TenKhuCongNghiep.ToLower()));
+                obj.IdKhuCongNghiep = kcn != null? kcn.IdKhuCongNghiep: null;
+                obj.ThuocKhuKinhTe = true;
+                var entity = await Insert(obj);
+
+                await _unitOfWork.SaveChangesAsync();
+                var gpmtVm = obj.DSGiayPhepMoiTruong;
+                foreach(var item in gpmtVm)
+                {
+                    item.IdDuAn = entity.Data.IdDuAn;
+                    await _giayPhepMoiTruongService.Insert(item);
+                }
+            }
+            return new ApiSuccessResult<bool>() { Data = true};
+        }
+        public async Task<ApiResult<List<string>>> ImportDuAn(IList<IFormFile> files)
+        {
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            var result = new List<string>();
+            var ok = 0;
+            List<DuAnViewModel> importData = new List<DuAnViewModel>();
+            var messageSuccess = new List<string>();
+            var messageError = new List<string>();
+            var messageException = new List<string>();
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            using (var stream = new MemoryStream())
+            {
+                files[0].CopyTo(stream);
+                using (var package = new ExcelPackage(stream))
+                {
+                    var currentSheet = package.Workbook.Worksheets;
+                    var ws2023 = currentSheet[0];
+                    for (var i = 6; i <= ws2023.Dimension.End.Row; i++)
+                    {
+                        var imp = new DuAnViewModel();
+                        var gpmt = new GiayPhepMoiTruongViewModel();
+                        imp.TenDuAn = ws2023.Cells[i, 2].Value == null ? "" : ws2023.Cells[i, 2].Value.ToString();
+                        imp.TenDoanhNghiep = ws2023.Cells[i, 3].Value == null ? "" : ws2023.Cells[i, 3].Value.ToString();
+                        imp.DiaChi = ws2023.Cells[i, 4].Value == null ? "" : ws2023.Cells[i, 4].Value.ToString();
+                        imp.TenKhuCongNghiep = ws2023.Cells[i, 5].Value == null ? "" : ws2023.Cells[i, 5].Value.ToString();
+                        imp.TenNguoiDaiDien = ws2023.Cells[i, 6].Value == null ? "" : ws2023.Cells[i, 6].Value.ToString();
+                        imp.LoaiHinhSanXuat = ws2023.Cells[i, 7].Value == null ? "" : ws2023.Cells[i, 7].Value.ToString();
+                        imp.QuyMo = ws2023.Cells[i, 8].Value == null ? "" : ws2023.Cells[i, 8].Value.ToString();
+                        gpmt.SoGiayPhep = ws2023.Cells[i, 9].Value == null ? "" : ws2023.Cells[i, 9].Value.ToString();
+                        gpmt.NgayCap = ws2023.Cells[i, 10].Value == null ? "" : ws2023.Cells[i, 10].Value.ToString();
+                        imp.DSGiayPhepMoiTruong.Add(gpmt);
+                        if (!String.IsNullOrEmpty(imp.TenDuAn))
+                        {
+                            importData.Add(imp);
+                        }
+                    }
+                    await InsertExcel(importData);
+                }
+            }
+            result.Add(ok + " Doanh nghiệp được nhập hoàn chỉnh");
+            result.Add("========== DANH SÁCH THÀNH CÔNG ==========");
+            result.AddRange(messageSuccess);
+            result.Add("========== DANH SÁCH LỖI ==========");
+            result.AddRange(messageError);
+            result.Add("========== DANH SÁCH EXCEPTION ==========");
+            result.AddRange(messageException);
+            return new ApiSuccessResult<List<string>>() { Data = result };
         }
     }
 

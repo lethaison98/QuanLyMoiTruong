@@ -156,6 +156,7 @@ ThanhPhanMoiTruongControl = {
         $popup.find('.modal-header').text("Thêm mới thành phần môi trường");
         ResetForm("#FormThanhPhanMoiTruong");
         $popup.find('[data-name="IdThanhPhanMoiTruong"]').val(0);
+        $popup.find('[data-name="Lan"]').val(1);
         $popup.find("#tblFileThanhPhanMoiTruong tbody").html('');
     },
     LoadChiTietThanhPhanMoiTruong: function () {

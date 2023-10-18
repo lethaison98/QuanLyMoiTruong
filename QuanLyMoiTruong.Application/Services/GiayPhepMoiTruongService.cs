@@ -158,9 +158,9 @@ namespace QuanLyMoiTruong.Application.Services
             }
             return new ApiSuccessResult<IList<GiayPhepMoiTruongViewModel>>() { Data = result };
         }
-        public async Task<ApiResult<IList<GiayPhepMoiTruongViewModel>>> GetListByKhoangThoiGian(GiayPhepMoiTruongRequest request)
+        public async Task<ApiResult<IList<BaoCaoCapGiayPhepMoiTruongViewModel>>> GetListByKhoangThoiGian(GiayPhepMoiTruongRequest request)
         {
-            var entities = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted && x.IdDuAn != null, include: x=> x.Include(x=> x.DuAn));
+            var entities = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted && x.IdDuAn != null, include: x=> x.Include(x=> x.DuAn).Include(x=> x.DuAn.KhuCongNghiep));
             if (request.TuNgay != null)
             {
                 entities = entities.Where(x => x.NgayCap >= request.TuNgay).ToList();
@@ -169,9 +169,26 @@ namespace QuanLyMoiTruong.Application.Services
             {
                 entities = entities.Where(x => x.NgayCap <= request.DenNgay).ToList();
             }
-            var result = new List<GiayPhepMoiTruongViewModel>();
-            result = entities.Select(MapEntityToViewModel).ToList();
-            return new ApiSuccessResult<IList<GiayPhepMoiTruongViewModel>>() { Data = result };
+            var result = new List<BaoCaoCapGiayPhepMoiTruongViewModel>();
+            foreach(var item in entities)
+            {
+                var data = new BaoCaoCapGiayPhepMoiTruongViewModel();
+                data.IdGiayPhepMoiTruong = item.IdGiayPhepMoiTruong;
+                data.TenGiayPhep = item.TenGiayPhep;
+                data.SoGiayPhep = item.SoGiayPhep;
+                data.CoQuanCap = item.CoQuanCap;
+                data.NgayCap = item.NgayCap != null ? item.NgayCap.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "";
+                data.IdDuAn = item.IdDuAn;
+                data.TenDuAn = item.DuAn != null ? item.DuAn.TenDuAn : "";
+                data.DiaChi = item.DuAn != null ? item.DuAn.DiaChi : "";
+                data.LoaiHinhSanXuat = item.DuAn != null ? item.DuAn.LoaiHinhSanXuat : "";
+                data.QuyMo = item.DuAn != null ? item.DuAn.QuyMo : "";
+                data.TenNguoiDaiDien = item.DuAn != null ? item.DuAn.TenNguoiDaiDien : "";
+                data.TenDoanhNghiep = item.DuAn != null ? item.DuAn.TenDoanhNghiep : "";
+                data.TenKhuCongNghiep = item.DuAn.KhuCongNghiep != null ? item.DuAn.KhuCongNghiep.TenKhuCongNghiep : "";
+                result.Add(data);
+            }
+            return new ApiSuccessResult<IList<BaoCaoCapGiayPhepMoiTruongViewModel>>() { Data = result };
         }
         public GiayPhepMoiTruongViewModel MapEntityToViewModel(GiayPhepMoiTruong entity)
         {
