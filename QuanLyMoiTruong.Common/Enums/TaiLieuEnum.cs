@@ -20,7 +20,9 @@ namespace QuanLyMoiTruong.Common.Enums
         [Display(Name = "Báo cáo kết quả quan trắc")]
         BaoCaoKetQuaQuanTrac = 310,
         [Display(Name = "Tổng hợp kết quả quan trắc")]
-        TongHopKetQuaQuanTrac = 311
+        TongHopKetQuaQuanTrac = 311,
+        [Display(Name = "Tổng hợp thống kê nguồn thải")]
+        TongHopSoLieuThongKeNguonThai = 241,
     }
     public enum NhomTaiLieuEnum
     {

@@ -44,4 +44,4 @@ body {
 
 .required { color: #ed3e3a; margin: 0 5px; font-size: 14px; }
 
-.table-striped th { background-color: #8EA9DB }
+.table-striped th { background-color: #8EA9DB; text-align:center }

@@ -20,6 +20,7 @@ namespace QuanLyMoiTruong.Data.Entities
         public virtual KhuCongNghiep KhuCongNghiep { get; set; }
         public bool KhuKinhTe { get; set; }
         public string GhiChu { get; set; }
-
+        [JsonIgnore]
+        public List<KetQuaThongKeNguonThai> DsKetQuaThongKeNguonThai { get; set; }
     }
 }

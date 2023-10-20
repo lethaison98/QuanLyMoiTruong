@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 using QuanLyMoiTruong.Common.Expressions;
 using QuanLyMoiTruong.Common.Enums;
 using QuanLyMoiTruong.Application.Request;
+using OfficeOpenXml;
 
 namespace QuanLyMoiTruong.Application.Services
 {
@@ -20,32 +21,34 @@ namespace QuanLyMoiTruong.Application.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileTaiLieuService _fileTaiLieuService;
+        private readonly IKetQuaThongKeNguonThaiService _ketQuaThongKeNguonThaiService;
 
-        public BaoCaoThongKeNguonThaiService(IUnitOfWork unitOfWork, IFileTaiLieuService fileTaiLieuService)
+        public BaoCaoThongKeNguonThaiService(IUnitOfWork unitOfWork, IFileTaiLieuService fileTaiLieuService, IKetQuaThongKeNguonThaiService ketQuaThongKeNguonThaiService)
         {
-            _unitOfWork= unitOfWork;
-            _fileTaiLieuService= fileTaiLieuService;
+            _unitOfWork = unitOfWork;
+            _fileTaiLieuService = fileTaiLieuService;
+            _ketQuaThongKeNguonThaiService = ketQuaThongKeNguonThaiService;
         }
 
         public async Task<ApiResult<bool>> Delete(int id)
         {
-            var entity =  await _unitOfWork.GetRepository<BaoCaoThongKeNguonThai>().FindAsync(id);
+            var entity = await _unitOfWork.GetRepository<BaoCaoThongKeNguonThai>().FindAsync(id);
             if (entity != null)
             {
-                entity.IsDeleted= true;
+                entity.IsDeleted = true;
                 await _unitOfWork.SaveChangesAsync();
-                return new ApiSuccessResult<bool>() {};
+                return new ApiSuccessResult<bool>() { };
             }
             else
             {
-                return new ApiErrorResult<bool>("Không tồn tại dữ liệu cần xóa") ;
+                return new ApiErrorResult<bool>("Không tồn tại dữ liệu cần xóa");
             }
-        } 
+        }
 
         public async Task<ApiResult<IList<BaoCaoThongKeNguonThaiViewModel>>> GetAll()
         {
             var result = new List<BaoCaoThongKeNguonThaiViewModel>();
-            var entities =  await _unitOfWork.GetRepository<BaoCaoThongKeNguonThai>().GetAllAsync(predicate: x => !x.IsDeleted);
+            var entities = await _unitOfWork.GetRepository<BaoCaoThongKeNguonThai>().GetAllAsync(predicate: x => !x.IsDeleted);
             result = entities.Select(MapEntityToViewModel).ToList();
             return new ApiSuccessResult<IList<BaoCaoThongKeNguonThaiViewModel>>() { Data = result };
         }
@@ -53,14 +56,14 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<BaoCaoThongKeNguonThaiViewModel>> GetById(int id)
         {
             var result = new BaoCaoThongKeNguonThaiViewModel();
-            var data = await _unitOfWork.GetRepository<BaoCaoThongKeNguonThai>().GetFirstOrDefaultAsync(predicate: x => x.IdBaoCaoThongKeNguonThai == id, include: x => x.Include(y => y.DuAn).Include(y=> y.KhuCongNghiep));
+            var data = await _unitOfWork.GetRepository<BaoCaoThongKeNguonThai>().GetFirstOrDefaultAsync(predicate: x => x.IdBaoCaoThongKeNguonThai == id, include: x => x.Include(y => y.DuAn).Include(y => y.KhuCongNghiep));
             result = MapEntityToViewModel(data);
             var dsFile = await _fileTaiLieuService.GetByTaiLieu(data.IdBaoCaoThongKeNguonThai, NhomTaiLieuEnum.BaoCaoThongKeNguonThai.ToString());
             if (dsFile.Success)
             {
                 result.FileTaiLieu = dsFile.Data.ToList();
             }
-            return new ApiSuccessResult<BaoCaoThongKeNguonThaiViewModel>() {Data = result };
+            return new ApiSuccessResult<BaoCaoThongKeNguonThaiViewModel>() { Data = result };
         }
 
         public async Task<ApiResult<BaoCaoThongKeNguonThai>> Insert(BaoCaoThongKeNguonThaiViewModel obj)
@@ -75,6 +78,13 @@ namespace QuanLyMoiTruong.Application.Services
             fileTaiLieuRequest.NhomTaiLieu = NhomTaiLieuEnum.BaoCaoThongKeNguonThai.ToString();
             fileTaiLieuRequest.FileTaiLieu = obj.FileTaiLieu;
             await _fileTaiLieuService.UpdateAll(fileTaiLieuRequest);
+
+            var listFile = await _fileTaiLieuService.GetByTaiLieu(idTaiLieu: entity.IdBaoCaoThongKeNguonThai, nhomTaiLieu: NhomTaiLieuEnum.BaoCaoThongKeNguonThai.ToString());
+            var fileExcel = listFile.Data.FirstOrDefault(x => x.LoaiFileTaiLieu == LoaiFileTaiLieuEnum.TongHopSoLieuThongKeNguonThai.ToString());
+            if (fileExcel != null)
+            {
+                await ImportKetQuaThongKeNguonThai(fileExcel.File.LinkFile, entity);
+            }
             return new ApiSuccessResult<BaoCaoThongKeNguonThai>() { Data = entity };
         }
 
@@ -107,9 +117,9 @@ namespace QuanLyMoiTruong.Application.Services
 
             result.PageIndex = data.PageIndex;
             result.PageSize = data.PageSize;
-            result.IndexFrom= data.IndexFrom;
+            result.IndexFrom = data.IndexFrom;
             result.TotalCount = data.TotalCount;
-            result.TotalPages = data.TotalPages;    
+            result.TotalPages = data.TotalPages;
             result.Items = data.Items.Select(MapEntityToViewModel).ToList();
             return new ApiSuccessResult<IPagedList<BaoCaoThongKeNguonThaiViewModel>>() { Data = result };
         }
@@ -144,7 +154,7 @@ namespace QuanLyMoiTruong.Application.Services
             }
             return new ApiSuccessResult<IList<BaoCaoThongKeNguonThaiViewModel>>() { Data = result };
         }
-        
+
         public async Task<ApiResult<IList<BaoCaoThongKeNguonThaiViewModel>>> GetListBaoCaoThongKeNguonThaiByKhuCongNghiep(int idKhuCongNghiep)
         {
             var result = new List<BaoCaoThongKeNguonThaiViewModel>();
@@ -160,14 +170,53 @@ namespace QuanLyMoiTruong.Application.Services
             }
             return new ApiSuccessResult<IList<BaoCaoThongKeNguonThaiViewModel>>() { Data = result };
         }
+        public async Task<ApiResult<List<string>>> ImportKetQuaThongKeNguonThai(string path, BaoCaoThongKeNguonThai bc)
+        {
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            var result = new List<string>();
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            using (ExcelPackage package = new ExcelPackage(new System.IO.FileInfo(path)))
+            {
+                var currentSheet = package.Workbook.Worksheets;
 
-        public BaoCaoThongKeNguonThaiViewModel MapEntityToViewModel(BaoCaoThongKeNguonThai entity) {
+                var listKetQua = new List<KetQuaThongKeNguonThaiViewModel>();
+                var ws = currentSheet[0];
+                for (var i = 4; i <= ws.Dimension.End.Row; i++)
+                { //9 điểm quan trắc không khí
+
+                    var imp = new KetQuaThongKeNguonThaiViewModel();
+                    imp.TenKhuCongNghiep = ws.Cells[i, 2].Value == null ? "" : ws.Cells[i, 2].Value.ToString();
+                    imp.NuocThaiSinhHoat = ws.Cells[i, 3].Value == null ? "" : ws.Cells[i, 3].Value.ToString();
+                    imp.NuocThaiSanXuat = ws.Cells[i, 4].Value == null ? "" : ws.Cells[i, 4].Value.ToString();
+                    imp.NuocThaiTaiSuDung = ws.Cells[i, 5].Value == null ? "" : ws.Cells[i, 5].Value.ToString();
+                    imp.LuuLuongDauNoi = ws.Cells[i, 6].Value == null ? "" : ws.Cells[i, 6].Value.ToString();
+                    imp.KhiThai = ws.Cells[i, 7].Value == null ? "" : ws.Cells[i, 7].Value.ToString();
+                    imp.ChatThaiRanSinhHoat = ws.Cells[i, 8].Value == null ? "" : ws.Cells[i, 8].Value.ToString();
+                    imp.ChatThaiRanSanXuat = ws.Cells[i, 9].Value == null ? "" : ws.Cells[i, 9].Value.ToString();
+                    imp.ChatThaiRanTaiSuDung = ws.Cells[i, 10].Value == null ? "" : ws.Cells[i, 10].Value.ToString();
+                    imp.TongChatThaiRan = ws.Cells[i, 11].Value == null ? "" : ws.Cells[i, 11].Value.ToString();
+                    imp.ChatThaiNguyHai = ws.Cells[i, 12].Value == null ? "" : ws.Cells[i, 12].Value.ToString();
+                    imp.IdBaoCaoThongKeNguonThai = bc.IdBaoCaoThongKeNguonThai;
+                    listKetQua.Add(imp);
+                }
+                await _ketQuaThongKeNguonThaiService.InsertFromExcel(listKetQua);
+                return new ApiSuccessResult<List<string>>() { Data = result };
+            }
+        }
+        public async Task<ApiResult<List<KetQuaThongKeNguonThaiViewModel>>> GetKetQuaThongKeNguonThaiByIdBaoCao(int id)
+        {
+            var data = await _ketQuaThongKeNguonThaiService.GetAllByIdBaoCaoThongKeNguonThai(id);
+            var result = data.Data;
+            return new ApiSuccessResult<List<KetQuaThongKeNguonThaiViewModel>>() { Data = result };
+        }
+        public BaoCaoThongKeNguonThaiViewModel MapEntityToViewModel(BaoCaoThongKeNguonThai entity)
+        {
             var result = new BaoCaoThongKeNguonThaiViewModel();
             result.IdBaoCaoThongKeNguonThai = entity.IdBaoCaoThongKeNguonThai;
             result.TenBaoCao = entity.TenBaoCao;
             result.NgayBaoCao = entity.NgayBaoCao != null ? entity.NgayBaoCao.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "";
             result.IdDuAn = entity.IdDuAn;
-            result.TenDuAn = entity.IdDuAn != null? entity.DuAn.TenDuAn: "";
+            result.TenDuAn = entity.IdDuAn != null ? entity.DuAn.TenDuAn : "";
             result.TenDoanhNghiep = entity.IdDuAn != null ? entity.DuAn.TenDoanhNghiep : "";
             result.IdKhuCongNghiep = entity.IdKhuCongNghiep;
             result.TenKhuCongNghiep = entity.IdKhuCongNghiep != null ? entity.KhuCongNghiep.TenKhuCongNghiep : "";
@@ -186,7 +235,7 @@ namespace QuanLyMoiTruong.Application.Services
             entity.IdKhuCongNghiep = viewModel.IdKhuCongNghiep == 0 ? null : viewModel.IdKhuCongNghiep;
             entity.GhiChu = viewModel.GhiChu;
             entity.Nam = viewModel.Nam;
-            entity.Lan = viewModel.Lan; 
+            entity.Lan = viewModel.Lan;
             return entity;
         }
     }
