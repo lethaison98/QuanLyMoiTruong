@@ -185,6 +185,7 @@ BaoCaoBaoVeMoiTruongControl = {
             if (type == "KhuKinhTe") {
                 data.KhuKinhTe = true;
             }
+            data.LoaiBaoCao = type;
             data.FileTaiLieu = listFileTaiLieu;
             Post({
                 "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/InsertUpdate",

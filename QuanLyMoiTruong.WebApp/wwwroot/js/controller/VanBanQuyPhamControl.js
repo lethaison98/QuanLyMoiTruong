@@ -1,7 +1,7 @@
-﻿if (typeof (ThanhPhanMoiTruongControl) == "undefined") ThanhPhanMoiTruongControl = {};
-ThanhPhanMoiTruongControl = {
+﻿if (typeof (VanBanQuyPhamControl) == "undefined") VanBanQuyPhamControl = {};
+VanBanQuyPhamControl = {
     Init: function () {
-        ThanhPhanMoiTruongControl.RegisterEventsThanhPhanMoiTruong();
+        VanBanQuyPhamControl.RegisterEventsVanBanQuyPham();
     },
     DrawIconFile: function (linkfile) {
         var iconfile = "";
@@ -22,7 +22,7 @@ ThanhPhanMoiTruongControl = {
         var self = this;
         self.table = SetDataTable({
             table: $('#tbl'),
-            url: localStorage.getItem("API_URL") + "/ThanhPhanMoiTruong/GetAllPaging",
+            url: localStorage.getItem("API_URL") + "/VanBanQuyPham/GetAllPaging",
             dom: "rtip",
             data: {
                 "requestData": function () {
@@ -50,25 +50,22 @@ ThanhPhanMoiTruongControl = {
                     },
                     {
                         "class": "name-control",
-                        "defaultContent": "",
-                        render: function (data, type, row) {
-                            var thaotac = "<a href='ThanhPhanMoiTruong/ThanhPhanMoiTruongChiTiet/" + row.IdThanhPhanMoiTruong + "'>" + row.TenThanhPhanMoiTruong + "</i></a>";
-                            return thaotac;
-                        }
-                    },
-                    {
-                        "class": "name-control",
-                        "data": "Nam",
+                        "data": "SoKyHieu",
                         "defaultContent": "",
                     },
                     {
                         "class": "name-control",
-                        "data": "Lan",
+                        "data": "TrichYeu",
                         "defaultContent": "",
                     },
                     {
                         "class": "name-control",
-                        "data": "GhiChu",
+                        "data": "NgayBanHanh",
+                        "defaultContent": "",
+                    },
+                    {
+                        "class": "name-control",
+                        "data": "CoQuanBanHanh",
                         "defaultContent": "",
                     },
                     {
@@ -76,9 +73,22 @@ ThanhPhanMoiTruongControl = {
                         "orderable": false,
                         "defaultContent": "",
                         render: function (data, type, row) {
+                            console.log(row)
+                            var thaotac = "";
+                            $.each(row.FileTaiLieu, function (i, item) {
+                                thaotac += '<a href = "' + localStorage.getItem('API_URL').replace("api", "") + item.File.LinkFile + '" data-id="' + item.IdFileTaiLieu + '" data-IdFile = "' + item.IdFile + '" target="_blank">' + item.File.TenFile + '</a><br>';
+                            });
+                            return thaotac;
+                        }
+                    },
+                    {
+                        "class": "function-control",
+                        "orderable": false,
+                        "defaultContent": "",
+                        render: function (data, type, row) {
                             var thaotac = "<div class='hstn-func' style='text-align: center;' data-type='" + JSON.stringify(row) + "'>" +
-                                "<a href='javascript:;' class='edit-ThanhPhanMoiTruong' data-id='" + row.IdThanhPhanMoiTruong + "'><i class='fas fa-edit' title='Sửa'></i></a>&nbsp" +
-                                "<a href='javascript:;' class='remove-ThanhPhanMoiTruong text-danger' data-id='" + row.IdThanhPhanMoiTruong + "'><i class='fas fa-trash-alt' title='Xóa' ></i></a>" +
+                                "<a href='javascript:;' class='edit-VanBanQuyPham' data-id='" + row.IdVanBanQuyPham + "'><i class='fas fa-edit' title='Sửa'></i></a>&nbsp" +
+                                "<a href='javascript:;' class='remove-VanBanQuyPham text-danger' data-id='" + row.IdVanBanQuyPham + "'><i class='fas fa-trash-alt' title='Xóa' ></i></a>" +
                                 "</div>";
                             return thaotac;
                         }
@@ -87,44 +97,44 @@ ThanhPhanMoiTruongControl = {
             },
             callback: function () {
 
-                $('#tbl tbody .edit-ThanhPhanMoiTruong').off('click').on('click', function (e) {
-                    var $popup = $('#popup-form-thanh-phan-moi-truong');
+                $('#tbl tbody .edit-VanBanQuyPham').off('click').on('click', function (e) {
+                    var $popup = $('#popup-form-van-ban-quy-pham');
                     var id = $(this).attr('data-id');
                     Get({
-                        url: localStorage.getItem("API_URL") + '/ThanhPhanMoiTruong/GetById',
+                        url: localStorage.getItem("API_URL") + '/VanBanQuyPham/GetById',
                         data: {
-                            idThanhPhanMoiTruong: id
+                            idVanBanQuyPham: id
                         },
                         callback: function (res) {
                             if (res.Success) {
                                 $popup.modal('show');
                                 self.ResetPopup();
-                                $popup.find('.modal-title').text("Chỉnh sửa thông tin thành phần môi trường");
-                                FillFormData('#FormThanhPhanMoiTruong', res.Data);
+                                $popup.find('.modal-title').text("Chỉnh sửa văn bản quy phạm pháp luật");
+                                FillFormData('#FormVanBanQuyPham', res.Data);
                                 $.each(res.Data.FileTaiLieu, function (i, item) {
                                     var $tr = $popup.find("#tempFileTable").html();
                                     console.log($tr)
-                                    $popup.find("#tblFileThanhPhanMoiTruong tbody").append($tr);
-                                    $popup.find("#tblFileThanhPhanMoiTruong tbody tr:last").find('[data-name="MoTa"]').val(item.MoTa);
-                                    $popup.find("#tblFileThanhPhanMoiTruong tbody tr:last").find('[data-name="LoaiFileTaiLieu"]').val(item.LoaiFileTaiLieu);
-                                    $popup.find("#tblFileThanhPhanMoiTruong tbody tr:last td:first").append('<a href = "' + localStorage.getItem('API_URL').replace("api", "") + item.File.LinkFile + '" data-id="' + item.IdFileTaiLieu + '" data-IdFile = "' + item.IdFile + '" target="_blank">' + item.File.TenFile + '</a>');
+                                    $popup.find("#tblFileVanBanQuyPham tbody").append($tr);
+                                    $popup.find("#tblFileVanBanQuyPham tbody tr:last").find('[data-name="MoTa"]').val(item.MoTa);
+                                    $popup.find("#tblFileVanBanQuyPham tbody tr:last").find('[data-name="LoaiFileTaiLieu"]').val(item.LoaiFileTaiLieu);
+                                    $popup.find("#tblFileVanBanQuyPham tbody tr:last td:first").append('<a href = "' + localStorage.getItem('API_URL').replace("api", "") + item.File.LinkFile + '" data-id="' + item.IdFileTaiLieu + '" data-IdFile = "' + item.IdFile + '" target="_blank">' + item.File.TenFile + '</a>');
                                     $popup.find(".tr-remove").off('click').on('click', function () {
                                         $(this).parents('tr:first').remove();
                                     });
                                 });
-                                self.RegisterEventsPopupThanhPhanMoiTruong();
+                                self.RegisterEventsPopupVanBanQuyPham();
                             }
                         }
                     });
                 });
 
-                $("#tbl tbody .remove-ThanhPhanMoiTruong").off('click').on('click', function (e) {
+                $("#tbl tbody .remove-VanBanQuyPham").off('click').on('click', function (e) {
                     var $y = $(this);
                     var id = $y.attr('data-id');
                     if (id != "0") {
                         if (confirm("Xác nhận xóa?") == true) {
                             $.ajax({
-                                url: localStorage.getItem("API_URL") + "/ThanhPhanMoiTruong/Delete?idThanhPhanMoiTruong=" + $y.attr('data-id') + "&Type=1",
+                                url: localStorage.getItem("API_URL") + "/VanBanQuyPham/Delete?idVanBanQuyPham=" + $y.attr('data-id') + "&Type=1",
                                 headers: {
                                     'Authorization': 'Bearer ' + localStorage.getItem("ACCESS_TOKEN")
                                 },
@@ -152,36 +162,34 @@ ThanhPhanMoiTruongControl = {
     },
 
     ResetPopup: function () {
-        var $popup = $('#popup-form-thanh-phan-moi-truong');
-        $popup.find('.modal-header').text("Thêm mới thành phần môi trường");
-        ResetForm("#FormThanhPhanMoiTruong");
-        $popup.find('[data-name="IdThanhPhanMoiTruong"]').val(0);
-        $popup.find('[data-name="Lan"]').val(1);
-        $popup.find("#tblFileThanhPhanMoiTruong tbody").html('');
+        var $popup = $('#popup-form-van-ban-quy-pham');
+        $popup.find('.modal-header').text("Thêm mới văn bản quy phạm pháp luật");
+        ResetForm("#FormVanBanQuyPham");
+        $popup.find('[data-name="IdVanBanQuyPham"]').val(0);
+        $popup.find("#tblFileVanBanQuyPham tbody").html('');
     },
-    LoadChiTietThanhPhanMoiTruong: function () {
+    LoadChiTietVanBanQuyPham: function () {
         var self = this;
-        var $popup = $('#popup-form-thanh-phan-moi-truong');
+        var $popup = $('#popup-form-van-ban-quy-pham');
         Get({
-            "url": localStorage.getItem("API_URL") + "/ThanhPhanMoiTruong/GetById?id=" + idGiayPhep,
+            "url": localStorage.getItem("API_URL") + "/VanBanQuyPham/GetById?id=" + idGiayPhep,
             callback: function (res) {
             }
         });
     },
-    InsertUpdateThanhPhanMoiTruong: function () {
-        console.log(123)
+    InsertUpdateVanBanQuyPham: function () {
         var self = this;
-        var isValidate = ValidateForm($('#FormThanhPhanMoiTruong'));
+        var isValidate = ValidateForm($('#FormVanBanQuyPham'));
         if (isValidate) {
-            var $popup = $('#popup-form-thanh-phan-moi-truong');
-            var data = LoadFormData("#FormThanhPhanMoiTruong");
+            var $popup = $('#popup-form-van-ban-quy-pham');
+            var data = LoadFormData("#FormVanBanQuyPham");
             var listFileTaiLieu = [];
-            $('#tblFileThanhPhanMoiTruong tbody tr').each(function () {
+            $('#tblFileVanBanQuyPham tbody tr').each(function () {
                 var $tr = $(this);
                 listFileTaiLieu.push({
                     IdFileTaiLieu: $(this).find("td:first a").attr("data-id"),
                     IdFile: $(this).find("td:first a").attr("data-idfile"),
-                    NhomTaiLieu: "ThanhPhanMoiTruong",
+                    NhomTaiLieu: "VanBanQuyPham",
                     LoaiFileTaiLieu: $(this).find('[data-name="LoaiFileTaiLieu"] option:selected').val(),
                     MoTa: $(this).find('[data-name="MoTa"]').val(),
                 })
@@ -189,7 +197,7 @@ ThanhPhanMoiTruongControl = {
             });
             data.FileTaiLieu = listFileTaiLieu;
             Post({
-                "url": localStorage.getItem("API_URL") + "/ThanhPhanMoiTruong/InsertUpdate",
+                "url": localStorage.getItem("API_URL") + "/VanBanQuyPham/InsertUpdate",
                 "data": data,
                 callback: function (res) {
                     if (res.Success) {
@@ -205,41 +213,40 @@ ThanhPhanMoiTruongControl = {
         }
     },
 
-    RegisterEventsThanhPhanMoiTruong: function () {
+    RegisterEventsVanBanQuyPham: function () {
         var self = this;
-        var $popup = $('#popup-form-thanh-phan-moi-truong');
-        $('#btnCreateThanhPhanMoiTruong').off('click').on('click', function () {
-            console.log(2213)
+        var $popup = $('#popup-form-van-ban-quy-pham');
+        $('#btnCreateVanBanQuyPham').off('click').on('click', function () {
             $popup.modal('show');
             self.ResetPopup();
-            self.RegisterEventsPopupThanhPhanMoiTruong();
+            self.RegisterEventsPopupVanBanQuyPham();
         });
         self.LoadDatatable();
         $(document).on('keypress', function (e) {
             if (e.which == 13) {
-                $("#btnSearchThanhPhanMoiTruong").trigger('click');
+                $("#btnSearchVanBanQuyPham").trigger('click');
             }
         });
-        $("#btnSearchThanhPhanMoiTruong").off('click').on('click', function () {
+        $("#btnSearchVanBanQuyPham").off('click').on('click', function () {
             self.table.ajax.reload();
         });
     },
-    RegisterEventsPopupThanhPhanMoiTruong: function () {
+    RegisterEventsPopupVanBanQuyPham: function () {
         var self = this;
-        var $popup = $('#popup-form-thanh-phan-moi-truong');
+        var $popup = $('#popup-form-van-ban-quy-pham');
         // Phần xử lý file
-        $popup.find('#btnSelectFileThanhPhanMoiTruong').off('click').on('click', function () {
-            $popup.find('#fileThanhPhanMoiTruong').trigger("click");
+        $popup.find('#btnSelectFileVanBanQuyPham').off('click').on('click', function () {
+            $popup.find('#fileVanBanQuyPham').trigger("click");
         });
 
-        if ($popup.find('#fileThanhPhanMoiTruong').length > 0) {
-            $popup.find('#fileThanhPhanMoiTruong')[0].value = "";
-            $popup.find('#fileThanhPhanMoiTruong').off('change').on('change', function (e) {
+        if ($popup.find('#fileVanBanQuyPham').length > 0) {
+            $popup.find('#fileVanBanQuyPham')[0].value = "";
+            $popup.find('#fileVanBanQuyPham').off('change').on('change', function (e) {
                 var $this = this;
-                var file = $popup.find('#fileThanhPhanMoiTruong')[0].files.length > 0 ? $popup.find('#fileThanhPhanMoiTruong')[0].files : null;
+                var file = $popup.find('#fileVanBanQuyPham')[0].files.length > 0 ? $popup.find('#fileVanBanQuyPham')[0].files : null;
                 if (file != null) {
                     var dataFile = new FormData();
-                    dataFile.append("NhomTaiLieu", "ThanhPhanMoiTruong");
+                    dataFile.append("NhomTaiLieu", "VanBanQuyPham");
                     for (var i = 0; i < file.length; i++) {
                         dataFile.append("File", file[i]);
                     }
@@ -257,8 +264,8 @@ ThanhPhanMoiTruongControl = {
                             if (res.Success) {
                                 for (var i = 0; i < res.Data.length; i++) {
                                     var $tr = $popup.find("#tempFileTable").html();
-                                    $popup.find("#tblFileThanhPhanMoiTruong tbody").append($tr);
-                                    $popup.find("#tblFileThanhPhanMoiTruong tbody tr:last td:first").append('<a href = "' + localStorage.getItem("API_URL").replace("api", "") + res.Data[i].LinkFile + '" data-id="0" data-IdFile = "' + res.Data[i].IdFile + '"target="_blank">' + file[i].name + '</a>');
+                                    $popup.find("#tblFileVanBanQuyPham tbody").append($tr);
+                                    $popup.find("#tblFileVanBanQuyPham tbody tr:last td:first").append('<a href = "' + localStorage.getItem("API_URL").replace("api", "") + res.Data[i].LinkFile + '" data-id="0" data-IdFile = "' + res.Data[i].IdFile + '"target="_blank">' + file[i].name + '</a>');
                                     $popup.find(".tr-remove").off('click').on('click', function () {
                                         $(this).parents('tr:first').remove();
                                     });
@@ -274,12 +281,12 @@ ThanhPhanMoiTruongControl = {
         //Hết phần xử lý file
 
         $popup.find(".btn-primary").off('click').on('click', function () {
-            self.InsertUpdateThanhPhanMoiTruong();
+            self.InsertUpdateVanBanQuyPham();
         });
     },
 }
 
 $(document).ready(function () {
-    ThanhPhanMoiTruongControl.Init();
+    VanBanQuyPhamControl.Init();
 });
 

@@ -18,7 +18,13 @@ namespace QuanLyMoiTruong.Common.Enums
         [Display(Name = "Dự án đầu tư")]
         DuAnDauTu = 113,
         [Display(Name = "Báo cáo kết quả quan trắc")]
-        BaoCaoKetQuaQuanTrac = 310,
+        BaoCaoKetQuaQuanTrac = 210,
+        [Display(Name = "Báo cáo kết quả quan trắc")]
+        BaoCaoKetQuaBVMT = 211,
+        [Display(Name = "Tổng hợp kết quả BVMT chung trong KCN")]
+        TongHopSoLieuBVMTChungKCN = 212,
+        [Display(Name = "Tổng hợp kết quả BVMT Chi tiết KCN")]
+        TongHopSoLieuBVMTChitietKCN = 213,
         [Display(Name = "Tổng hợp kết quả quan trắc")]
         TongHopKetQuaQuanTrac = 311,
         [Display(Name = "Tổng hợp thống kê nguồn thải")]
@@ -45,5 +51,7 @@ namespace QuanLyMoiTruong.Common.Enums
         BaoCaoThongKeNguonThai = 23,
         [Display(Name = "Thành phần môi trường")]
         ThanhPhanMoiTruong = 3,
+        [Display(Name = "Văn bản quy phạm")]
+        VanBanQuyPham = 4,
     }
 }

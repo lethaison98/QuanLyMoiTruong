@@ -53,9 +53,11 @@
                     <thead>
                         <tr>
                             <th style="width: 5%">STT</th>
-                            <th>Tên Văn bản quy phạm</th>
-                            <th>Tên doanh nghiệp</th>
-                            <th>Số giấy phép ĐKKD</th>
+                            <th>Số ký hiệu</th>
+                            <th>Trích yếu</th>
+                            <th>Ngày ban hành</th>
+                            <th>Cơ quan ban hành</th>
+                            <th>File đính kèm</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -66,7 +68,7 @@
         </div>
     </div>
 </div>
-
+@await Html.PartialAsync("_PopupFormVanBanQuyPham.cshtml")
 @section Scripts{
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
 <script src="~/js/controller/VanBanQuyPhamControl.js"></script>

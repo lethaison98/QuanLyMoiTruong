@@ -54,6 +54,9 @@ namespace QuanLyMoiTruong.Data.EF
             modelBuilder.ApplyConfiguration(new KetQuaQuanTracConfiguration());
             modelBuilder.ApplyConfiguration(new BaoCaoThongKeNguonThaiConfiguration());
             modelBuilder.ApplyConfiguration(new KetQuaThongKeNguonThaiConfiguration());
+            modelBuilder.ApplyConfiguration(new KetQuaBaoVeMoiTruongDoanhNghiepConfiguration());
+            modelBuilder.ApplyConfiguration(new KetQuaBaoVeMoiTruongKCNConfiguration());
+            modelBuilder.ApplyConfiguration(new VanBanQuyPhamConfiguration());
 
         }
         public DbSet<AppConfig> AppConfig { get; set; }
@@ -78,6 +81,9 @@ namespace QuanLyMoiTruong.Data.EF
         public DbSet<KetQuaQuanTrac> KetQuaQuanTrac { get; set; }
         public DbSet<BaoCaoThongKeNguonThai> BaoCaoThongKeNguonThai { get; set; }
         public DbSet<KetQuaThongKeNguonThai> KetQuaThongKeNguonThai { get; set; }
+        public DbSet<KetQuaBaoVeMoiTruongDoanhNghiep> KetQuaBaoVeMoiTruongDoanhNghiep { get; set; }
+        public DbSet<KetQuaBaoVeMoiTruongKCN> KetQuaBaoVeMoiTruongKCN { get; set; }
+        public DbSet<VanBanQuyPham> VanBanQuyPham { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

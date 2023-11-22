@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 using QuanLyMoiTruong.Common.Expressions;
 using QuanLyMoiTruong.Common.Enums;
 using QuanLyMoiTruong.Application.Request;
+using OfficeOpenXml;
 
 namespace QuanLyMoiTruong.Application.Services
 {
@@ -20,11 +21,16 @@ namespace QuanLyMoiTruong.Application.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileTaiLieuService _fileTaiLieuService;
+        private readonly IKetQuaBaoVeMoiTruongDoanhNghiepService _ketQuaBaoVeMoiTruongDoanhNghiepService;
+        private readonly IKetQuaBaoVeMoiTruongKCNService _ketQuaBaoVeMoiTruongKCNService;
 
-        public BaoCaoBaoVeMoiTruongService(IUnitOfWork unitOfWork, IFileTaiLieuService fileTaiLieuService)
+
+        public BaoCaoBaoVeMoiTruongService(IUnitOfWork unitOfWork, IFileTaiLieuService fileTaiLieuService, IKetQuaBaoVeMoiTruongKCNService ketQuaBaoVeMoiTruongKCNService, IKetQuaBaoVeMoiTruongDoanhNghiepService ketQuaBaoVeMoiTruongDoanhNghiepService)
         {
             _unitOfWork= unitOfWork;
             _fileTaiLieuService= fileTaiLieuService;
+            _ketQuaBaoVeMoiTruongDoanhNghiepService = ketQuaBaoVeMoiTruongDoanhNghiepService;
+            _ketQuaBaoVeMoiTruongKCNService = ketQuaBaoVeMoiTruongKCNService;
         }
 
         public async Task<ApiResult<bool>> Delete(int id)
@@ -75,6 +81,21 @@ namespace QuanLyMoiTruong.Application.Services
             fileTaiLieuRequest.NhomTaiLieu = NhomTaiLieuEnum.BaoCaoBaoVeMoiTruong.ToString();
             fileTaiLieuRequest.FileTaiLieu = obj.FileTaiLieu;
             await _fileTaiLieuService.UpdateAll(fileTaiLieuRequest);
+
+            if(obj.LoaiBaoCao == "KhuCongNghiep")
+            {
+                var listFile = await _fileTaiLieuService.GetByTaiLieu(idTaiLieu: entity.IdBaoCaoBaoVeMoiTruong, nhomTaiLieu: NhomTaiLieuEnum.BaoCaoBaoVeMoiTruong.ToString());
+                var fileChung = listFile.Data.FirstOrDefault(x => x.LoaiFileTaiLieu == LoaiFileTaiLieuEnum.TongHopSoLieuBVMTChungKCN.ToString());
+                if (fileChung != null)
+                {
+                    await ImportKetQuaBaoVeMoiTruongKCN(fileChung.File.LinkFile, entity);
+                }
+                var fileChiTiet = listFile.Data.FirstOrDefault(x => x.LoaiFileTaiLieu == LoaiFileTaiLieuEnum.TongHopSoLieuBVMTChitietKCN.ToString());
+                if (fileChiTiet != null)
+                {
+                    await ImportKetQuaBaoVeMoiTruongDoanhNghiep(fileChiTiet.File.LinkFile, entity);
+                }
+            }
             return new ApiSuccessResult<BaoCaoBaoVeMoiTruong>() { Data = entity };
         }
 
@@ -175,6 +196,81 @@ namespace QuanLyMoiTruong.Application.Services
             }
             return new ApiSuccessResult<IList<BaoCaoBaoVeMoiTruongViewModel>>() { Data = result };
         }
+
+        public async Task<ApiResult<List<string>>> ImportKetQuaBaoVeMoiTruongDoanhNghiep(string path, BaoCaoBaoVeMoiTruong bc)
+        {
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            var result = new List<string>();
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            using (ExcelPackage package = new ExcelPackage(new System.IO.FileInfo(path)))
+            {
+                var currentSheet = package.Workbook.Worksheets;
+
+                var listKetQua = new List<KetQuaBaoVeMoiTruongDoanhNghiepViewModel>();
+                var ws = currentSheet[0];
+                for (var i = 6; i <= ws.Dimension.End.Row; i++)
+                { 
+
+                    var imp = new KetQuaBaoVeMoiTruongDoanhNghiepViewModel();
+                    imp.TenDoanhNghiep = ws.Cells[i, 2].Value == null ? "" : ws.Cells[i, 2].Value.ToString();
+                    imp.SoGiayTo = ws.Cells[i, 3].Value == null ? "" : ws.Cells[i, 3].Value.ToString();
+                    imp.LoaiHinhSanXuat = ws.Cells[i, 4].Value == null ? "" : ws.Cells[i, 4].Value.ToString();
+                    imp.TongLuongNuocThai = ws.Cells[i, 5].Value == null ? "" : ws.Cells[i, 5].Value.ToString();
+                    imp.DauNoiVaoHTXLNT = ws.Cells[i, 6].Value == null ? "" : ws.Cells[i, 6].Value.ToString();
+                    imp.TachDauNoi = ws.Cells[i, 7].Value == null ? "" : ws.Cells[i, 7].Value.ToString();
+                    imp.LuongKhiThai = ws.Cells[i, 8].Value == null ? "" : ws.Cells[i, 8].Value.ToString();
+                    imp.QuanTracKhiThai = ws.Cells[i, 9].Value == null ? "" : ws.Cells[i, 9].Value.ToString();
+                    imp.ChatThaiRanSinhHoat = ws.Cells[i, 10].Value == null ? "" : ws.Cells[i, 10].Value.ToString();
+                    imp.ChatThaiRanCongNghiep = ws.Cells[i, 11].Value == null ? "" : ws.Cells[i, 11].Value.ToString();
+                    imp.ChatThaiRanNguyHai = ws.Cells[i, 12].Value == null ? "" : ws.Cells[i, 12].Value.ToString();
+                    imp.TyLeCayXanh = ws.Cells[i, 13].Value == null ? "" : ws.Cells[i, 13].Value.ToString();
+                    imp.IdBaoCaoBaoVeMoiTruong = bc.IdBaoCaoBaoVeMoiTruong;
+                    imp.TenKhuCongNghiep = bc.KhuCongNghiep != null? bc.KhuCongNghiep.TenKhuCongNghiep: "";
+                    imp.IdKhuCongNghiep = bc.IdKhuCongNghiep != null? bc.IdKhuCongNghiep.Value : 0;
+                    listKetQua.Add(imp);
+                }
+                await _ketQuaBaoVeMoiTruongDoanhNghiepService.InsertFromExcel(listKetQua);
+                return new ApiSuccessResult<List<string>>() { Data = result };
+            }
+        }
+        public async Task<ApiResult<List<string>>> ImportKetQuaBaoVeMoiTruongKCN(string path, BaoCaoBaoVeMoiTruong bc)
+        {
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            var result = new List<string>();
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            using (ExcelPackage package = new ExcelPackage(new System.IO.FileInfo(path)))
+            {
+                var currentSheet = package.Workbook.Worksheets;
+
+                var listKetQua = new List<KetQuaBaoVeMoiTruongKCNViewModel>();
+                var ws = currentSheet[0];
+                for (var i = 6; i <= ws.Dimension.End.Row; i++)
+                {
+                    var imp = new KetQuaBaoVeMoiTruongKCNViewModel();
+                    imp.TenKhuCongNghiep = ws.Cells[i, 2].Value == null ? "" : ws.Cells[i, 2].Value.ToString();
+                    imp.DiaChi = ws.Cells[i, 3].Value == null ? "" : ws.Cells[i, 3].Value.ToString();
+                    imp.DienTich = ws.Cells[i, 4].Value == null ? "" : ws.Cells[i, 4].Value.ToString();
+                    imp.TenChuDautu = ws.Cells[i, 5].Value == null ? "" : ws.Cells[i, 5].Value.ToString();
+                    imp.SoLuongCoSo = ws.Cells[i, 6].Value == null ? "" : ws.Cells[i, 6].Value.ToString();
+                    imp.TyLeLapDay = ws.Cells[i, 7].Value == null ? "" : ws.Cells[i, 7].Value.ToString();
+                    imp.HeThongThuGomNuocMua = ws.Cells[i, 8].Value == null ? "" : ws.Cells[i, 8].Value.ToString();
+                    imp.TongLuongNuocThai = ws.Cells[i, 9].Value == null ? "" : ws.Cells[i, 9].Value.ToString();
+                    imp.CongSuatThietKeHTXLNT = ws.Cells[i, 10].Value == null ? "" : ws.Cells[i, 10].Value.ToString();
+                    imp.HeThongQuanTracNuocThai = ws.Cells[i, 11].Value == null ? "" : ws.Cells[i, 11].Value.ToString();
+                    imp.ChatThaiRanSinhHoat = ws.Cells[i, 12].Value == null ? "" : ws.Cells[i, 12].Value.ToString();
+                    imp.ChatThaiRanCongNghiep = ws.Cells[i, 13].Value == null ? "" : ws.Cells[i, 13].Value.ToString();
+                    imp.ChatThaiRanNguyHai = ws.Cells[i, 14].Value == null ? "" : ws.Cells[i, 14].Value.ToString();
+                    imp.CongTrinhPhongNgua = ws.Cells[i, 15].Value == null ? "" : ws.Cells[i, 15].Value.ToString();
+                    imp.TyLeCayXanh = ws.Cells[i, 16].Value == null ? "" : ws.Cells[i, 16].Value.ToString();
+                    imp.IdBaoCaoBaoVeMoiTruong = bc.IdBaoCaoBaoVeMoiTruong;
+                    imp.IdKhuCongNghiep = bc.IdKhuCongNghiep != null? bc.IdKhuCongNghiep.Value : 0;
+                    listKetQua.Add(imp);
+                }
+                await _ketQuaBaoVeMoiTruongKCNService.InsertFromExcel(listKetQua);
+                return new ApiSuccessResult<List<string>>() { Data = result };
+            }
+        }
+
         public BaoCaoBaoVeMoiTruongViewModel MapEntityToViewModel(BaoCaoBaoVeMoiTruong entity) {
             var result = new BaoCaoBaoVeMoiTruongViewModel();
             result.IdBaoCaoBaoVeMoiTruong = entity.IdBaoCaoBaoVeMoiTruong;
@@ -187,7 +283,7 @@ namespace QuanLyMoiTruong.Application.Services
             result.TenKhuCongNghiep = entity.IdKhuCongNghiep != null ? entity.KhuCongNghiep.TenKhuCongNghiep : "";
             result.TenChuDauTu = entity.IdKhuCongNghiep != null ? entity.KhuCongNghiep.TenChuDauTu : "";
             result.KhuKinhTe = entity.KhuKinhTe;
-
+            result.LoaiBaoCao = entity.LoaiBaoCao;
             return result;
         }
         public BaoCaoBaoVeMoiTruong MapViewModelToEntity(BaoCaoBaoVeMoiTruongViewModel viewModel, BaoCaoBaoVeMoiTruong entity)
@@ -198,6 +294,7 @@ namespace QuanLyMoiTruong.Application.Services
             entity.IdDuAn = viewModel.IdDuAn == 0 ? null : viewModel.IdDuAn;
             entity.IdKhuCongNghiep = viewModel.IdKhuCongNghiep == 0 ? null : viewModel.IdKhuCongNghiep;
             entity.KhuKinhTe = viewModel.KhuKinhTe;
+            entity.LoaiBaoCao = viewModel.LoaiBaoCao;
             return entity;
         }
     }

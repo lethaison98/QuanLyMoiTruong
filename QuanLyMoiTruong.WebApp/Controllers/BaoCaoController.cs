@@ -50,5 +50,27 @@ namespace QuanLyMoiTruong.WebApp.Controllers
             }
             return View();
         }
+        [HttpPost]
+        public async Task<ActionResult> BaoCaoBaoVeMoiTruongDoanhNghiep(GiayPhepMoiTruongRequest request, string command)
+        {
+            if (command.Equals("Search"))
+            {
+                var result = await _baoCaoApiClient.SearchBaoCaoCapGiayPhepMoiTruong(request);
+                var model = result.Data;
+                ViewBag.Data = model;
+            }
+            else
+            {
+                var data = await _baoCaoApiClient.ExportBaoCaoCapGiayPhepMoiTruong(request);
+                if (data.Success)
+                {
+                    var result = File(data.Data, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Báo cáo cấp giấy phép môi trường.xlsx");
+                    return result;
+                }
+                return Ok(data);
+            }
+            return View();
+        }
+
     }
 }

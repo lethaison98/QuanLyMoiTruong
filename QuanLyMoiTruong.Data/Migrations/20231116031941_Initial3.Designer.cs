@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuanLyMoiTruong.Data.EF;
 
@@ -11,9 +12,11 @@ using QuanLyMoiTruong.Data.EF;
 namespace QuanLyMoiTruong.Data.Migrations
 {
     [DbContext(typeof(QuanLyMoiTruongDbContext))]
-    partial class QuanLyMoiTruongDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231116031941_Initial3")]
+    partial class Initial3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1215,58 +1218,6 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.HasKey("IdTinhThanh");
 
                     b.ToTable("TinhThanh", (string)null);
-                });
-
-            modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.VanBanQuyPham", b =>
-                {
-                    b.Property<int>("IdVanBanQuyPham")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdVanBanQuyPham"));
-
-                    b.Property<string>("CoQuanBanHanh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GhiChu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IdNguoiCapNhat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IdNguoiTao")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Nam")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("NgayBanHanh")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("NgayCapNhat")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("NgayTao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NguoiCapNhat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NguoiTao")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SoKyHieu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrichYeu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdVanBanQuyPham");
-
-                    b.ToTable("VanBanQuyPham", (string)null);
                 });
 
             modelBuilder.Entity("QuanLyMoiTruong.Data.Entities.ViecLam", b =>

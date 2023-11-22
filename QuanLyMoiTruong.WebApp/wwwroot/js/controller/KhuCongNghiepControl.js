@@ -49,7 +49,11 @@ KhuCongNghiepControl = {
                     },
                     {
                         "class": "name-control",
-                        "data": "DiaDiem",
+                        "data": "TenChuDauTu",
+                        "defaultContent": "",
+                    },
+                    {
+                        "class": "name-control",
                         render: function (data, type, row) {
                             if (row.ThuocKhuKinhTe)
                                 return "Có";

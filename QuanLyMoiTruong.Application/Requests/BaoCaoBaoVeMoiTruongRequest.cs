@@ -9,5 +9,7 @@ namespace QuanLyMoiTruong.Application.Requests
     public class BaoCaoBaoVeMoiTruongRequest : PagingRequest
     {
         public int IdDuAn { get; set; } 
+        public int IdKhuCongNghiep { get; set; } 
+        public int IdBaoCaoBaoVeMoiTruong { get; set; } 
     }
 }
