@@ -138,6 +138,25 @@ namespace QuanLyMoiTruong.Application.Services
             result = entities.Select(MapEntityToViewModel).ToList();
             return new ApiSuccessResult<List<KetQuaBaoVeMoiTruongKCNViewModel>>() { Data = result };
         }
+        public async Task<ApiResult<List<KetQuaBaoVeMoiTruongKCNViewModel>>> GetBaoCao1_2(BaoCaoBaoVeMoiTruongRequest request)
+        {
+            var result = new List<KetQuaBaoVeMoiTruongKCNViewModel>();
+            var entities = await _unitOfWork.GetRepository<KetQuaBaoVeMoiTruongKCN>().GetAllAsync(predicate: x => !x.IsDeleted, include: x => x.Include(x => x.BaoCaoBaoVeMoiTruong));
+            if (request.TuNgay != null)
+            {
+                entities = entities.Where(x => x.BaoCaoBaoVeMoiTruong.NgayBaoCao >= request.TuNgay).ToList();
+            }
+            if (request.DenNgay != null)
+            {
+                entities = entities.Where(x => x.BaoCaoBaoVeMoiTruong.NgayBaoCao <= request.DenNgay).ToList();
+            }
+            if(request.Nam != 0)
+            {
+                entities = entities.Where(x => x.BaoCaoBaoVeMoiTruong.Nam == request.Nam).ToList();
+            }
+            result = entities.Select(MapEntityToViewModel).ToList();
+            return new ApiSuccessResult<List<KetQuaBaoVeMoiTruongKCNViewModel>>() { Data = result };
+        }
         public KetQuaBaoVeMoiTruongKCNViewModel MapEntityToViewModel(KetQuaBaoVeMoiTruongKCN entity)
         {
             var result = new KetQuaBaoVeMoiTruongKCNViewModel();

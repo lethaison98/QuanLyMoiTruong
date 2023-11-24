@@ -1,0 +1,140 @@
+﻿@using QuanLyMoiTruong.Application.Requests
+@model BaoCaoBaoVeMoiTruongRequest;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pagetitle">
+    <h1>Bảng 2 (Báo cáo BVMT KKT)</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Bảng 2: Danh sách các cơ sở hoạt động trong các KCN</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row  pt-2">
+                    <form asp-action="BaoCaoCacDoanhNghiepHoatDongTrongKCN" asp-controller="BaoCao" method="post" class="row g-3 needs-validation" novalidate>
+                        <div class="col-6 col-md-6 col-lg-6 col-xl-8">
+                            <div class="row  ttls-cm">
+                                <div class="col-4">
+                                    <label>Từ ngày</label>
+                                    <div class="ttls-content">
+                                        <input type="date" class="form-control" asp-for="TuNgay" placeholder="Từ ngày">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <label>Đến ngày</label>
+                                    <div class="ttls-content">
+                                        <input type="date" class="form-control" asp-for="DenNgay" placeholder="Đến ngày">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <label>Năm báo cáo</label>
+                                    <div class="ttls-content">
+                                        <select asp-for="Nam" class="form-control">
+                                            <option value="0">Lựa chọn năm báo cáo</option>
+                                            <option value="2018">Năm 2018</option>
+                                            <option value="2019">Năm 2019</option>
+                                            <option value="2020">Năm 2020</option>
+                                            <option value="2021">Năm 2021</option>
+                                            <option value="2022">Năm 2022</option>
+                                            <option value="2023">Năm 2023</option>
+                                            <option value="2024">Năm 2024</option>
+                                            <option value="2025">Năm 2025</option>
+                                            <option value="2026">Năm 2026</option>
+                                            <option value="2027">Năm 2027</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-6 col-lg-6 col-xl-4">
+                            <label></label>
+
+                            <div class="ttls-cm">
+                                <div class="ttls-content">
+                                    <button class="btn btn-sm btn-primary waves-effect waves-light" type="submit" name="command" value="Search">
+                                        <span>Tra cứu</span>
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-success waves-effect waves-light" type="submit" name="command" value="Export">
+                                        <span>Xuất excel</span>
+                                        <i class="fas fa-excel"></i>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Dữ liệu báo cáo</h4>
+                <table id="tbl" class="table table-bordered table-hover table-striped" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" style="width: 5%">STT</th>
+                            <th rowspan="2">Tên khu công nghiệp</th>
+                            <th rowspan="2">Tên dự án/cơ sở</th>
+                            <th rowspan="2">Số giấy phép</th>
+                            <th rowspan="2">Loại hình sản xuất/Quy mô công suất</th>
+                            <th colspan="3">Nước thải</th>
+                            <th colspan="2">Khí thải</th>
+                            <th colspan="3">Tổng lượng CTR phát sinh</th>
+                            <th rowspan="2">Tỷ lệ cây xanh</th>
+                        </tr>
+                        <tr>
+                            <th>Tổng lượng nước thải phát sinh</th>
+                            <th>Đấu nối vào HTXLNT</th>
+                            <th>Tách đấu nối</th>
+                            <th>Lượng khí thải phát sinh</th>
+                            <th>Quan trắc khí thải tự độngliên tục</th>
+                            <th>Sinh hoạt (tấn/năm)</th>
+                            <th>Công nghiệp thông thường (kg/năm)</th>
+                            <th>Nguy hại (kg/năm)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.Data != null)
+                        {
+                            @for (int i = 0; i < @ViewBag.Data.Count; i++)
+                            {
+                                <tr>
+                                    <td>@(i + 1)</td>
+                                    <td>@ViewBag.Data[i].TenKhuCongNghiep</td>
+                                    <td>@ViewBag.Data[i].TenDoanhNghiep</td>
+                                    <td>@ViewBag.Data[i].SoGiayTo</td>
+                                    <td>@ViewBag.Data[i].LoaiHinhSanXuat</td>
+                                    <td>@ViewBag.Data[i].TongLuongNuocThai</td>
+                                    <td>@ViewBag.Data[i].DauNoiVaoHTXLNT</td>
+                                    <td>@ViewBag.Data[i].TachDauNoi</td>
+                                    <td>@ViewBag.Data[i].LuongKhiThai</td>
+                                    <td>@ViewBag.Data[i].QuanTracKhiThai</td>
+                                    <td>@ViewBag.Data[i].ChatThaiRanSinhHoat</td>
+                                    <td>@ViewBag.Data[i].ChatThaiRanCongNghiep</td>
+                                    <td>@ViewBag.Data[i].ChatThaiRanNguyHai</td>
+                                    <td>@ViewBag.Data[i].TyLeCayXanh</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
+}

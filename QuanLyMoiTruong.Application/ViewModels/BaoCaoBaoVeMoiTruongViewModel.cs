@@ -18,6 +18,7 @@ namespace QuanLyMoiTruong.Application.ViewModels
         public string TenChuDauTu { get; set; }
         public string TenBaoCao { get; set; }
         public string NgayBaoCao { get; set; }
+        public int Nam { get; set; }
         public bool KhuKinhTe { get; set; }
         public string LoaiBaoCao { get; set; }
         public List<FileTaiLieu> FileTaiLieu { get; set; } = new List<FileTaiLieu>();

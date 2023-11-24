@@ -11,5 +11,8 @@ namespace QuanLyMoiTruong.Application.Requests
         public int IdDuAn { get; set; } 
         public int IdKhuCongNghiep { get; set; } 
         public int IdBaoCaoBaoVeMoiTruong { get; set; } 
+        public int Nam { get; set; }
+        public DateTime? TuNgay { get; set; }
+        public DateTime? DenNgay { get; set; }
     }
 }

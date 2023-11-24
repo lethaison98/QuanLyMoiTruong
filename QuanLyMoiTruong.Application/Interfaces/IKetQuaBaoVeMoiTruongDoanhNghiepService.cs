@@ -13,6 +13,7 @@ namespace QuanLyMoiTruong.Application.Interfaces
     {
         public Task<ApiResult<bool>> InsertFromExcel(List<KetQuaBaoVeMoiTruongDoanhNghiepViewModel> list);
         public Task<ApiResult<List<KetQuaBaoVeMoiTruongDoanhNghiepViewModel>>> GetAllByIdBaoCaoBaoVeMoiTruong(int idBaoCaoBaoVeMoiTruongDoanhNghiep);
+        public Task<ApiResult<List<KetQuaBaoVeMoiTruongDoanhNghiepViewModel>>> GetBaoCao2(BaoCaoBaoVeMoiTruongRequest request);
 
     }
 }

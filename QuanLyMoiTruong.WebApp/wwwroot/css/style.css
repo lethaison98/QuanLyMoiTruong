@@ -281,10 +281,7 @@ h6 {
   box-shadow: none;
 }
 
-.accordion-button:not(.collapsed) {
-  color: #012970;
-  background-color: #f6f9ff;
-}
+.accordion-button:not(.collapsed) { color: #012970; background-color: #cfdbf3; }
 
 .accordion-flush .accordion-button {
   padding: 15px 0;
@@ -656,7 +653,7 @@ h6 {
 .sidebar-nav .nav-item {
   margin-bottom: 5px;
 }
-    .sidebar-nav .nav-item span { text-transform: uppercase; }
+    /*.sidebar-nav .nav-item span { text-transform: uppercase; }*/
 
 .sidebar-nav .nav-heading {
   font-size: 11px;

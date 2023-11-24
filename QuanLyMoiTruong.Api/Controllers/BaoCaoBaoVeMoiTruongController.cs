@@ -14,9 +14,14 @@ namespace QuanLyMoiTruong.Api.Controllers
     public class BaoCaoBaoVeMoiTruongController : Controller
     {
         private readonly IBaoCaoBaoVeMoiTruongService _BaoCaoBaoVeMoiTruongService;
-        public BaoCaoBaoVeMoiTruongController(IBaoCaoBaoVeMoiTruongService BaoCaoBaoVeMoiTruongService)
+        private readonly IKetQuaBaoVeMoiTruongDoanhNghiepService _ketQuaBaoVeMoiTruongDoanhNghiepService;
+        private readonly IKetQuaBaoVeMoiTruongKCNService _ketQuaBaoVeMoiTruongKCNService;
+        public BaoCaoBaoVeMoiTruongController(IBaoCaoBaoVeMoiTruongService BaoCaoBaoVeMoiTruongService, IKetQuaBaoVeMoiTruongDoanhNghiepService ketQuaBaoVeMoiTruongDoanhNghiepService, IKetQuaBaoVeMoiTruongKCNService ketQuaBaoVeMoiTruongKCNService)
         {
             _BaoCaoBaoVeMoiTruongService = BaoCaoBaoVeMoiTruongService;
+            _ketQuaBaoVeMoiTruongDoanhNghiepService = ketQuaBaoVeMoiTruongDoanhNghiepService;
+            _ketQuaBaoVeMoiTruongKCNService = ketQuaBaoVeMoiTruongKCNService;
+
         }
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
@@ -79,6 +84,18 @@ namespace QuanLyMoiTruong.Api.Controllers
         public async Task<IActionResult> GetGPMTByKhuKinhTe()
         {
             var result = await _BaoCaoBaoVeMoiTruongService.GetListBaoCaoBaoVeMoiTruongByKhuKinhTe();
+            return Ok(result);
+        }
+        [HttpGet("GetDoanhNghiepHoatDongTrongKCNByBaoCao")]
+        public async Task<IActionResult> GetDoanhNghiepHoatDongTrongKCNByBaoCao(int idBaoCaoBaoVeMoiTruong)
+        {
+            var result = await _ketQuaBaoVeMoiTruongDoanhNghiepService.GetAllByIdBaoCaoBaoVeMoiTruong(idBaoCaoBaoVeMoiTruong);
+            return Ok(result);
+        }
+        [HttpGet("GetChiTieuBaoVeMoiTruongKCNByBaoCao")]
+        public async Task<IActionResult> GetChiTieuBaoVeMoiTruongKCNByBaoCao(int idBaoCaoBaoVeMoiTruong)
+        {
+            var result = await _ketQuaBaoVeMoiTruongKCNService.GetAllByIdBaoCaoBaoVeMoiTruong(idBaoCaoBaoVeMoiTruong);
             return Ok(result);
         }
     }

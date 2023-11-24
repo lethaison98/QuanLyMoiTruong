@@ -49,6 +49,7 @@ BaoCaoBaoVeMoiTruongControl = {
         };
         var $tab = $('#bordered-BaoCaoBaoVeMoiTruong');
         var $popup = $('#popup-form-bao-cao-bao-ve-moi-truong-hang-nam');
+        var $popupkq = $('#popup-ket-qua-bao-cao-bao-ve-moi-truong-kcn');
         $tab.find("#accordion-BaoCaoBaoVeMoiTruong").html('');
         Get({
             "url": urlApi,
@@ -66,13 +67,163 @@ BaoCaoBaoVeMoiTruongControl = {
                                     var iconfile = self.DrawIconFile(file.File.LinkFile);
                                     html1 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
                                     break;
+                                case "TongHopTinhHinhHoatDongChungTrongKCN":
+                                    var iconfile = self.DrawIconFile(file.File.LinkFile);
+                                    html2 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
+                                    break;
+                                case "TongHopCacDoanhNghiepHoatDongTrongKCN":
+                                    var iconfile = self.DrawIconFile(file.File.LinkFile);
+                                    html3 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
+                                    break;
                                 default:
                                     var iconfile = self.DrawIconFile(file.File.LinkFile);
                                     html5 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
                             }
 
                         });
-                        var tag = `<div class="accordion-item">
+                        if (type == "KhuCongNghiep") {
+                            var tag = `<div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading_`+ value.IdBaoCaoBaoVeMoiTruong + `">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_`+ value.IdBaoCaoBaoVeMoiTruong + `" aria-expanded="true" aria-controls="collapse_` + value.IdBaoCaoBaoVeMoiTruong + `">
+                                                `+ value.TenBaoCao + ' ngày ' + value.NgayBaoCao + `
+                                            </button>
+                                        </h2>
+                                        <div id="collapse_` + value.IdBaoCaoBaoVeMoiTruong + `" class="accordion-collapse collapse show" aria-labelledby="heading_` + value.IdBaoCaoBaoVeMoiTruong + `" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
+                                                <strong>1. Báo cáo công tác bảo vệ môi trường hàng năm</strong>
+                                                <p class="row">`+ html1 + `
+                                                </p>
+                                                <hr>
+                                                <strong>2. Bảng tóm tắt tình hình hoạt động chung trong KCN</strong>
+                                                <p class="row">`+ html2 + `
+                                                </p>
+                                                <hr>
+                                                <strong>3. Bảng chi tiết danh sách các cơ sở hoạt động trong KCN</strong>
+                                                <p class="row">`+ html3 + `
+                                                </p>
+                                                <hr>
+                                                <strong>4. Tài liệu khác</strong>
+                                                <p class="row">`+ html5 + `
+                                                </p>
+                                            </div>
+                                            <div  style="float:right">
+                                                <button type="button" class="btn btn-success btn-sm btn-xem-so-lieu" data-id=`+ value.IdBaoCaoBaoVeMoiTruong + `>Xem số liệu</button>
+                                                <button type="button" class="btn btn-secondary btn-sm btn-sua" data-id=`+ value.IdBaoCaoBaoVeMoiTruong + `>Chỉnh sửa</button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-xoa " data-id=`+ value.IdBaoCaoBaoVeMoiTruong + `>Xóa</button>
+                                            </div>
+                                            </br><hr>
+                                        </div>
+                                    </div>`
+                            $tab.find("#accordion-BaoCaoBaoVeMoiTruong").append(tag);
+                            $tab.find('.btn-xem-so-lieu').off('click').on('click', function () {
+                                var idBaoCao = $(this).attr("data-id");
+                                $popupkq.modal('show');
+                                Get({
+                                    "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetDoanhNghiepHoatDongTrongKCNByBaoCao?idBaoCaoBaoVeMoiTruong=" + idBaoCao,
+                                    callback: function (res) {
+                                        if (res.Success) {
+                                            var html = "";
+                                            $.each(res.Data, function (i, item) {
+                                                html += `<tr>
+                                                    <td>`+ (i+1) +`</td>
+                                                    <td>`+item.TenKhuCongNghiep+`</td>
+                                                    <td>`+ item.TenDoanhNghiep +`</td>
+                                                    <td>`+ item.SoGiayTo +`</td>
+                                                    <td>`+ item.LoaiHinhSanXuat +`</td>
+                                                    <td>`+ item.TongLuongNuocThai +`</td>
+                                                    <td>`+ item.DauNoiVaoHTXLNT +`</td>
+                                                    <td>`+ item.TachDauNoi +`</td>
+                                                    <td>`+ item.LuongKhiThai +`</td>
+                                                    <td>`+ item.QuanTracKhiThai +`</td>
+                                                    <td>`+ item.ChatThaiRanSinhHoat +`</td>
+                                                    <td>`+ item.ChatThaiRanCongNghiep +`</td>
+                                                    <td>`+ item.ChatThaiRanNguyHai +`</td>
+                                                    <td>`+ item.TyLeCayXanh +`</td>
+                                                </tr>`
+                                            });
+                                            $("#tbl2").append(html);
+                                            self.RegisterEventsPopupBaoCaoBaoVeMoiTruong();
+
+                                        }
+                                    }
+                                });
+                                Get({
+                                    "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetChiTieuBaoVeMoiTruongKCNByBaoCao?idBaoCaoBaoVeMoiTruong=" + idBaoCao,
+                                    callback: function (res) {
+                                        if (res.Success) {
+                                            var html = "";
+                                            $.each(res.Data, function (i, item) {
+                                                html += `<tr>
+                                                    <td>`+ (i + 1) + `</td>
+                                                    <td>`+ item.TenKhuCongNghiep + `</td>
+                                                    <td>`+ item.DiaChi + `</td>
+                                                    <td>`+ item.TenChuDautu + `</td>
+                                                    <td>`+ item.SoLuongCoSo + `</td>
+                                                    <td>`+ item.TyLeLapDay + `</td>
+                                                    <td>`+ item.HeThongThuGomNuocMua + `</td>
+                                                    <td>`+ item.TongLuongNuocThai + `</td>
+                                                    <td>`+ item.CongSuatThietKeHTXLNT + `</td>
+                                                    <td>`+ item.HeThongQuanTracNuocThai + `</td>
+                                                    <td>`+ item.ChatThaiRanSinhHoat + `</td>
+                                                    <td>`+ item.ChatThaiRanCongNghiep + `</td>
+                                                    <td>`+ item.ChatThaiRanNguyHai + `</td>
+                                                    <td>`+ item.CongTrinhPhongNgua + `</td>
+                                                    <td>`+ item.TyLeCayXanh + `</td>
+                                                </tr>`
+                                            });
+                                            $("#tbl1_2").append(html);
+                                            self.RegisterEventsPopupBaoCaoBaoVeMoiTruong();
+
+                                        }
+                                    }
+                                });
+                            });
+
+                            $tab.find('.btn-sua').off('click').on('click', function () {
+                                var idBaoCao = $(this).attr("data-id");
+                                $popup.modal('show');
+                                self.ResetPopup();
+                                Get({
+                                    "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetById?idBaoCaoBaoVeMoiTruong=" + idBaoCao,
+                                    callback: function (res) {
+                                        if (res.Success) {
+                                            $popup.find('.modal-header').text("Chỉnh sửa báo cáo bảo vệ môi trường hàng năm")
+                                            FillFormData('#FormBaoCaoBaoVeMoiTruong', res.Data);
+
+                                            $.each(res.Data.FileTaiLieu, function (i, item) {
+                                                var $tr = $popup.find("#tempFileTable").html();
+                                                $popup.find("#tblFileBaoCaoBaoVeMoiTruong tbody").append($tr);
+                                                $popup.find("#tblFileBaoCaoBaoVeMoiTruong tbody tr:last").find('[data-name="MoTa"]').val(item.MoTa);
+                                                $popup.find("#tblFileBaoCaoBaoVeMoiTruong tbody tr:last").find('[data-name="LoaiFileTaiLieu"]').val(item.LoaiFileTaiLieu);
+                                                $popup.find("#tblFileBaoCaoBaoVeMoiTruong tbody tr:last td:first").append('<a href = "' + localStorage.getItem('API_URL').replace("api", "") + item.File.LinkFile + '" data-id="' + item.IdFileTaiLieu + '" data-IdFile = "' + item.IdFile + '"target="_blank">' + item.File.TenFile + '</a>');
+                                                $popup.find(".tr-remove").off('click').on('click', function () {
+                                                    $(this).parents('tr:first').remove();
+                                                });
+                                            });
+                                            self.RegisterEventsPopupBaoCaoBaoVeMoiTruong();
+
+                                        }
+                                    }
+                                });
+                            });
+                            $tab.find('.btn-xoa').off('click').on('click', function () {
+                                var idBaoCao = $(this).attr("data-id");
+                                if (confirm("Xác nhận xóa?") == true) {
+                                    Delete({
+                                        "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/Delete?idBaoCaoBaoVeMoiTruong=" + idBaoCao,
+                                        callback: function (res) {
+                                            if (res.Success) {
+                                                toastr.success('Thực hiện thành công', 'Thông báo')
+                                                self.LoadDanhSachBaoCaoBaoVeMoiTruong();
+                                            } else {
+                                                toastr.error(res.Message, 'Có lỗi xảy ra')
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            var tag = `<div class="accordion-item">
                                         <h2 class="accordion-header" id="heading_`+ value.IdBaoCaoBaoVeMoiTruong + `">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_`+ value.IdBaoCaoBaoVeMoiTruong + `" aria-expanded="true" aria-controls="collapse_` + value.IdBaoCaoBaoVeMoiTruong + `">
                                                 `+ value.TenBaoCao + ' ngày ' + value.NgayBaoCao + `
@@ -95,50 +246,51 @@ BaoCaoBaoVeMoiTruongControl = {
                                             </br><hr>
                                         </div>
                                     </div>`
-                        $tab.find("#accordion-BaoCaoBaoVeMoiTruong").append(tag);
-                        $tab.find('.btn-sua').off('click').on('click', function () {
-                            var idGiayPhep = $(this).attr("data-id");
-                            $popup.modal('show');
-                            self.ResetPopup();
-                            Get({
-                                "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetById?idBaoCaoBaoVeMoiTruong=" + idGiayPhep,
-                                callback: function (res) {
-                                    if (res.Success) {
-                                        $popup.find('.modal-header').text("Chỉnh sửa báo cáo bảo vệ môi trường hàng năm")
-                                        FillFormData('#FormBaoCaoBaoVeMoiTruong', res.Data);
-
-                                        $.each(res.Data.FileTaiLieu, function (i, item) {
-                                            var $tr = $popup.find("#tempFileTable").html();
-                                            $popup.find("#tblFileBaoCaoBaoVeMoiTruong tbody").append($tr);
-                                            $popup.find("#tblFileBaoCaoBaoVeMoiTruong tbody tr:last").find('[data-name="MoTa"]').val(item.MoTa);
-                                            $popup.find("#tblFileBaoCaoBaoVeMoiTruong tbody tr:last").find('[data-name="LoaiFileTaiLieu"]').val(item.LoaiFileTaiLieu);
-                                            $popup.find("#tblFileBaoCaoBaoVeMoiTruong tbody tr:last td:first").append('<a href = "' + localStorage.getItem('API_URL').replace("api", "") + item.File.LinkFile + '" data-id="' + item.IdFileTaiLieu + '" data-IdFile = "' + item.IdFile + '"target="_blank">' + item.File.TenFile + '</a>');
-                                            $popup.find(".tr-remove").off('click').on('click', function () {
-                                                $(this).parents('tr:first').remove();
-                                            });
-                                        });
-                                        self.RegisterEventsPopupBaoCaoBaoVeMoiTruong();
-
-                                    }
-                                }
-                            });
-                        });
-                        $tab.find('.btn-xoa').off('click').on('click', function () {
-                            var idGiayPhep = $(this).attr("data-id");
-                            if (confirm("Xác nhận xóa?") == true) {
-                                Delete({
-                                    "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/Delete?idBaoCaoBaoVeMoiTruong=" + idGiayPhep,
+                            $tab.find("#accordion-BaoCaoBaoVeMoiTruong").append(tag);
+                            $tab.find('.btn-sua').off('click').on('click', function () {
+                                var idBaoCao = $(this).attr("data-id");
+                                $popup.modal('show');
+                                self.ResetPopup();
+                                Get({
+                                    "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetById?idBaoCaoBaoVeMoiTruong=" + idBaoCao,
                                     callback: function (res) {
                                         if (res.Success) {
-                                            toastr.success('Thực hiện thành công', 'Thông báo')
-                                            self.LoadDanhSachBaoCaoBaoVeMoiTruong();
-                                        } else {
-                                            toastr.error(res.Message, 'Có lỗi xảy ra')
+                                            $popup.find('.modal-header').text("Chỉnh sửa báo cáo bảo vệ môi trường hàng năm")
+                                            FillFormData('#FormBaoCaoBaoVeMoiTruong', res.Data);
+
+                                            $.each(res.Data.FileTaiLieu, function (i, item) {
+                                                var $tr = $popup.find("#tempFileTable").html();
+                                                $popup.find("#tblFileBaoCaoBaoVeMoiTruong tbody").append($tr);
+                                                $popup.find("#tblFileBaoCaoBaoVeMoiTruong tbody tr:last").find('[data-name="MoTa"]').val(item.MoTa);
+                                                $popup.find("#tblFileBaoCaoBaoVeMoiTruong tbody tr:last").find('[data-name="LoaiFileTaiLieu"]').val(item.LoaiFileTaiLieu);
+                                                $popup.find("#tblFileBaoCaoBaoVeMoiTruong tbody tr:last td:first").append('<a href = "' + localStorage.getItem('API_URL').replace("api", "") + item.File.LinkFile + '" data-id="' + item.IdFileTaiLieu + '" data-IdFile = "' + item.IdFile + '"target="_blank">' + item.File.TenFile + '</a>');
+                                                $popup.find(".tr-remove").off('click').on('click', function () {
+                                                    $(this).parents('tr:first').remove();
+                                                });
+                                            });
+                                            self.RegisterEventsPopupBaoCaoBaoVeMoiTruong();
+
                                         }
                                     }
                                 });
-                            }
-                        });
+                            });
+                            $tab.find('.btn-xoa').off('click').on('click', function () {
+                                var idBaoCao = $(this).attr("data-id");
+                                if (confirm("Xác nhận xóa?") == true) {
+                                    Delete({
+                                        "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/Delete?idBaoCaoBaoVeMoiTruong=" + idBaoCao,
+                                        callback: function (res) {
+                                            if (res.Success) {
+                                                toastr.success('Thực hiện thành công', 'Thông báo')
+                                                self.LoadDanhSachBaoCaoBaoVeMoiTruong();
+                                            } else {
+                                                toastr.error(res.Message, 'Có lỗi xảy ra')
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }             
                     });
                 }
                 else {
@@ -157,7 +309,7 @@ BaoCaoBaoVeMoiTruongControl = {
         var self = this;
         var $popup = $('#popup-form-bao-cao-bao-ve-moi-truong-hang-nam');
         Get({
-            "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetById?id=" + idGiayPhep,
+            "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetById?id=" + idBaoCao,
             callback: function (res) {
             }
         });

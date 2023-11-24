@@ -16,7 +16,7 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="~/img/favicon.png" rel="icon">
+    <link href="~/img/logo.png" rel="icon">
     <link href="~/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -51,53 +51,58 @@
 <body>
     <header id="header" class="header fixed-top d-flex align-items-center">
 
-        <div class="d-flex align-items-center justify-content-between">
+        <div class="col-2 d-flex align-items-center justify-content-between">
             <a href="/" class="logo d-flex align-items-center">
                 <img src="~/img/logo.png" alt="">
                 <span class="d-none d-lg-block">BQL KKTĐN</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
+        <div class="col-9" style="text-align:center;">
+            @*<h2 style="margin-bottom: 0px; color:#0047ab"><b>CƠ SỞ DỮ LIỆU MÔI TRƯỜNG KKT ĐÔNG NAM VÀ CÁC KCN TỈNH NGHỆ AN</b></h2>*@
+        </div>
+        <div class="col-1 d-flex align-items-center justify-content-between">
+            <nav class="header-nav ms-auto">
+                <ul class="d-flex align-items-center">
+                    <li class="nav-item dropdown pe-3">
 
-        <nav class="header-nav ms-auto">
-            <ul class="d-flex align-items-center">
-                <li class="nav-item dropdown pe-3">
+                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                            <img src="~/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                            <span class="d-none d-md-block dropdown-toggle ps-2">@Context.Session.GetString("HoTen")</span>
+                        </a><!-- End Profile Iamge Icon -->
 
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="~/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">@Context.Session.GetString("HoTen")</span>
-                    </a><!-- End Profile Iamge Icon -->
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                            <li class="dropdown-header">
+                                <h6>@Context.Session.GetString("HoTen")</h6>
+                                <span>@Context.Session.GetString("UserName")</span>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
 
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                        <li class="dropdown-header">
-                            <h6>@Context.Session.GetString("HoTen")</h6>
-                            <span>@Context.Session.GetString("UserName")</span>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="#" id="ChangePass">
+                                    <i class="bi bi-person"></i>
+                                    <span>Đổi mật khẩu</span>
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="/User/Logout">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Đăng xuất</span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#" id="ChangePass">
-                                <i class="bi bi-person"></i>
-                                <span>Đổi mật khẩu</span>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="/User/Logout">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>Đăng xuất</span>
-                            </a>
-                        </li>
+                        </ul><!-- End Profile Dropdown Items -->
+                    </li><!-- End Profile Nav -->
 
-                    </ul><!-- End Profile Dropdown Items -->
-                </li><!-- End Profile Nav -->
+                </ul>
+            </nav><!-- End Icons Navigation -->
+        </div>
 
-            </ul>
-        </nav><!-- End Icons Navigation -->
     </header>
     <aside id="sidebar" class="sidebar">
 
@@ -112,45 +117,26 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/DuAn">
                     <i class="bi bi-journal-text"></i>
-                    <span>Công tác BVMT của các dự án/cơ sở</span>
+                    <span>Danh mục các dự án/cơ sở</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/KhuCongNghiep">
                     <i class="bi bi-layout-text-window-reverse"></i>
-                    <span>Công tác bảo vệ môi trường tại các KCN</span>
+                    <span>Các KCN trên địa bàn</span>
                 </a>
             </li>
-            @*            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
-                <i class="bi bi-bar-chart"></i><span>Diễn biến các thành phần môi trường trên địa bàn KKT Đông Nam</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
-                <li>
-                <a class="nav-link collapsed" href="/ThanhPhanMoiTruong">
-                <i class="bi bi-box-arrow-in-right"></i>
-                <span>Danh sách các thành phần môi trường</span>
-                </a>
-                </li>
-                <li>
-                <a class="nav-link collapsed" href="/ThanhPhanMoiTruong/BanDoCacThanhPhanMoitruong">
-                <i class="bi bi-box-arrow-in-right"></i>
-                <span>Bản đồ các thành phần môi trường</span>
-                </a>
-                </li>
-                </ul>
-                </li>*@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
-                    <i class="bi bi-bar-chart"></i><span>Công tác bảo vệ môi trường tại KKT Đông Nam và các KCN tỉnh Nghệ An</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-buildings"></i><span>Công tác bảo vệ môi trường KKT Đông Nam và các KCN</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
-@*                    <li>
+                    @*                    <li>
                         <a class="nav-link collapsed" href="/KhuKinhTe">
-                            <i class="bi bi-box-arrow-in-right"></i>
-                            <span>Thông tin chung về KKT Đông Nam</span>
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        <span>Thông tin chung về KKT Đông Nam</span>
                         </a>
-                    </li>*@
+                        </li>*@
                     <li>
                         <a class="nav-link collapsed" href="/KhuKinhTe/BaoCaoBaoVeMoiTruongKhuKinhTe">
                             <i class="bi bi-box-arrow-in-right"></i>
@@ -196,6 +182,24 @@
                             <span>Danh mục Dự án/Cơ sở được cấp giấy phép môi trường</span>
                         </a>
                     </li>
+                    <li>
+                        <a class="nav-link collapsed" href="/BaoCao/BaoCaoChiTieuBaoVeMoiTruongKhuKinhTe">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span>Bảng 1.1 (Báo cáo BVMT KKT)</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link collapsed" href="/BaoCao/BaoCaoChiTieuBaoVeMoiTruongKCN">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span>Bảng 1.2 (Báo cáo BVMT KKT)</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link collapsed" href="/BaoCao/BaoCaoCacDoanhNghiepHoatDongTrongKCN">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span>Bảng 2 (Báo cáo BVMT KKT)</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item">
@@ -209,7 +213,7 @@
 
     </aside><!-- End Sidebar-->
 
-    <main id="main" class="main">
+    <main id="main" class="main" style="max-height: 1000px;">
         @RenderBody()
 
 
@@ -218,7 +222,16 @@
     @await Html.PartialAsync("_PopupDoiMatKhau")
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
-    </footer><!-- End Footer -->
+        <div class="credits">
+            <strong>Ban quản lý khu kinh tế Đông Nam</strong><br />
+
+            <div class="float-right d-none d-sm-inline-block">
+                <span>Trụ sở: Số 362 đường V.L.Lê Nin, phường Hưng Phúc, Tp Vinh, Nghệ An</span><br />
+                <span>Điện thoại: (0238) 3 835 146 - Fax: 084-038.3 832 657 - Email: bqlkktdn@nghean.gov.vn</span>
+            </div>
+        </div>
+
+    </footer>
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

@@ -34,13 +34,13 @@ namespace QuanLyMoiTruong.Api.Controllers
         [HttpPost("BaoCaoDanhSachDoanhNghiepHoatDongTrongCacKCN")]
         public async Task<IActionResult> GetListKetQuaBaoVeMoiTruongDoanhNghiep(BaoCaoBaoVeMoiTruongRequest request)
         {
-            var result = await _ketQuaBaoVeMoiTruongDoanhNghiepService.GetAll();
+            var result = await _ketQuaBaoVeMoiTruongDoanhNghiepService.GetBaoCao2(request);
             return Ok(result);
         }
-        [HttpGet("BaoCaoMoiTruongCacKCN")]
+        [HttpPost("BaoCaoChiTieuBaoVeMoiTruongKCN")]
         public async Task<IActionResult> GetListKetQuaBaoVeMoiTruongKCN(BaoCaoBaoVeMoiTruongRequest request)
         {
-            var result = await _ketQuaBaoVeMoiTruongKCNService.GetAll();
+            var result = await _ketQuaBaoVeMoiTruongKCNService.GetBaoCao1_2(request);
             return Ok(result);
         }
     }

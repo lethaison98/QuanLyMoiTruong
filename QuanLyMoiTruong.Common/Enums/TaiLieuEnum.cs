@@ -22,9 +22,9 @@ namespace QuanLyMoiTruong.Common.Enums
         [Display(Name = "Báo cáo kết quả quan trắc")]
         BaoCaoKetQuaBVMT = 211,
         [Display(Name = "Tổng hợp kết quả BVMT chung trong KCN")]
-        TongHopSoLieuBVMTChungKCN = 212,
+        TongHopTinhHinhHoatDongChungTrongKCN = 212,
         [Display(Name = "Tổng hợp kết quả BVMT Chi tiết KCN")]
-        TongHopSoLieuBVMTChitietKCN = 213,
+        TongHopCacDoanhNghiepHoatDongTrongKCN = 213,
         [Display(Name = "Tổng hợp kết quả quan trắc")]
         TongHopKetQuaQuanTrac = 311,
         [Display(Name = "Tổng hợp thống kê nguồn thải")]

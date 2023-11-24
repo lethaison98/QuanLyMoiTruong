@@ -1,4 +1,5 @@
 ﻿using QuanLyMoiTruong.Application.Interfaces;
+using QuanLyMoiTruong.Application.Interfaces;
 using QuanLyMoiTruong.Data.Entities;
 using QuanLyMoiTruong.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,17 @@ namespace QuanLyMoiTruong.Application.Services
             {
                 entity.IsDeleted= true;
                 await _unitOfWork.SaveChangesAsync();
+                var dsKetQuaDoanhNghiep = await _ketQuaBaoVeMoiTruongDoanhNghiepService.GetAllByIdBaoCaoBaoVeMoiTruong(entity.IdBaoCaoBaoVeMoiTruong);
+                foreach(var item in dsKetQuaDoanhNghiep.Data)
+                {
+                    await _ketQuaBaoVeMoiTruongDoanhNghiepService.Delete(item.IdKetQuaBaoVeMoiTruongDoanhNghiep);
+                }
+                var dsKetQuaKCN = await _ketQuaBaoVeMoiTruongKCNService.GetAllByIdBaoCaoBaoVeMoiTruong(entity.IdBaoCaoBaoVeMoiTruong);
+                foreach (var item in dsKetQuaKCN.Data)
+                {
+                    await _ketQuaBaoVeMoiTruongKCNService.Delete(item.IdKetQuaBaoVeMoiTruongKCN);
+                }
+
                 return new ApiSuccessResult<bool>() {};
             }
             else
@@ -85,12 +97,12 @@ namespace QuanLyMoiTruong.Application.Services
             if(obj.LoaiBaoCao == "KhuCongNghiep")
             {
                 var listFile = await _fileTaiLieuService.GetByTaiLieu(idTaiLieu: entity.IdBaoCaoBaoVeMoiTruong, nhomTaiLieu: NhomTaiLieuEnum.BaoCaoBaoVeMoiTruong.ToString());
-                var fileChung = listFile.Data.FirstOrDefault(x => x.LoaiFileTaiLieu == LoaiFileTaiLieuEnum.TongHopSoLieuBVMTChungKCN.ToString());
+                var fileChung = listFile.Data.FirstOrDefault(x => x.LoaiFileTaiLieu == LoaiFileTaiLieuEnum.TongHopTinhHinhHoatDongChungTrongKCN.ToString());
                 if (fileChung != null)
                 {
                     await ImportKetQuaBaoVeMoiTruongKCN(fileChung.File.LinkFile, entity);
                 }
-                var fileChiTiet = listFile.Data.FirstOrDefault(x => x.LoaiFileTaiLieu == LoaiFileTaiLieuEnum.TongHopSoLieuBVMTChitietKCN.ToString());
+                var fileChiTiet = listFile.Data.FirstOrDefault(x => x.LoaiFileTaiLieu == LoaiFileTaiLieuEnum.TongHopCacDoanhNghiepHoatDongTrongKCN.ToString());
                 if (fileChiTiet != null)
                 {
                     await ImportKetQuaBaoVeMoiTruongDoanhNghiep(fileChiTiet.File.LinkFile, entity);
@@ -276,6 +288,7 @@ namespace QuanLyMoiTruong.Application.Services
             result.IdBaoCaoBaoVeMoiTruong = entity.IdBaoCaoBaoVeMoiTruong;
             result.TenBaoCao = entity.TenBaoCao;
             result.NgayBaoCao = entity.NgayBaoCao != null ? entity.NgayBaoCao.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "";
+            result.Nam = entity.Nam;
             result.IdDuAn = entity.IdDuAn;
             result.TenDuAn = entity.IdDuAn != null? entity.DuAn.TenDuAn: "";
             result.TenDoanhNghiep = entity.IdDuAn != null ? entity.DuAn.TenDoanhNghiep : "";
@@ -291,6 +304,7 @@ namespace QuanLyMoiTruong.Application.Services
             entity.IdBaoCaoBaoVeMoiTruong = viewModel.IdBaoCaoBaoVeMoiTruong;
             entity.TenBaoCao = viewModel.TenBaoCao;
             entity.NgayBaoCao = string.IsNullOrEmpty(viewModel.NgayBaoCao) ? null : DateTime.Parse(viewModel.NgayBaoCao, new CultureInfo("vi-VN"));
+            entity.Nam = viewModel.Nam;
             entity.IdDuAn = viewModel.IdDuAn == 0 ? null : viewModel.IdDuAn;
             entity.IdKhuCongNghiep = viewModel.IdKhuCongNghiep == 0 ? null : viewModel.IdKhuCongNghiep;
             entity.KhuKinhTe = viewModel.KhuKinhTe;

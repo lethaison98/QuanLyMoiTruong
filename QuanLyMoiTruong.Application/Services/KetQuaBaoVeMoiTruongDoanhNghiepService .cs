@@ -122,6 +122,8 @@ namespace QuanLyMoiTruong.Application.Services
             {
                 foreach (var obj in list)
                 {
+                    var kcn = await _khuCongNghiepService.GetById(obj.IdKhuCongNghiep);
+                    obj.TenKhuCongNghiep = kcn.Data.TenKhuCongNghiep;
                     var entity = new KetQuaBaoVeMoiTruongDoanhNghiep();
                     entity = MapViewModelToEntity(obj, entity);
                     await _unitOfWork.GetRepository<KetQuaBaoVeMoiTruongDoanhNghiep>().InsertAsync(entity);
@@ -139,6 +141,25 @@ namespace QuanLyMoiTruong.Application.Services
         {
             var result = new List<KetQuaBaoVeMoiTruongDoanhNghiepViewModel>();
             var entities = await _unitOfWork.GetRepository<KetQuaBaoVeMoiTruongDoanhNghiep>().GetAllAsync(predicate: x => x.IdBaoCaoBaoVeMoiTruong == IdBaoCaoBaoVeMoiTruong && !x.IsDeleted);
+            result = entities.Select(MapEntityToViewModel).ToList();
+            return new ApiSuccessResult<List<KetQuaBaoVeMoiTruongDoanhNghiepViewModel>>() { Data = result };
+        }
+        public async Task<ApiResult<List<KetQuaBaoVeMoiTruongDoanhNghiepViewModel>>> GetBaoCao2(BaoCaoBaoVeMoiTruongRequest request)
+        {
+            var result = new List<KetQuaBaoVeMoiTruongDoanhNghiepViewModel>();
+            var entities = await _unitOfWork.GetRepository<KetQuaBaoVeMoiTruongDoanhNghiep>().GetAllAsync(predicate: x => !x.IsDeleted, include: x => x.Include(x => x.BaoCaoBaoVeMoiTruong));
+            if (request.TuNgay != null)
+            {
+                entities = entities.Where(x => x.BaoCaoBaoVeMoiTruong.NgayBaoCao >= request.TuNgay).ToList();
+            }
+            if (request.DenNgay != null)
+            {
+                entities = entities.Where(x => x.BaoCaoBaoVeMoiTruong.NgayBaoCao <= request.DenNgay).ToList();
+            }
+            if (request.Nam != 0)
+            {
+                entities = entities.Where(x => x.BaoCaoBaoVeMoiTruong.Nam == request.Nam).ToList();
+            }
             result = entities.Select(MapEntityToViewModel).ToList();
             return new ApiSuccessResult<List<KetQuaBaoVeMoiTruongDoanhNghiepViewModel>>() { Data = result };
         }
