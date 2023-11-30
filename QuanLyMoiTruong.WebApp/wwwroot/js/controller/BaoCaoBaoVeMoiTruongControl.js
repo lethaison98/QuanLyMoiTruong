@@ -122,6 +122,7 @@ BaoCaoBaoVeMoiTruongControl = {
                                     "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetDoanhNghiepHoatDongTrongKCNByBaoCao?idBaoCaoBaoVeMoiTruong=" + idBaoCao,
                                     callback: function (res) {
                                         if (res.Success) {
+                                            $("#tbl2 tbody").html("");
                                             var html = "";
                                             $.each(res.Data, function (i, item) {
                                                 html += `<tr>
@@ -151,6 +152,7 @@ BaoCaoBaoVeMoiTruongControl = {
                                     "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/GetChiTieuBaoVeMoiTruongKCNByBaoCao?idBaoCaoBaoVeMoiTruong=" + idBaoCao,
                                     callback: function (res) {
                                         if (res.Success) {
+                                            $("#tbl1_2 tbody").html("");
                                             var html = "";
                                             $.each(res.Data, function (i, item) {
                                                 html += `<tr>
@@ -172,9 +174,23 @@ BaoCaoBaoVeMoiTruongControl = {
                                                 </tr>`
                                             });
                                             $("#tbl1_2").append(html);
-                                            self.RegisterEventsPopupBaoCaoBaoVeMoiTruong();
 
                                         }
+                                    }
+                                });
+                                $popupkq.find(".btn-primary").off('click').on('click', function () {
+                                    if (confirm("Dữ liệu cũ sẽ bị xóa và thay thế bằng file hiện tại, Xác nhận cập nhật lại dữ liệu?") == true) {
+                                        Get({
+                                            "url": localStorage.getItem("API_URL") + "/BaoCaoBaoVeMoiTruong/UpdateKetQuaBaoCaoBaoVeMoiTruong?idBaoCaoBaoVeMoiTruong=" + idBaoCao,
+                                            callback: function (res) {
+                                                if (res.Success) {
+                                                    toastr.success('Thực hiện thành công', 'Thông báo')
+                                                    $popupkq.find('.btn-danger').trigger('click');
+                                                } else {
+                                                    toastr.error(res.Message, 'Có lỗi xảy ra')
+                                                }
+                                            }
+                                        });
                                     }
                                 });
                             });

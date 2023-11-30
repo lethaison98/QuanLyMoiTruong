@@ -118,9 +118,12 @@ namespace QuanLyMoiTruong.Application.Services
             {
                 foreach (var obj in list)
                 {
-                    var entity = new KetQuaBaoVeMoiTruongKCN();
-                    entity = MapViewModelToEntity(obj, entity);
-                    await _unitOfWork.GetRepository<KetQuaBaoVeMoiTruongKCN>().InsertAsync(entity);
+                    if (!String.IsNullOrEmpty(obj.TenKhuCongNghiep))
+                    {
+                        var entity = new KetQuaBaoVeMoiTruongKCN();
+                        entity = MapViewModelToEntity(obj, entity);
+                        await _unitOfWork.GetRepository<KetQuaBaoVeMoiTruongKCN>().InsertAsync(entity);
+                    }
                 }
                 await _unitOfWork.SaveChangesAsync();
 

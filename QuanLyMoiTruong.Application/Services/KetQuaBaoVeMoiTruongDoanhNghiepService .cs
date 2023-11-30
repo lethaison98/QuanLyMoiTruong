@@ -122,11 +122,15 @@ namespace QuanLyMoiTruong.Application.Services
             {
                 foreach (var obj in list)
                 {
-                    var kcn = await _khuCongNghiepService.GetById(obj.IdKhuCongNghiep);
-                    obj.TenKhuCongNghiep = kcn.Data.TenKhuCongNghiep;
-                    var entity = new KetQuaBaoVeMoiTruongDoanhNghiep();
-                    entity = MapViewModelToEntity(obj, entity);
-                    await _unitOfWork.GetRepository<KetQuaBaoVeMoiTruongDoanhNghiep>().InsertAsync(entity);
+                    if (!String.IsNullOrEmpty(obj.TenDoanhNghiep))
+                    {
+                        var kcn = await _khuCongNghiepService.GetById(obj.IdKhuCongNghiep);
+                        obj.TenKhuCongNghiep = kcn.Data.TenKhuCongNghiep;
+                        var entity = new KetQuaBaoVeMoiTruongDoanhNghiep();
+                        entity = MapViewModelToEntity(obj, entity);
+                        await _unitOfWork.GetRepository<KetQuaBaoVeMoiTruongDoanhNghiep>().InsertAsync(entity);
+                    }
+
                 }
                 await _unitOfWork.SaveChangesAsync();
 

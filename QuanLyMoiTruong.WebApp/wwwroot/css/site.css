@@ -13,10 +13,6 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
-}
-
 .has-success .form-control { border-color: #35a989; -webkit-box-shadow: none; box-shadow: none; }
 
 .has-warning .form-control { border-color: #f5b225; -webkit-box-shadow: none; box-shadow: none; }

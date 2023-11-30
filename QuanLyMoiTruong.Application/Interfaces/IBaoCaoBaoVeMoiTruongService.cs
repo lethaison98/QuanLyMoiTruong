@@ -14,6 +14,7 @@ namespace QuanLyMoiTruong.Application.Interfaces
         public Task<ApiResult<IList<BaoCaoBaoVeMoiTruongViewModel>>> GetListBaoCaoBaoVeMoiTruongByDuAn(int idDuAn);
         public Task<ApiResult<IList<BaoCaoBaoVeMoiTruongViewModel>>> GetListBaoCaoBaoVeMoiTruongByKhuCongNghiep(int idKhuCongNghiep);
         public Task<ApiResult<IList<BaoCaoBaoVeMoiTruongViewModel>>> GetListBaoCaoBaoVeMoiTruongByKhuKinhTe();
+        public Task<ApiResult<BaoCaoBaoVeMoiTruong>> UpdateKetQuaBaoCaoBaoVeMoiTruong(int id);
       
     }
 }

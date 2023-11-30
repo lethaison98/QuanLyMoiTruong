@@ -28,21 +28,21 @@ namespace QuanLyMoiTruong.Application.Services
 
         public BaoCaoBaoVeMoiTruongService(IUnitOfWork unitOfWork, IFileTaiLieuService fileTaiLieuService, IKetQuaBaoVeMoiTruongKCNService ketQuaBaoVeMoiTruongKCNService, IKetQuaBaoVeMoiTruongDoanhNghiepService ketQuaBaoVeMoiTruongDoanhNghiepService)
         {
-            _unitOfWork= unitOfWork;
-            _fileTaiLieuService= fileTaiLieuService;
+            _unitOfWork = unitOfWork;
+            _fileTaiLieuService = fileTaiLieuService;
             _ketQuaBaoVeMoiTruongDoanhNghiepService = ketQuaBaoVeMoiTruongDoanhNghiepService;
             _ketQuaBaoVeMoiTruongKCNService = ketQuaBaoVeMoiTruongKCNService;
         }
 
         public async Task<ApiResult<bool>> Delete(int id)
         {
-            var entity =  await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruong>().FindAsync(id);
+            var entity = await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruong>().FindAsync(id);
             if (entity != null)
             {
-                entity.IsDeleted= true;
+                entity.IsDeleted = true;
                 await _unitOfWork.SaveChangesAsync();
                 var dsKetQuaDoanhNghiep = await _ketQuaBaoVeMoiTruongDoanhNghiepService.GetAllByIdBaoCaoBaoVeMoiTruong(entity.IdBaoCaoBaoVeMoiTruong);
-                foreach(var item in dsKetQuaDoanhNghiep.Data)
+                foreach (var item in dsKetQuaDoanhNghiep.Data)
                 {
                     await _ketQuaBaoVeMoiTruongDoanhNghiepService.Delete(item.IdKetQuaBaoVeMoiTruongDoanhNghiep);
                 }
@@ -52,18 +52,18 @@ namespace QuanLyMoiTruong.Application.Services
                     await _ketQuaBaoVeMoiTruongKCNService.Delete(item.IdKetQuaBaoVeMoiTruongKCN);
                 }
 
-                return new ApiSuccessResult<bool>() {};
+                return new ApiSuccessResult<bool>() { };
             }
             else
             {
-                return new ApiErrorResult<bool>("Không tồn tại dữ liệu cần xóa") ;
+                return new ApiErrorResult<bool>("Không tồn tại dữ liệu cần xóa");
             }
-        } 
+        }
 
         public async Task<ApiResult<IList<BaoCaoBaoVeMoiTruongViewModel>>> GetAll()
         {
             var result = new List<BaoCaoBaoVeMoiTruongViewModel>();
-            var entities =  await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted);
+            var entities = await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted);
             result = entities.Select(MapEntityToViewModel).ToList();
             return new ApiSuccessResult<IList<BaoCaoBaoVeMoiTruongViewModel>>() { Data = result };
         }
@@ -71,16 +71,15 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<BaoCaoBaoVeMoiTruongViewModel>> GetById(int id)
         {
             var result = new BaoCaoBaoVeMoiTruongViewModel();
-            var data = await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruong>().GetFirstOrDefaultAsync(predicate: x => x.IdBaoCaoBaoVeMoiTruong == id, include: x => x.Include(y => y.DuAn).Include(y=> y.KhuCongNghiep));
+            var data = await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruong>().GetFirstOrDefaultAsync(predicate: x => x.IdBaoCaoBaoVeMoiTruong == id, include: x => x.Include(y => y.DuAn).Include(y => y.KhuCongNghiep));
             result = MapEntityToViewModel(data);
             var dsFile = await _fileTaiLieuService.GetByTaiLieu(data.IdBaoCaoBaoVeMoiTruong, NhomTaiLieuEnum.BaoCaoBaoVeMoiTruong.ToString());
             if (dsFile.Success)
             {
                 result.FileTaiLieu = dsFile.Data.ToList();
             }
-            return new ApiSuccessResult<BaoCaoBaoVeMoiTruongViewModel>() {Data = result };
+            return new ApiSuccessResult<BaoCaoBaoVeMoiTruongViewModel>() { Data = result };
         }
-
         public async Task<ApiResult<BaoCaoBaoVeMoiTruong>> Insert(BaoCaoBaoVeMoiTruongViewModel obj)
         {
             var entity = new BaoCaoBaoVeMoiTruong();
@@ -94,7 +93,7 @@ namespace QuanLyMoiTruong.Application.Services
             fileTaiLieuRequest.FileTaiLieu = obj.FileTaiLieu;
             await _fileTaiLieuService.UpdateAll(fileTaiLieuRequest);
 
-            if(obj.LoaiBaoCao == "KhuCongNghiep")
+            if (obj.LoaiBaoCao == "KhuCongNghiep")
             {
                 var listFile = await _fileTaiLieuService.GetByTaiLieu(idTaiLieu: entity.IdBaoCaoBaoVeMoiTruong, nhomTaiLieu: NhomTaiLieuEnum.BaoCaoBaoVeMoiTruong.ToString());
                 var fileChung = listFile.Data.FirstOrDefault(x => x.LoaiFileTaiLieu == LoaiFileTaiLieuEnum.TongHopTinhHinhHoatDongChungTrongKCN.ToString());
@@ -140,9 +139,9 @@ namespace QuanLyMoiTruong.Application.Services
 
             result.PageIndex = data.PageIndex;
             result.PageSize = data.PageSize;
-            result.IndexFrom= data.IndexFrom;
+            result.IndexFrom = data.IndexFrom;
             result.TotalCount = data.TotalCount;
-            result.TotalPages = data.TotalPages;    
+            result.TotalPages = data.TotalPages;
             result.Items = data.Items.Select(MapEntityToViewModel).ToList();
             return new ApiSuccessResult<IPagedList<BaoCaoBaoVeMoiTruongViewModel>>() { Data = result };
         }
@@ -177,7 +176,45 @@ namespace QuanLyMoiTruong.Application.Services
             }
             return new ApiSuccessResult<IList<BaoCaoBaoVeMoiTruongViewModel>>() { Data = result };
         }
-        
+        public async Task<ApiResult<BaoCaoBaoVeMoiTruong>> UpdateKetQuaBaoCaoBaoVeMoiTruong(int id)
+        {
+            var entity = await _unitOfWork.GetRepository<BaoCaoBaoVeMoiTruong>().GetFirstOrDefaultAsync(predicate: x => x.IdBaoCaoBaoVeMoiTruong == id);
+            if (entity != null)
+            {
+                if (entity.LoaiBaoCao == "KhuCongNghiep")
+                {
+                    // Xóa dữ liệu cũ
+                    var dsKetQuaDoanhNghiep = await _ketQuaBaoVeMoiTruongDoanhNghiepService.GetAllByIdBaoCaoBaoVeMoiTruong(entity.IdBaoCaoBaoVeMoiTruong);
+                    foreach (var item in dsKetQuaDoanhNghiep.Data)
+                    {
+                        await _ketQuaBaoVeMoiTruongDoanhNghiepService.Delete(item.IdKetQuaBaoVeMoiTruongDoanhNghiep);
+                    }
+                    var dsKetQuaKCN = await _ketQuaBaoVeMoiTruongKCNService.GetAllByIdBaoCaoBaoVeMoiTruong(entity.IdBaoCaoBaoVeMoiTruong);
+                    foreach (var item in dsKetQuaKCN.Data)
+                    {
+                        await _ketQuaBaoVeMoiTruongKCNService.Delete(item.IdKetQuaBaoVeMoiTruongKCN);
+                    }
+
+                    // Cập nhật dữ liệu mới
+                    var listFile = await _fileTaiLieuService.GetByTaiLieu(idTaiLieu: entity.IdBaoCaoBaoVeMoiTruong, nhomTaiLieu: NhomTaiLieuEnum.BaoCaoBaoVeMoiTruong.ToString());
+                    var fileChung = listFile.Data.FirstOrDefault(x => x.LoaiFileTaiLieu == LoaiFileTaiLieuEnum.TongHopTinhHinhHoatDongChungTrongKCN.ToString());
+                    if (fileChung != null)
+                    {
+                        await ImportKetQuaBaoVeMoiTruongKCN(fileChung.File.LinkFile, entity);
+                    }
+                    var fileChiTiet = listFile.Data.FirstOrDefault(x => x.LoaiFileTaiLieu == LoaiFileTaiLieuEnum.TongHopCacDoanhNghiepHoatDongTrongKCN.ToString());
+                    if (fileChiTiet != null)
+                    {
+                        await ImportKetQuaBaoVeMoiTruongDoanhNghiep(fileChiTiet.File.LinkFile, entity);
+                    }
+                }
+                return new ApiSuccessResult<BaoCaoBaoVeMoiTruong>() { Data = entity };
+            }
+            else
+            {
+                return new ApiErrorResult<BaoCaoBaoVeMoiTruong>() { Message = "Không tìm thấy báo cáo!" };
+            }
+        }
         public async Task<ApiResult<IList<BaoCaoBaoVeMoiTruongViewModel>>> GetListBaoCaoBaoVeMoiTruongByKhuCongNghiep(int idKhuCongNghiep)
         {
             var result = new List<BaoCaoBaoVeMoiTruongViewModel>();
@@ -221,7 +258,7 @@ namespace QuanLyMoiTruong.Application.Services
                 var listKetQua = new List<KetQuaBaoVeMoiTruongDoanhNghiepViewModel>();
                 var ws = currentSheet[0];
                 for (var i = 6; i <= ws.Dimension.End.Row; i++)
-                { 
+                {
 
                     var imp = new KetQuaBaoVeMoiTruongDoanhNghiepViewModel();
                     imp.TenDoanhNghiep = ws.Cells[i, 2].Value == null ? "" : ws.Cells[i, 2].Value.ToString();
@@ -237,8 +274,8 @@ namespace QuanLyMoiTruong.Application.Services
                     imp.ChatThaiRanNguyHai = ws.Cells[i, 12].Value == null ? "" : ws.Cells[i, 12].Value.ToString();
                     imp.TyLeCayXanh = ws.Cells[i, 13].Value == null ? "" : ws.Cells[i, 13].Value.ToString();
                     imp.IdBaoCaoBaoVeMoiTruong = bc.IdBaoCaoBaoVeMoiTruong;
-                    imp.TenKhuCongNghiep = bc.KhuCongNghiep != null? bc.KhuCongNghiep.TenKhuCongNghiep: "";
-                    imp.IdKhuCongNghiep = bc.IdKhuCongNghiep != null? bc.IdKhuCongNghiep.Value : 0;
+                    imp.TenKhuCongNghiep = bc.KhuCongNghiep != null ? bc.KhuCongNghiep.TenKhuCongNghiep : "";
+                    imp.IdKhuCongNghiep = bc.IdKhuCongNghiep != null ? bc.IdKhuCongNghiep.Value : 0;
                     listKetQua.Add(imp);
                 }
                 await _ketQuaBaoVeMoiTruongDoanhNghiepService.InsertFromExcel(listKetQua);
@@ -275,7 +312,7 @@ namespace QuanLyMoiTruong.Application.Services
                     imp.CongTrinhPhongNgua = ws.Cells[i, 15].Value == null ? "" : ws.Cells[i, 15].Value.ToString();
                     imp.TyLeCayXanh = ws.Cells[i, 16].Value == null ? "" : ws.Cells[i, 16].Value.ToString();
                     imp.IdBaoCaoBaoVeMoiTruong = bc.IdBaoCaoBaoVeMoiTruong;
-                    imp.IdKhuCongNghiep = bc.IdKhuCongNghiep != null? bc.IdKhuCongNghiep.Value : 0;
+                    imp.IdKhuCongNghiep = bc.IdKhuCongNghiep != null ? bc.IdKhuCongNghiep.Value : 0;
                     listKetQua.Add(imp);
                 }
                 await _ketQuaBaoVeMoiTruongKCNService.InsertFromExcel(listKetQua);
@@ -283,14 +320,15 @@ namespace QuanLyMoiTruong.Application.Services
             }
         }
 
-        public BaoCaoBaoVeMoiTruongViewModel MapEntityToViewModel(BaoCaoBaoVeMoiTruong entity) {
+        public BaoCaoBaoVeMoiTruongViewModel MapEntityToViewModel(BaoCaoBaoVeMoiTruong entity)
+        {
             var result = new BaoCaoBaoVeMoiTruongViewModel();
             result.IdBaoCaoBaoVeMoiTruong = entity.IdBaoCaoBaoVeMoiTruong;
             result.TenBaoCao = entity.TenBaoCao;
             result.NgayBaoCao = entity.NgayBaoCao != null ? entity.NgayBaoCao.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "";
             result.Nam = entity.Nam;
             result.IdDuAn = entity.IdDuAn;
-            result.TenDuAn = entity.IdDuAn != null? entity.DuAn.TenDuAn: "";
+            result.TenDuAn = entity.IdDuAn != null ? entity.DuAn.TenDuAn : "";
             result.TenDoanhNghiep = entity.IdDuAn != null ? entity.DuAn.TenDoanhNghiep : "";
             result.IdKhuCongNghiep = entity.IdKhuCongNghiep;
             result.TenKhuCongNghiep = entity.IdKhuCongNghiep != null ? entity.KhuCongNghiep.TenKhuCongNghiep : "";

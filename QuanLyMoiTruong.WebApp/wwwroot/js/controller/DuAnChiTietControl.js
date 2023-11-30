@@ -38,7 +38,7 @@ DuAnChiTietControl = {
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Giấy phép đăng ký kinh doanh</div>
+                                    <div class="col-lg-3 col-md-4 label">Đăng ký kinh doanh/Chứng nhận đầu tư</div>
                                     <div class="col-lg-9 col-md-8">`+ res.Data.GiayPhepDKKD + `</div>
                                 </div>
                                 <div class="row">

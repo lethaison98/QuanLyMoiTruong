@@ -107,7 +107,7 @@ namespace QuanLyMoiTruong.Application.Services
                 filter = filter.And(p => p.TrichYeu.ToLower().Contains(fullTextSearch) || p.SoKyHieu.ToLower().Contains(fullTextSearch));
             }
             filter = filter.And(p => !p.IsDeleted);
-            var data = await _unitOfWork.GetRepository<VanBanQuyPham>().GetPagedListAsync(predicate: filter, pageIndex: request.PageIndex, pageSize: request.PageSize);
+            var data = await _unitOfWork.GetRepository<VanBanQuyPham>().GetPagedListAsync(predicate: filter, orderBy: o => o.OrderByDescending(s => s.NgayBanHanh), pageIndex: request.PageIndex, pageSize: request.PageSize);
             data.Items.Select(MapEntityToViewModel);
             var result = new PagedList<VanBanQuyPhamViewModel>();
 
