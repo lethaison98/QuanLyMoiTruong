@@ -51,6 +51,7 @@ GiayPhepMoiTruongControl = {
                         var html3 = "";
                         var html4 = "";
                         var html5 = "";
+                        var html6 = "";
 
                         $.each(value.FileTaiLieu, function (j, file) {
                             switch (file.LoaiFileTaiLieu) {
@@ -58,21 +59,25 @@ GiayPhepMoiTruongControl = {
                                     var iconfile = self.DrawIconFile(file.File.LinkFile);
                                     html1 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
                                     break;
-                                case ("DonXinCapPhep"):
+                                case ("BaoCaoDanhGiaTacDongMoiTruong"):
                                     var iconfile = self.DrawIconFile(file.File.LinkFile);
                                     html2 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
                                     break;
-                                case ("BaoCaoDeXuatCapPhep"):
+                                case ("DonXinCapPhep"):
                                     var iconfile = self.DrawIconFile(file.File.LinkFile);
                                     html3 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
                                     break;
-                                case ("DuAnDauTu"):
+                                case ("BaoCaoDeXuatCapPhep"):
                                     var iconfile = self.DrawIconFile(file.File.LinkFile);
                                     html4 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
                                     break;
-                                default:
+                                case ("DuAnDauTu"):
                                     var iconfile = self.DrawIconFile(file.File.LinkFile);
                                     html5 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
+                                    break;
+                                default:
+                                    var iconfile = self.DrawIconFile(file.File.LinkFile);
+                                    html6 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
                             }
 
                         });
@@ -88,20 +93,24 @@ GiayPhepMoiTruongControl = {
                                                 <p class="row">`+ html1 + `
                                                 </p>
                                                 <hr>
-                                                <strong>2. Đơn xin cấp phép</strong>
+                                                <strong>2. Báo cáo đánh giá tác động môi trường</strong>
                                                 <p class="row">`+ html2 + `
                                                 </p>
                                                 <hr>
-                                                <strong>3. Báo cáo đề xuất cấp phép</strong>
+                                                <strong>3. Đơn xin cấp phép</strong>
                                                 <p class="row">`+ html3 + `
                                                 </p>
                                                 <hr>
-                                                <strong>4. Dự án đầu tư</strong>
+                                                <strong>4. Báo cáo đề xuất cấp phép</strong>
                                                 <p class="row">`+ html4 + `
                                                 </p>
                                                 <hr>
-                                                <strong>5. Tài liệu khác</strong>
+                                                <strong>5. Dự án đầu tư</strong>
                                                 <p class="row">`+ html5 + `
+                                                </p>
+                                                <hr>
+                                                <strong>6. Tài liệu khác</strong>
+                                                <p class="row">`+ html6 + `
                                                 </p>
                                             </div>
                                             <div  style="float:right">
@@ -164,7 +173,7 @@ GiayPhepMoiTruongControl = {
     },
     ResetPopup: function () {
         var $popup = $('#popup-form-giay-phep-moi-truong');
-        $popup.find('.modal-header').text("Thêm mới giấy phép môi trường");
+        $popup.find('.modal-header').text("Thêm mới hồ sơ thủ tục môi trường");
         ResetForm("#FormGiayPhepMoiTruong");
         $popup.find('[data-name="IdGiayPhepMoiTruong"]').val(0);
         $popup.find("#tblFileGiayPhepMoiTruong tbody").html('');

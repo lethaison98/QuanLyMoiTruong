@@ -1,0 +1,63 @@
+﻿@{
+    Layout = null;
+}
+<div class="modal fade" id="popup-form-diem-quan-trac" data-backdrop="static" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm mới điểm quan trắc</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="min-height:600px">
+                <div class="row g-3" id="FormDiemQuanTrac">
+                    <div class="col-6">
+                        <label>Tên điểm quan trắc<span class="required">*</span></label>
+                        <div class="ttls-content">
+                            <input type="hidden" class="form-control" data-name="IdDiemQuanTrac" value="0">
+                            <input type="text" class="form-control" data-name="TenDiemQuanTrac" required>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label>Địa chỉ <span class="required">*</span></label>
+                        <div class="ttls-content">
+                            <input type="text" class="form-control" data-name="DiaChi">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label>Kinh độ <span class="required">*</span></label>
+                        <div class="ttls-content">
+                            <input type="text" class="form-control" data-name="KinhDo" required>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label>Vĩ độ <span class="required">*</span></label>
+                        <div class="ttls-content">
+                            <input type="text" class="form-control" data-name="ViDo" required>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <label>Loại <span class="required">*</span></label>
+                        <div class="ttls-content">
+                            <select class="form-control select2 px-0" style="width: 100%;" data-name="Loai">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6" style="display:none">
+                        <label>Dự án <span class="required">*</span></label>
+                        <div class="ttls-content">
+                            <select class="select2 ddDuAn" data-name="IdDuAn" style="width: 100%;">
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSave">Lưu</button>
+                <button type="button" class="btn btn-danger" id="btnClose" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>

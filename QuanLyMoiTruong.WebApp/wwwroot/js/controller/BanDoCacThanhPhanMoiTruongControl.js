@@ -52,7 +52,7 @@ BanDoCacThanhPhanMoiTruongControl = {
             iconSize: [13, 13],
         });
         Get({
-            "url": localStorage.getItem("API_URL") + "/DiemQuanTrac/GetDuLieuLenBanDo",
+            "url": localStorage.getItem("API_URL") + "/DiemQuanTrac/GetDuLieuCacDiemQuanTracLenBanDo",
             data: {
                 "idThanhPhanMoiTruong": $('.ddThanhPhanMoiTruong option:selected').val()
             },
@@ -152,6 +152,9 @@ BanDoCacThanhPhanMoiTruongControl = {
     RegisterEvents: function () {
         var self = this;
         self.LoadDanhSachThanhPhanMoiTruong();
+        $('#BanDoDiemQuanTrac-tab').off('click').on('click', function () {
+            self.LoadDuLieuRaBanDo();
+        });
     },
 }
 

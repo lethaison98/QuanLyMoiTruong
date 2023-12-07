@@ -22,5 +22,11 @@ namespace QuanLyMoiTruong.WebApp.Controllers
         {
             return View();
         }
+
+        [Route("BanDoCacDiemXaThai")]
+        public ViewResult BanDoCacDiemXaThai()
+        {
+            return View();
+        }
     }
 }

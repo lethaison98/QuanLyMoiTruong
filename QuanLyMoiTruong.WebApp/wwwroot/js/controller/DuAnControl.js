@@ -49,6 +49,11 @@ DuAnControl = {
                     },
                     {
                         "class": "name-control",
+                        "data": "LoaiHinhSanXuat",
+                        "defaultContent": ""
+                    },
+                    {
+                        "class": "name-control",
                         "data": "DiaChi",
                         "defaultContent": "",
                     },

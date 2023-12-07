@@ -427,6 +427,12 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Property<string>("DiaChi")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("IdDuAn")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdKhuCongNghiep")
+                        .HasColumnType("int");
+
                     b.Property<string>("IdNguoiCapNhat")
                         .HasColumnType("nvarchar(max)");
 
@@ -434,6 +440,9 @@ namespace QuanLyMoiTruong.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("KhuKinhTe")
                         .HasColumnType("bit");
 
                     b.Property<string>("KinhDo")
@@ -509,6 +518,9 @@ namespace QuanLyMoiTruong.Data.Migrations
                     b.Property<string>("NguoiTao")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("QuocGia")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("QuyMo")
                         .HasColumnType("nvarchar(max)");
 
@@ -526,6 +538,12 @@ namespace QuanLyMoiTruong.Data.Migrations
 
                     b.Property<bool>("ThuocKhuKinhTe")
                         .HasColumnType("bit");
+
+                    b.Property<string>("TongVonDauTuVND")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrangThaiHoatDong")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdDuAn");
 

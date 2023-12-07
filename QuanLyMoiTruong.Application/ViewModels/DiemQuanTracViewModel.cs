@@ -15,6 +15,9 @@ namespace QuanLyMoiTruong.Application.ViewModels
         public string Loai { get; set; }
         public string KinhDo { get; set; }
         public string ViDo { get; set; }
+        public int? IdDuAn { get;set; }
+        public int? IdKhuCongNghiep { get; set; }   
+        public bool KhuKinhTe { get; set; } 
         public List<KetQuaQuanTrac> DsKetQuaQuanTrac { get; set; }
 
     }

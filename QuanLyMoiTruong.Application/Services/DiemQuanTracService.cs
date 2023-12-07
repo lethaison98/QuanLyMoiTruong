@@ -81,13 +81,20 @@ namespace QuanLyMoiTruong.Application.Services
             }
         }
 
-        public async Task<ApiResult<IPagedList<DiemQuanTracViewModel>>> GetAllPaging(PagingRequest request)
+        public async Task<ApiResult<IPagedList<DiemQuanTracViewModel>>> GetAllPaging(DiemQuanTracRequest request)
         {
             Expression<Func<DiemQuanTrac, bool>> filter = x => true;
             if (!string.IsNullOrWhiteSpace(request.FullTextSearch))
             {
                 var fullTextSearch = request.FullTextSearch.ToLowerInvariant();
                 filter = filter.And(p => p.TenDiemQuanTrac.ToLower().Contains(fullTextSearch));
+            }
+            if (request.Type == "DiemXaThai"){
+                filter = filter.And(p=> !p.KhuKinhTe);
+            }
+            else
+            {
+                filter = filter.And(p => p.KhuKinhTe);
             }
             filter = filter.And(p => !p.IsDeleted);
             var data = await _unitOfWork.GetRepository<DiemQuanTrac>().GetPagedListAsync(predicate: filter, pageIndex: request.PageIndex, pageSize: request.PageSize);
@@ -111,10 +118,10 @@ namespace QuanLyMoiTruong.Application.Services
             await _unitOfWork.SaveChangesAsync();
             return new ApiSuccessResult<DiemQuanTrac>() { Data = entity };
         }
-        public async Task<ApiResult<IList<DiemQuanTracViewModel>>> GetDuLieuLenBanDo(int idThanhPhanMoiTruong)
+        public async Task<ApiResult<IList<DiemQuanTracViewModel>>> GetDuLieuCacDiemQuanTracLenBanDo(int idThanhPhanMoiTruong)
         {
             var result = new List<DiemQuanTracViewModel>();
-            var entities = await _unitOfWork.GetRepository<DiemQuanTrac>().GetAllAsync(predicate: x => !x.IsDeleted);
+            var entities = await _unitOfWork.GetRepository<DiemQuanTrac>().GetAllAsync(predicate: x => !x.IsDeleted && (x.Loai == "M" || x.Loai == "K" || x.Loai == "N" || x.Loai == "B"));
             result = entities.Select(MapEntityToViewModel).OrderBy(x => x.Loai).ThenBy(x => x.TenDiemQuanTrac).ToList();
             foreach(var item in result)
             {
@@ -122,6 +129,28 @@ namespace QuanLyMoiTruong.Application.Services
                 item.DsKetQuaQuanTrac = dsKetQuaQuanTrac.ToList();
             }
             return new ApiSuccessResult<IList<DiemQuanTracViewModel>>() { Data = result };
+        }
+        public async Task<ApiResult<IList<DiemQuanTracViewModel>>> GetDuLieuCacDiemXaThaiLenBanDo(string keyword, string loai)
+        {
+            var result = new List<DiemQuanTracViewModel>();
+            var entities = await _unitOfWork.GetRepository<DiemQuanTrac>().GetAllAsync(predicate: x => !x.IsDeleted && (x.Loai == "NT" || x.Loai == "KT"));
+            if (!String.IsNullOrEmpty(loai))
+            {
+                entities = entities.Where(x => x.Loai == loai).ToList();
+            }
+            if (!String.IsNullOrEmpty(keyword))
+            {
+                entities = entities.Where(x => x.TenDiemQuanTrac.Contains(keyword) || x.DiaChi.Contains(keyword)).ToList();
+            }
+            result = entities.Select(MapEntityToViewModel).OrderBy(x => x.Loai).ThenBy(x => x.TenDiemQuanTrac).ToList();
+            return new ApiSuccessResult<IList<DiemQuanTracViewModel>>() { Data = result };
+        }
+        public async Task<ApiResult<IList<string>>> GetDanhSachLoaiDiemQuanTrac()
+        {
+            var result = new List<String>();
+            var entities = await _unitOfWork.GetRepository<DiemQuanTrac>().GetAllAsync(predicate: x => !x.IsDeleted);
+            result = entities.Select(x=> x.Loai).Distinct().ToList();
+            return new ApiSuccessResult<IList<string>>() { Data = result };
         }
         public DiemQuanTracViewModel MapEntityToViewModel(DiemQuanTrac entity) {
             var result = new DiemQuanTracViewModel();
@@ -131,6 +160,9 @@ namespace QuanLyMoiTruong.Application.Services
             result.Loai = entity.Loai;
             result.KinhDo = entity.KinhDo;
             result.ViDo = entity.ViDo;
+            result.IdDuAn = entity.IdDuAn;
+            result.IdKhuCongNghiep = entity.IdKhuCongNghiep;
+            result.KhuKinhTe = entity.KhuKinhTe;
             return result;
         }
         public DiemQuanTrac MapViewModelToEntity(DiemQuanTracViewModel viewModel, DiemQuanTrac entity)
@@ -141,6 +173,9 @@ namespace QuanLyMoiTruong.Application.Services
             entity.Loai = viewModel.Loai;
             entity.KinhDo = viewModel.KinhDo;
             entity.ViDo = viewModel.ViDo;
+            entity.IdDuAn = viewModel.IdDuAn;
+            entity.IdKhuCongNghiep = viewModel.IdKhuCongNghiep;
+            entity.KhuKinhTe = viewModel.KhuKinhTe;
             return entity;
         }
     }

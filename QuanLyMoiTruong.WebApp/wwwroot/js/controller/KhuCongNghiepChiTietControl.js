@@ -14,7 +14,7 @@ KhuCongNghiepChiTietControl = {
                     var dsDuAn = "";
                     $.each(res.Data.DsDuAn, function (j, duan) {
                         var stt = j + 1;
-                        dsDuAn += "<tr><td>" + stt + "</td><td>" + duan.TenDuAn + "</td><td>" + duan.TenDoanhNghiep + "</td><td>" + duan.DiaChi + "</td><td>" + duan.GhiChu + "</td></tr>"
+                        dsDuAn += "<tr><td>" + stt + "</td><td><a href =/DuAn/DuAnChiTiet/"+duan.IdDuAn+">" + duan.TenDuAn + "</a></td><td>" + duan.TenDoanhNghiep + "</td><td>" + duan.DiaChi + "</td></tr>"
                                 
                     });
                     $('.pagetitle h1').text(res.Data.TenKhuCongNghiep);

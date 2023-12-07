@@ -6,13 +6,13 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Thêm mới giấy phép môi trường</h4>
+                <h4 class="modal-title">Thêm mới hồ sơ thủ tục môi trường</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="min-height:600px">
                 <div class="row g-3" id="FormGiayPhepMoiTruong">
                     <div class="col-6">
-                        <label>Số giấy phép<span class="required">*</span></label>
+                        <label>Số hồ sơ<span class="required">*</span></label>
                         <div class="ttls-content">
                             <input type="hidden" class="form-control" data-name="IdGiayPhepMoiTruong" value="0">
                             <input type="text" class="form-control" data-name="SoGiayPhep" required>
@@ -93,10 +93,11 @@
                                 <input type="hidden" class="form-control" data-name="IdFileTaiLieu" value="0">
                                 <select class="form-control px-0" style="width: 100%;" data-name="LoaiFileTaiLieu">
                                     <option value="GiayPhepMoiTruong">Giấy phép môi trường</option>
+                                    <option value="BaoCaoDanhGiaTacDongMoiTruong">Báo cáo đánh giá tác động môi trường</option>
                                     <option value="DonXinCapPhep">Đơn xin cấp phép</option>
                                     <option value="BaoCaoDeXuatCapPhep">Báo cáo đề xuất cấp phép</option>
                                     <option value="DuAnDauTu">Dự án đầu tư</option>
-                                    <option value="TaiLieuKhac">Tài liệu khác</option>
+                                    <option value="TaiLieuKhac"> Hồ sơ khác</option>
                                 </select>
                             </td>
                             <td style="width:20%">

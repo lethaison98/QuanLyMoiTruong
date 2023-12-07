@@ -22,6 +22,9 @@ namespace QuanLyMoiTruong.Data.Entities
         public string GiayPhepDKKD { get; set; }
         public string LoaiHinhSanXuat { get; set; }
         public string QuyMo { get; set; }
+        public string TrangThaiHoatDong { get; set; }
+        public string QuocGia { get; set; }
+        public string TongVonDauTuVND { get; set; }
         public string GhiChu { get; set; }
         [JsonIgnore]
         public List<GiayPhepMoiTruong> DsGiayPhepMoiTruong { get; set; }

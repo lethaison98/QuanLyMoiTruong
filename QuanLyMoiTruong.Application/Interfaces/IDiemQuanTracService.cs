@@ -9,8 +9,11 @@ using System.Threading.Tasks;
 
 namespace QuanLyMoiTruong.Application.Interfaces
 {
-    public interface IDiemQuanTracService:IBaseService<DiemQuanTrac, int, DiemQuanTracViewModel, PagingRequest>
+    public interface IDiemQuanTracService:IBaseService<DiemQuanTrac, int, DiemQuanTracViewModel, DiemQuanTracRequest>
     {
-        public Task<ApiResult<IList<DiemQuanTracViewModel>>> GetDuLieuLenBanDo(int idThanhPhanMoiTruong);
+        public Task<ApiResult<IList<DiemQuanTracViewModel>>> GetDuLieuCacDiemQuanTracLenBanDo(int idThanhPhanMoiTruong);
+        public Task<ApiResult<IList<DiemQuanTracViewModel>>> GetDuLieuCacDiemXaThaiLenBanDo(string keyword, string loai);
+        public Task<ApiResult<IList<string>>> GetDanhSachLoaiDiemQuanTrac();
+
     }
 }

@@ -39,13 +39,14 @@ namespace QuanLyMoiTruong.Api.Controllers
             }
         }
         [HttpGet("GetAllPaging")]
-        public async Task<IActionResult> GetAllPaging(string keyword = "", int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAllPaging(string keyword = "", int pageNumber = 1, int pageSize = 10, string type="")
         {
-            var param = new PagingRequest
+            var param = new DiemQuanTracRequest
             {
                 FullTextSearch = keyword,
                 PageIndex = pageNumber,
-                PageSize = pageSize
+                PageSize = pageSize,
+                Type = type
             };
             var result = await _DiemQuanTracService.GetAllPaging(param);
             return Ok(result);
@@ -63,10 +64,22 @@ namespace QuanLyMoiTruong.Api.Controllers
             var result = await _DiemQuanTracService.GetById(idDiemQuanTrac);
             return Ok(result);
         }
-        [HttpGet("GetDuLieuLenBanDo")]
-        public async Task<IActionResult> GetDuLieuLenBanDo(int idThanhPhanMoiTruong)
+        [HttpGet("GetDuLieuCacDiemQuanTracLenBanDo")]
+        public async Task<IActionResult> GetDuLieuCacDiemQuanTracLenBanDo(int idThanhPhanMoiTruong)
         {
-            var result = await _DiemQuanTracService.GetDuLieuLenBanDo(idThanhPhanMoiTruong);
+            var result = await _DiemQuanTracService.GetDuLieuCacDiemQuanTracLenBanDo(idThanhPhanMoiTruong);
+            return Ok(result);
+        }
+        [HttpGet("GetDuLieuCacDiemXaThaiLenBanDo")]
+        public async Task<IActionResult> GetDuLieuCacDiemXaThaiLenBanDo(string keyword, string loai)
+        {
+            var result = await _DiemQuanTracService.GetDuLieuCacDiemXaThaiLenBanDo(keyword, loai);
+            return Ok(result);
+        }
+        [HttpGet("GetDanhSachLoaiDiemQuanTrac")]
+        public async Task<IActionResult> GetDanhSachLoaiDiemQuanTrac()
+        {
+            var result = await _DiemQuanTracService.GetDanhSachLoaiDiemQuanTrac();
             return Ok(result);
         }
     }
