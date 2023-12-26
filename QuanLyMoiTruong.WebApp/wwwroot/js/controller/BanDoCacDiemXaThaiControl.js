@@ -15,7 +15,7 @@ BanDoCacDiemXaThaiControl = {
             attribution: '<a href="https://dongnam.nghean.gov.vn/" target="_blank">Ban quản lý khu kinh tế Đông Nam</a>'
         }).addTo(map);
         map.options.minZoom = 9;
-        map.options.maxZoom = 14;
+        map.options.maxZoom = 18;
 
         var successIcon = L.icon({
             iconUrl: '/img/map/dot_success.png',

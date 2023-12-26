@@ -18,25 +18,49 @@
             <div class="card-body">
                 <div class="row  pt-2">
                     <form asp-action="BaoCaoCapGiayPhepMoiTruong" asp-controller="BaoCao" method="post" class="row g-3 needs-validation" novalidate>
-                        <div class="col-6 col-md-6 col-lg-6 col-xl-8">
+                        <div class="col-9 col-md-9 col-lg-9 col-xl-9">
                             <div class="row  ttls-cm">
-                                <div class="col-6">
+                                <div class="col-3">
                                     <label>Từ ngày</label>
                                     <div class="ttls-content">
                                         <input type="date" class="form-control" asp-for="TuNgay" placeholder="Từ ngày">
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-3">
                                     <label>Đến ngày</label>
                                     <div class="ttls-content">
                                         <input type="date" class="form-control" asp-for="DenNgay" placeholder="Đến ngày">
                                     </div>
                                 </div>
-
+                                 <div class="col-3">
+                                    <label>Loại giấy phép</label>
+                                    <div class="ttls-content">
+                                        <select asp-for="TenGiayPhep" class="form-control">
+                                            <option value="">Tất cả</option>
+                                            <option value="GiayPhepMoiTruong">Giấy phép môi trường</option>
+                                            <option value="BaoCaoTacDongMoiTruong">Báo cáo tác động môi trường</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                 <div class="col-3">
+                                    <label>Khu công nghiệp</label>
+                                    <div class="ttls-content">
+                                        <select asp-for="IdKhuCongNghiep" class="form-control">
+                                            <option value="0">Tất cả</option>
+                                            <option value="1">KCN VSIP Nghệ An</option>
+                                            <option value="2">KCN WHA</option>
+                                            <option value="3">KCN Nam Cấm</option>
+                                            <option value="4">KCN Bắc Vinh</option>
+                                            <option value="6">KCN Đông Hồi</option>
+                                            <option value="7">KCN Hoàng Mai 1</option>
+                                            <option value="8">KCN Thọ Lộc</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-6 col-md-6 col-lg-6 col-xl-4">
+                        <div class="col-3 col-md-3 col-lg-3 col-xl- 3">
                             <label></label>
 
                             <div class="ttls-cm">

@@ -21,6 +21,9 @@ namespace QuanLyMoiTruong.Application.ViewModels
         public string LoaiHinhSanXuat { get; set; }
         public string QuyMo { get; set; }
         public string GhiChu { get; set; }
+        public string QuocGia { get; set; }
+        public string TongVonDauTuVND { get; set; }
+        public string TrangThaiHoatDong { get; set; }
         public List<GiayPhepMoiTruongViewModel> DSGiayPhepMoiTruong { get; set; } = new List<GiayPhepMoiTruongViewModel>();
     }
 }

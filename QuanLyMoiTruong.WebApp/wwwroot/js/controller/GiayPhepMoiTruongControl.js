@@ -49,9 +49,6 @@ GiayPhepMoiTruongControl = {
                         var html1 = "";
                         var html2 = "";
                         var html3 = "";
-                        var html4 = "";
-                        var html5 = "";
-                        var html6 = "";
 
                         $.each(value.FileTaiLieu, function (j, file) {
                             switch (file.LoaiFileTaiLieu) {
@@ -63,21 +60,9 @@ GiayPhepMoiTruongControl = {
                                     var iconfile = self.DrawIconFile(file.File.LinkFile);
                                     html2 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
                                     break;
-                                case ("DonXinCapPhep"):
-                                    var iconfile = self.DrawIconFile(file.File.LinkFile);
-                                    html3 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
-                                    break;
-                                case ("BaoCaoDeXuatCapPhep"):
-                                    var iconfile = self.DrawIconFile(file.File.LinkFile);
-                                    html4 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
-                                    break;
-                                case ("DuAnDauTu"):
-                                    var iconfile = self.DrawIconFile(file.File.LinkFile);
-                                    html5 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
-                                    break;
                                 default:
                                     var iconfile = self.DrawIconFile(file.File.LinkFile);
-                                    html6 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
+                                    html3 += '<span class="pt-1"><a href = "' + localStorage.getItem('API_URL').replace("api", "") + file.File.LinkFile + '"target="_blank">' + iconfile + file.File.TenFile + '</a></span>';
                             }
 
                         });
@@ -97,20 +82,8 @@ GiayPhepMoiTruongControl = {
                                                 <p class="row">`+ html2 + `
                                                 </p>
                                                 <hr>
-                                                <strong>3. Đơn xin cấp phép</strong>
+                                                <strong>3. Tài liệu khác</strong>
                                                 <p class="row">`+ html3 + `
-                                                </p>
-                                                <hr>
-                                                <strong>4. Báo cáo đề xuất cấp phép</strong>
-                                                <p class="row">`+ html4 + `
-                                                </p>
-                                                <hr>
-                                                <strong>5. Dự án đầu tư</strong>
-                                                <p class="row">`+ html5 + `
-                                                </p>
-                                                <hr>
-                                                <strong>6. Tài liệu khác</strong>
-                                                <p class="row">`+ html6 + `
                                                 </p>
                                             </div>
                                             <div  style="float:right">

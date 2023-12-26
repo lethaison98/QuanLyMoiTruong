@@ -128,6 +128,9 @@ namespace QuanLyMoiTruong.Application.Services
             result.QuyMo = entity.QuyMo;
             result.LoaiHinhSanXuat = entity.LoaiHinhSanXuat;
             result.GhiChu = entity.GhiChu;
+            result.TrangThaiHoatDong = entity.TrangThaiHoatDong;
+            result.TongVonDauTuVND = entity.TongVonDauTuVND;
+            result.QuocGia = entity.QuocGia;
             var listGPMT = _giayPhepMoiTruongService.GetListGiayPhepMoiTruongByDuAn(entity.IdDuAn).Result;
             result.DSGiayPhepMoiTruong = listGPMT.Data.ToList();
             return result;
@@ -145,6 +148,9 @@ namespace QuanLyMoiTruong.Application.Services
             entity.GiayPhepDKKD = viewModel.GiayPhepDKKD;
             entity.QuyMo = viewModel.QuyMo;
             entity.LoaiHinhSanXuat = viewModel.LoaiHinhSanXuat;
+            entity.TrangThaiHoatDong = viewModel.TrangThaiHoatDong;
+            entity.TongVonDauTuVND = viewModel.TongVonDauTuVND;
+            entity.QuocGia = viewModel.QuocGia;
             entity.GhiChu = viewModel.GhiChu;
             return entity;
         }
@@ -199,6 +205,11 @@ namespace QuanLyMoiTruong.Application.Services
                         imp.QuyMo = ws2023.Cells[i, 8].Value == null ? "" : ws2023.Cells[i, 8].Value.ToString();
                         gpmt.SoGiayPhep = ws2023.Cells[i, 9].Value == null ? "" : ws2023.Cells[i, 9].Value.ToString();
                         gpmt.NgayCap = ws2023.Cells[i, 10].Value == null ? "" : ws2023.Cells[i, 10].Value.ToString();
+                        imp.QuocGia = ws2023.Cells[i, 11].Value == null ? "" : ws2023.Cells[i, 11].Value.ToString();
+                        imp.TrangThaiHoatDong = ws2023.Cells[i, 12].Value == null ? "" : ws2023.Cells[i, 12].Value.ToString();
+                        imp.TongVonDauTuVND = ws2023.Cells[i, 13].Value == null ? "" : ws2023.Cells[i, 13].Value.ToString();
+                        imp.GiayPhepDKKD = ws2023.Cells[i, 14].Value == null ? "" : ws2023.Cells[i, 14].Value.ToString();
+                        imp.GhiChu = ws2023.Cells[i, 15].Value == null ? "" : ws2023.Cells[i, 15].Value.ToString();
                         imp.DSGiayPhepMoiTruong.Add(gpmt);
                         if (!String.IsNullOrEmpty(imp.TenDuAn))
                         {

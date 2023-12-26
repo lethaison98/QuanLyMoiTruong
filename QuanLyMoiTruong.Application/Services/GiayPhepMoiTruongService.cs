@@ -161,6 +161,14 @@ namespace QuanLyMoiTruong.Application.Services
         public async Task<ApiResult<IList<BaoCaoCapGiayPhepMoiTruongViewModel>>> GetListByKhoangThoiGian(GiayPhepMoiTruongRequest request)
         {
             var entities = await _unitOfWork.GetRepository<GiayPhepMoiTruong>().GetAllAsync(predicate: x => !x.IsDeleted && x.IdDuAn != null, include: x=> x.Include(x=> x.DuAn).Include(x=> x.DuAn.KhuCongNghiep));
+            if (!String.IsNullOrEmpty(request.TenGiayPhep))
+            {
+                entities = entities.Where(x => x.TenGiayPhep == request.TenGiayPhep).ToList();
+            }
+            if (request.IdKhuCongNghiep != 0)
+            {
+                entities = entities.Where(x => x.DuAn.IdKhuCongNghiep == request.IdKhuCongNghiep).ToList();
+            }
             if (request.TuNgay != null)
             {
                 entities = entities.Where(x => x.NgayCap >= request.TuNgay).ToList();
